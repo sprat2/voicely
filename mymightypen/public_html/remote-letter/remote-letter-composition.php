@@ -763,12 +763,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     }
 
     function deleteAllCookies() {
-        // Remove all cookies (Note: Must be changed when the domain changes)
-
-        // Note: this next line will only work if the frontend and backend are on the same domain
-        // document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/; domain=.mymightypen.org"); });
-        
-        $.get( <?="\"".$ajax_host."\"";?>+"auth/delete-cookies.php" );
+        $.get( <?="\"".$ajax_host."\"";?>+"auth/delete-auth-cookies.php" );
     }
     </script>
 
