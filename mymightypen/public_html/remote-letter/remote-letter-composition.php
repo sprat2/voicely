@@ -24,7 +24,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     <!-- Clipboard copying dependency -->
     <!-- Documentation:
         https://github.com/zenorocha/clipboard.js -->
-    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.6.0/dist/clipboard.min.js"></script>
+    <script src="js/clipboard.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -763,12 +763,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     }
 
     function deleteAllCookies() {
-        // Remove all cookies (Note: Must be changed when the domain changes)
-
-        // Note: this next line will only work if the frontend and backend are on the same domain
-        // document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/; domain=.mymightypen.org"); });
-        
-        $.get( <?="\"".$ajax_host."\"";?>+"auth/delete-cookies.php" );
+        $.get( <?="\"".$ajax_host."\"";?>+"auth/delete-auth-cookies.php" );
     }
     </script>
 
