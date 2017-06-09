@@ -187,11 +187,11 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     // Open and prepare for the first element
     $( document ).ready(function() {
         
-        $('#collapse1:not(".in")').collapse('show');
+        // Initialize to step one
         startStepOne();
 
         // Register the person-selector populating event
-        $('#person-textarea').on('input', newPerson);
+        $('#person-textarea').on('input', personAddressedHasChanged);
 
         // Populate the share percentage fields appropriately
         getPercentageOfShared('facebook');
@@ -354,7 +354,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     }
 
     // Populates the person selector with relevant people
-    function newPerson() {
+    function personAddressedHasChanged() {
         // Perform the AJAX request
         $.get(<?="\"".$ajax_host."\"";?>+"ajax/get-people.php", 
         {
@@ -374,6 +374,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                     // Else no errors - proceed
                     else {
                         // Process response
+                        console.log(returnedData);
                         populatePeopleTable( returnedData );
                     }
                 }
@@ -427,8 +428,8 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             $('#person-selected-table tr:nth-of-type(' + numOfCompleteRows + ')').append('<td><button type="button" class="btn btn-primary btn-block person-selected-button">' + selectedPerson + '</button></td>');
         }
 
-        // Fire newPerson() to recalculate the number of rows shown by its display
-        newPerson();
+        // Fire personAddressedHasChanged() to recalculate the number of rows shown by its display
+        personAddressedHasChanged();
     }
 
     // Returns the default sharing message using the user's entered parameters from the first few steps
