@@ -24,7 +24,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     <!-- Clipboard copying dependency -->
     <!-- Documentation:
         https://github.com/zenorocha/clipboard.js -->
-    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.6.0/dist/clipboard.min.js"></script>
+    <script src="js/clipboard.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
