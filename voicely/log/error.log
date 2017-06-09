@@ -1,0 +1,14 @@
+[Thu Jun 01 23:47:37.933998 2017] [ssl:warn] [pid 27338] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jun 02 00:02:55.985727 2017] [ssl:error] [pid 32684] [client 64.41.200.102:41131] AH02042: rejecting client initiated renegotiation
+[Fri Jun 02 03:53:26.733267 2017] [ssl:error] [pid 32683] [client 64.41.200.104:46877] AH02042: rejecting client initiated renegotiation
+[Fri Jun 02 06:25:02.809362 2017] [ssl:warn] [pid 27338] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sat Jun 03 03:17:41.995131 2017] [ssl:error] [pid 7690] [client 64.41.200.103:50226] AH02042: rejecting client initiated renegotiation
+[Sat Jun 03 06:25:02.767812 2017] [ssl:warn] [pid 27338] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sun Jun 04 06:25:02.635200 2017] [ssl:warn] [pid 27338] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Jun 05 06:25:02.494145 2017] [ssl:warn] [pid 27338] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Jun 06 06:25:02.736835 2017] [ssl:warn] [pid 27338] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Wed Jun 07 06:25:02.614084 2017] [ssl:warn] [pid 27338] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Thu Jun 08 06:25:02.420046 2017] [ssl:warn] [pid 27338] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Thu Jun 08 19:18:48.843708 2017] [ssl:warn] [pid 1431] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Thu Jun 08 19:18:48.891518 2017] [ssl:warn] [pid 1432] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jun 09 06:25:02.922179 2017] [ssl:warn] [pid 1432] AH01906: voicely.org:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)

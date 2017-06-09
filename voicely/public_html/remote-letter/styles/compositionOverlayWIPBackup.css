@@ -1,0 +1,97 @@
+body {
+    font-family: Georgia;
+    overflow: hidden;
+}
+#step-sections {
+    height: auto;
+    width: auto;
+}
+
+/* "Next" button */
+#next-button {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin-right: 2px;
+  margin-bottom: 2px;
+}
+
+/* Accordion active panel height */
+.panel-collapse {
+    height: 62%;
+}
+
+/* Letter writing form */
+.letter-writing-form {
+    height: 100%;
+    overflow: hidden;
+}
+.letter-writing-form textarea {
+    border-color: #fff;
+    min-height: 1em;
+    font-family: Georgia;
+    color: #777;
+}
+.letter-writing-form textarea:focus {
+    outline-color: #f1f1f1;
+    outline-style: solid;
+    outline-width: 1px;
+}
+.letter-writing-form #letter-title {
+    width: 100%;
+    resize: none;
+    max-height: 3em;
+    font-size: 200%;
+}
+.letter-writing-form #letter-body {
+    height: 90%;
+    width: 100%;
+    resize: none;
+    font-size: 110%;
+}
+
+/* Sharing dialogs */
+.remote-letter-sharing-dialog textarea {
+    height: 100%;
+    width: 100%;
+    resize: none;
+    font-size: 200%;
+}
+
+/* Accordion transition speed */
+.collapsing {
+    transition: height 0.1s !important;
+}
+
+/* Submitting screen */
+.sharing-icon img {
+    height: 40px;
+}
+.sharing-message {
+    vertical-align: bottom;
+}
+
+
+/* Animated ellipsis via https://codepen.io/thetallweeks/pen/yybGra */
+.loading {
+  font-size: 30px;
+}
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+  animation: ellipsis steps(4,end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+@keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
+}
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
+}
