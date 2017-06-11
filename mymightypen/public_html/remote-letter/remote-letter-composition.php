@@ -121,7 +121,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             <!-- Content -->
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="tags-selector">
-                    <textarea id="temp-textarea-tags" placeholder="Enter tags"></textarea>
+                    <textarea id="temp-textarea-tags" placeholder="Tag one, Tag two, etc."></textarea>
                     <br>
                 </div>
             </div>
