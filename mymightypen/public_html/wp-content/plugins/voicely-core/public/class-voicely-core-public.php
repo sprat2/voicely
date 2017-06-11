@@ -464,9 +464,11 @@ class Voicely_Core_Public {
 			'hierarchical'               => false,
 			'public'                     => true,
 			'show_ui'                    => true,
+			'show_in_menu'				 => true,
 			'show_admin_column'          => true,
 			'show_in_nav_menus'          => true,
 			'show_tagcloud'              => true,
+			'description'				 => 'A person to whom a letter may be addressed',
 		);
 		register_taxonomy( 'addressee', array( 'letter' ), $args );
 	}
