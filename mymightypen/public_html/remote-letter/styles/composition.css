@@ -111,6 +111,23 @@ body {
     font-size: 140%;
 }
 
+/* Tag input */
+.tags-selector textarea {
+    border-color: #fff;
+    font-family: 'Pontano Sans' !important;
+    width: 100%;
+    color: #777;
+    padding: 10px;
+    height: 6em;
+    resize: none;
+    font-size: 140%;
+}
+.tags-selector textarea:focus {
+    outline-color: #f1f1f1;
+    outline-style: solid;
+    outline-width: 1px;
+}
+
 /* Post-submit view */
 #submit-view-container {
     display: flex; /* Also managed dynamically */
