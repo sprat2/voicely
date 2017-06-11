@@ -45,7 +45,7 @@ try {
         $tags = sanitize_text_field( $_POST['tags'] );
 
         // Collect addressees & tags
-        $addressees = explode( ', ', $addressees );
+        $addressees = explode( ',', $addressees );
         $tags = explode( ', ', $tags );
 
         // Create the post

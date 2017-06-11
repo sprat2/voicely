@@ -121,7 +121,6 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             <!-- Content -->
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="tags-selector">
-                    <p>Tags selection placeholder.</p>
                     <textarea id="temp-textarea-tags" placeholder="Enter tags"></textarea>
                     <br>
                 </div>
@@ -186,12 +185,17 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     <script>
     // Open and prepare for the first element
     $( document ).ready(function() {
-        
-        $('#collapse1:not(".in")').collapse('show');
+
+        // Initialize lists of selected addressees info
+        var myArray = [];
+        $('#person-selected-table').data('selected-people-ids', myArray.join(',')); // commit to DOM
+        $('#person-selected-table').data('selected-people-names', myArray.join(',')); // commit to DOM
+
+        // Initialize to step one
         startStepOne();
 
         // Register the person-selector populating event
-        $('#person-textarea').on('input', newPerson);
+        $('#person-textarea').on('input', personAddressedHasChanged);
 
         // Populate the share percentage fields appropriately
         getPercentageOfShared('facebook');
@@ -354,7 +358,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     }
 
     // Populates the person selector with relevant people
-    function newPerson() {
+    function personAddressedHasChanged() {
         // Perform the AJAX request
         $.get(<?="\"".$ajax_host."\"";?>+"ajax/get-people.php", 
         {
@@ -374,6 +378,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                     // Else no errors - proceed
                     else {
                         // Process response
+                        //console.log(returnedData);
                         populatePeopleTable( returnedData );
                     }
                 }
@@ -388,47 +393,150 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             }
         );
     }
-    function populatePeopleTable( returnedData ) {
-        // returnedData is indexed from 0
 
-        var newRows = "";
-        var allowance = 30 - ( $('#person-selected-table td').length + 3 );
+    // Get the list of selected people IDs
+    function getSelectedPeopleIDs() {
+        // Fetch selected people from DOM
+        var tempArray = $("#person-selected-table").data("selected-people-ids").split(',');
+
+        // Filter out any empty entries from am empty initial array
+        tempArray = tempArray.filter(function(entry) { return entry.trim() != ''; });
+
+        return tempArray;
+    }
+    // Get the list of selected people names
+    function getSelectedPeopleNames() {
+        // Fetch selected people from DOM
+        var tempArray = $("#person-selected-table").data("selected-people-names").split(',');
+
+        // Filter out any empty entries from am empty initial array
+        tempArray = tempArray.filter(function(entry) { return entry.trim() != ''; });
+
+        return tempArray;
+    }
+    // Add the list of selected people.  Returns true on success and false on failure.
+    function addToSelectedPeople( newId, newName ) {
+        // Get existing selected people
+        var idArray = getSelectedPeopleIDs();
+        var nameArray = getSelectedPeopleNames();
+
+        // Don't go over max of 30
+        if ( ( idArray.length >= 30 ) || ( nameArray.length >= 30 ) )
+            return false;
+
+        // Add our new person to array
+        idArray.push(newId);
+        nameArray.push(newName);
+
+        // Commit list of people back to DOM
+        $('#person-selected-table').data('selected-people-ids', idArray.join(','));
+        $('#person-selected-table').data('selected-people-names', nameArray.join(','));
+
+        return true;
+    }
+    // Remove from list of selected people.  Returns true on success and false on failure.
+    function removeFromSelectedPeople( oldId ) {
+        // Get existing selected people
+        var idArray = getSelectedPeopleIDs();
+        var nameArray = getSelectedPeopleNames();
+
+        // Remove our person from the arrays
+        var index = idArray.indexOf(oldId);
+        idArray.splice(index, 1);
+        nameArray.splice(index, 1);
+
+        // Commit list of people back to DOM
+        $('#person-selected-table').data('selected-people-ids', idArray.join(','));
+        $('#person-selected-table').data('selected-people-names', nameArray.join(','));
+
+        return true;
+    }
+
+    // Populate people search table given the data returned from its AJAX call
+    function populatePeopleTable( returnedData ) {
+
+        // List of selected people's IDs
+        var selectedPeopleIDs = getSelectedPeopleIDs();
+        var selectedPeopleNames = getSelectedPeopleNames();
+
+        // Lists of unselected people
+        //  allowance = max elements - selected elements, so we stay somewhat the same size
+        var allowance = 30 - ( getSelectedPeopleIDs.length + 3 );
+        var unselectedPeopleIDs = [];
+        var unselectedPeopleNames = [];
         for ( i=0; (i<returnedData.length) && (i<allowance); i++ ) {
+            // Only add elements to unselected if they're not already in the selected list
+            //   Note: Older browsers will break on the indexOf check
+            if ( selectedPeopleIDs.indexOf( returnedData[i].term_id ) == -1 ) {
+                unselectedPeopleIDs.push( returnedData[i].term_id );
+                unselectedPeopleNames.push( returnedData[i].name );
+            }
+        }
+
+        // Generate UI for the elements
+        // (returnedData is indexed from 0)
+        var newRows = "";
+
+        // Generate UI for selected elements
+        for ( i=0; i<selectedPeopleIDs.length; i++ ) {
 
             if ( (i%3) == 0 )
                 newRows += '<tr>';
             
-            newRows += '<td><button type="button" class="btn btn-default btn-block person-button">' + returnedData[i] + '</button></td>';
+            newRows += '<td><button type="button" class="btn btn-primary btn-block person-button-sel" id="rlid-'+selectedPeopleIDs[i]+'">' + selectedPeopleNames[i] + '</button></td>';
 
             if ( (i%3) == 2 )
                 newRows += '</tr>';
 
         }
+
+        for ( i=0; (i<unselectedPeopleIDs.length) && (i<allowance); i++ ) {
+
+            if ( (i%3) == 0 )
+                newRows += '<tr>';
+            
+            newRows += '<td><button type="button" class="btn btn-default btn-block person-button-unsel" id="rlid-'+unselectedPeopleIDs[i]+'">' + unselectedPeopleNames[i] + '</button></td>';
+
+            if ( (i%3) == 2 )
+                newRows += '</tr>';
+
+        }
+
+        // Replace existing HTML with new table display
         $('#person-table').html(newRows);
 
         // Register the onClick events
-        $('.person-button').on('click', personSelected);
+        $('.person-button-unsel').on('click', personSelected);
+        $('.person-button-sel').on('click', personUnselected);
     }
     function personSelected() {
-        var selectedPerson = this.innerHTML;
+
+        var selectedPersonID = $(this).attr('id');
+        selectedPersonID = selectedPersonID.replace('rlid-', '');
+        selectedPersonName = $(this).html();
 
         // Don't allow more than 30 people to be selected
-        if ( $('#person-selected-table td').length >= 30 )
+        if ( getSelectedPeopleIDs().length >= 30 )
             return;
 
-        var numOfCompleteRows = $('#person-selected-table tr').length;
+        // Add this person to the selected list
+        addToSelectedPeople( selectedPersonID, selectedPersonName );
 
-        // If free for a new row, create one and add the element
-        if ( ( $('#person-selected-table td').length % 3 ) == 0 )
-            $('#person-selected-table').append('<tr><td><button type="button" class="btn btn-primary btn-block person-button">' + selectedPerson + '</button></td></tr>');
-        
-        // Else append the new person to the last row
-        else {
-            $('#person-selected-table tr:nth-of-type(' + numOfCompleteRows + ')').append('<td><button type="button" class="btn btn-primary btn-block person-selected-button">' + selectedPerson + '</button></td>');
-        }
+        // Update the people table's display
+        //    (have to call from here because we can no longer access unselected list after the callback)
+        personAddressedHasChanged();
+    }
+    function personUnselected() {
 
-        // Fire newPerson() to recalculate the number of rows shown by its display
-        newPerson();
+        var unselectedPersonID = $(this).attr('id');
+        unselectedPersonID = unselectedPersonID.replace('rlid-', '');
+
+        // Remove this person from the selected list
+        removeFromSelectedPeople( unselectedPersonID );
+
+        // Update the people table's display
+        //    (have to call from here because we can no longer access unselected list after the callback)
+        personAddressedHasChanged();
     }
 
     // Returns the default sharing message using the user's entered parameters from the first few steps
@@ -444,20 +552,18 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         }
 
         // Addressees
-        // Fetch the input
-        var addressees = document.getElementById( "person-textarea" ).value.split(", ");
-        // Remove empty elements
-        addressees = addressees.filter( function(entry) { return /\S/.test(entry); });
+        // Fetch the input & remove empty elements
+        var addressees = getSelectedPeopleNames();
         if ( addressees.length > 0 ) {
             // Combine with oxford comma
             if ( addressees.length > 2 ) {
-                last_addressee = addressees.pop();
+                var last_addressee = addressees.pop();
                 addressees.push( 'and ' + last_addressee );
                 addressees = addressees.join( ', ' );
             }
             // Combine two without a comma
             if ( addressees.length == 2 ) {
-                last_addressee = addressees.pop();
+                var last_addressee = addressees.pop();
                 addressees.push( 'and ' + last_addressee );
                 addressees = addressees.join( ' ' );
             }
@@ -469,8 +575,17 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             addressees = "";
         }
 
+        // Tags
+        var tags = document.getElementById("temp-textarea-tags").value; // get tags string
+        tags = tags.split(' ').join(''); // remove spaces
+        tags = tags.split(','); // convert to array (space after comma has been removed)
+        var tagsString = ""; // Prepend hashes
+        for ( var i=0; i<tags.length; i++) {
+            tagsString += ' #' + tags[i];
+        }
+
         // Combine & return
-        var result = "I just wrote an open letter" + addressees + title + ".";
+        var result = "I just wrote an open letter" + addressees + title + "." + tagsString + " ";
         return result;
     }
 
@@ -479,7 +594,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     function submitLetter() {        
         // Create an array of parameters to be included in the AJAX request
         var postData = {
-            addressees: document.getElementById("person-textarea").value,
+            addressees: $("#person-selected-table").data("selected-people-names"),
             title:      document.getElementById("letter-title").value,
             contents:   document.getElementById("letter-body").value,
             tags:       document.getElementById("temp-textarea-tags").value,

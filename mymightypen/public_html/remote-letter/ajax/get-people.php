@@ -13,17 +13,65 @@ if ( isset( $_GET['given_person'] ) ) {
     // Global unhelpful try/catch to obscure error messages
     try {
 
-        $addressees = get_terms( 
-            array( 
-                'taxonomy'   => 'addressee', 
-                'hide_empty' => false,
-                'number'     => '30',
-                'fields'     => 'names',
-                'name__like' => $_GET['given_person'],
-            ) 
-        );
+        global $wpdb;
+        // get inner union of the ids from 1 & 2, 
+        //      then join it with $wpdb->terms to get 'term_id' and 'name'
+        $query = 
+            "
+            /* addressees which have meta-values or names LIKE the input value */
+            (
+                SELECT name, $wpdb->terms.term_id
+                FROM $wpdb->terms
+                INNER JOIN
 
-        echo json_encode( $addressees );
+                /* addressee IDs which have meta-values or names LIKE the input value */
+                (
+
+                    SELECT t_result1.term_id
+
+                    FROM (
+                        /* all addressee IDs */
+                        SELECT term_id 
+                        FROM $wpdb->term_taxonomy
+                        WHERE taxonomy = 'addressee'
+                    ) t_result1
+                    
+                    INNER JOIN (
+                        
+                        (
+                            /* meta_values LIKE the input value */
+                            SELECT DISTINCT term_id
+                            FROM $wpdb->termmeta
+                            WHERE meta_value 
+                            LIKE '%" . $_GET['given_person'] . "%'
+                        )
+
+                        UNION
+
+                        (
+                            /* name LIKE the input value */
+                            SELECT term_id 
+                            FROM $wpdb->terms
+                            WHERE name
+                            LIKE '%" . $_GET['given_person'] . "%'
+                        )
+
+                    ) t_result2
+
+                    ON t_result1.term_id = t_result2.term_id
+
+                ) t_outer_result
+
+                ON $wpdb->terms.term_id = t_outer_result.term_id
+            )
+
+            LIMIT 30
+            ";
+            
+        $results = $wpdb->get_results( $query );
+
+        echo json_encode( $results );
+        // echo json_encode( $addressees_meta );
 
     } catch ( Exception $e ) {
         set_and_return_error( 'Error while fetching people.\n' . $e->getMessage() );

@@ -26,15 +26,21 @@ if ( isset( $_GET['provider'] ) ) {
         // Query for the number of letters
         $query = new WP_Query( array( 'post_type' => 'letter' ) );
         $totalLetters = $query->found_posts;
-        if ( $totalLetters == 0 )
-            echo json_encode( "100" );
+        if ( $totalLetters == 0 ) {
+            $returnArray = array(
+                "result" => 100,
+                "provider" => $_GET['provider'],
+            );
+            echo json_encode( $returnArray );
+            die();
+        }
 
         // Query for the number of posts with the flag
         $query = new WP_Query( array( 'post_type' => 'letter', 'meta_key' => $prov_str ) );
         $numShared = $query->found_posts;
 
         // Calculate
-        $percentageShared = $numShared / ((float) $totalLetters);
+        $percentageShared = $numShared / ((float) $totalLetters );
         $wholePercentageShared = (int) ( $percentageShared * 10000 / 100 );
 
         // Return the percentage of posts shared
@@ -43,6 +49,7 @@ if ( isset( $_GET['provider'] ) ) {
             "provider" => $_GET['provider'],
         );
         echo json_encode( $returnArray );
+        die();
 
     } catch ( Exception $e ) {
         set_and_return_error( 'Error while fetching number of shares.\n' . $e->getMessage() );
