@@ -14,9 +14,14 @@ if ( isset( $_GET['given_person'] ) ) {
     try {
 
         global $wpdb;
-        // get inner union of the ids from 1 & 2, 
-        //      then join it with $wpdb->terms to get 'term_id' and 'name'
-        $query = 
+
+        // Escape the user-input query param for its LIKE statements
+        //   NOTE: Must still be SQL-escaped (by something like "prepare")
+        $input = $wpdb->esc_like( $_GET['given_person'] );
+        $wpdb->show_errors();
+
+        // Comments explain their following segments
+        $query = $wpdb->prepare(
             "
             /* addressees which have meta-values or names LIKE the input value */
             (
@@ -43,7 +48,7 @@ if ( isset( $_GET['given_person'] ) ) {
                             SELECT DISTINCT term_id
                             FROM $wpdb->termmeta
                             WHERE meta_value 
-                            LIKE '%" . $_GET['given_person'] . "%'
+                            LIKE %s
                         )
 
                         UNION
@@ -53,7 +58,7 @@ if ( isset( $_GET['given_person'] ) ) {
                             SELECT term_id 
                             FROM $wpdb->terms
                             WHERE name
-                            LIKE '%" . $_GET['given_person'] . "%'
+                            LIKE %s
                         )
 
                     ) t_result2
@@ -66,7 +71,10 @@ if ( isset( $_GET['given_person'] ) ) {
             )
 
             LIMIT 30
-            ";
+            ",
+            '%' . $input . '%',
+            '%' . $input . '%'
+        );
             
         $results = $wpdb->get_results( $query );
 
