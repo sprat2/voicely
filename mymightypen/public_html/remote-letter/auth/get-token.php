@@ -4,6 +4,8 @@ session_start();
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
 
+// NOTE: Does not interface with WP at all.  Does not need sanitization for our purposes.
+
 // Set up Hybridauth
 // Import Hybridauth
 include '../vendor/autoload.php';
@@ -35,11 +37,11 @@ $config = [
 // Set the provider
 if ( isset( $_GET['provider'] ) ) {
     $_SESSION['pastProvider'] = urldecode( $_GET['provider'] );
-    $provider = urldecode( $_GET['provider'] );
+    $provider =  urldecode( $_GET['provider'] );
 } elseif ( isset( $_SESSION['pastProvider'] ) ||
-         isset( $_GET['oauth_token'] ) ||
-         isset( $_GET['code'] ) ) {
-    $provider = $_SESSION['pastProvider'];
+           isset( $_GET['oauth_token'] ) ||
+           isset( $_GET['code'] ) ) {
+    $provider = $_SESSION['pastProvider']; // Already sanitized on last visit
 } else {
     set_and_return_error( 'Provider not set' );
 }

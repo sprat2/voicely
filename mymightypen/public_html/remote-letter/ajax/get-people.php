@@ -8,6 +8,8 @@ header('Access-Control-Allow-Origin: *');
 define('WP_USE_THEMES', false);
 require('../../wp-load.php');
 
+// $wpdb->show_errors();
+
 // Set the provider
 if ( isset( $_GET['given_person'] ) ) {
     // Global unhelpful try/catch to obscure error messages
@@ -18,7 +20,6 @@ if ( isset( $_GET['given_person'] ) ) {
         // Escape the user-input query param for its LIKE statements
         //   NOTE: Must still be SQL-escaped (by something like "prepare")
         $input = $wpdb->esc_like( $_GET['given_person'] );
-        $wpdb->show_errors();
 
         // Comments explain their following segments
         $query = $wpdb->prepare(

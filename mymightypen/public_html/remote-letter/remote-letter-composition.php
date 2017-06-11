@@ -5,10 +5,6 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Load WordPress functionality
-define('WP_USE_THEMES', false);
-require('../wp-load.php');
-
 // Adjust this for SSL when applicable
 $ajax_host = "http://mymightypen.org/remote-letter/";
 
@@ -509,6 +505,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.person-button-unsel').on('click', personSelected);
         $('.person-button-sel').on('click', personUnselected);
     }
+    // Processes person selection
     function personSelected() {
 
         var selectedPersonID = $(this).attr('id');
@@ -526,6 +523,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         //    (have to call from here because we can no longer access unselected list after the callback)
         personAddressedHasChanged();
     }
+    // Process selected-person deselection
     function personUnselected() {
 
         var unselectedPersonID = $(this).attr('id');
@@ -642,7 +640,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     }
 
     function processServerLetterResponse( returnedRemoteLetterData ) {
-        console.log( returnedRemoteLetterData );
+        //console.log( returnedRemoteLetterData );
         
         // Continue execution on a delay
         setTimeout(letterSuccessHandler, 700, returnedRemoteLetterData);
@@ -745,7 +743,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         );
     }
 
-    // Opens a new popup, centered
+    // Opens a new popup, centered (for sharing prompts)
     // From: http://www.xtf.dk/2011/08/center-new-popup-window-even-on.html
     function popupCenter(url, title, w, h) {
         // Fixes dual-screen position                         Most browsers      Firefox
