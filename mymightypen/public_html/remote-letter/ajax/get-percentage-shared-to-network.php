@@ -40,7 +40,7 @@ if ( isset( $_GET['provider'] ) ) {
         $numShared = $query->found_posts;
 
         // Calculate
-        $percentageShared = $numShared / ((float) $totalLetters + 0.0000001);
+        $percentageShared = $numShared / ((float) $totalLetters );
         $wholePercentageShared = (int) ( $percentageShared * 10000 / 100 );
 
         // Return the percentage of posts shared
