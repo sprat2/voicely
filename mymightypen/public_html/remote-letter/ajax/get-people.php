@@ -13,23 +13,6 @@ if ( isset( $_GET['given_person'] ) ) {
     // Global unhelpful try/catch to obscure error messages
     try {
 
-        // // Get terms
-        // $addressees = get_terms( 
-        //     array( 
-        //         'taxonomy'   => 'addressee', 
-        //         'hide_empty' => false,
-        //         'number'     => '30',
-        //         'fields'     => 'names',
-        //         'name__like' => $_GET['given_person'],
-        //     ) 
-        // );
-
-        // // Get term metadata
-        // $addressees_meta = [];
-        // for ( $i = 0; $i < count( $addressees ); $i++ ) {
-        //     $addressees_meta[] = get_term_by( 'name', $addressees[$i], 'addressee' );
-        // }
-
         global $wpdb;
         // get inner union of the ids from 1 & 2, 
         //      then join it with $wpdb->terms to get 'term_id' and 'name'
