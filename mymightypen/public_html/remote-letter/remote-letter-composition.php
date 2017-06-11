@@ -399,7 +399,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             if ( (i%3) == 0 )
                 newRows += '<tr>';
             
-            newRows += '<td><button type="button" class="btn btn-default btn-block person-button">' + returnedData[i] + '</button></td>';
+            newRows += '<td><button type="button" class="btn btn-default btn-block person-button">' + returnedData[i].name + '</button></td>';
 
             if ( (i%3) == 2 )
                 newRows += '</tr>';

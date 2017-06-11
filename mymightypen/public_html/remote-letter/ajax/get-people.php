@@ -35,30 +35,44 @@ if ( isset( $_GET['given_person'] ) ) {
         //      then join it with $wpdb->terms to get 'term_id' and 'name'
         $query = 
             "
-            /* addressees which have meta-values LIKE the input value */
+            /* addressees which have meta-values or names LIKE the input value */
             (
                 SELECT name, $wpdb->terms.term_id
                 FROM $wpdb->terms
                 INNER JOIN
 
-                /* addressee IDs which have meta-values LIKE the input value */
+                /* addressee IDs which have meta-values or names LIKE the input value */
                 (
 
                     SELECT t_result1.term_id
 
                     FROM (
-                        /* addressees */
+                        /* all addressee IDs */
                         SELECT term_id 
                         FROM $wpdb->term_taxonomy
                         WHERE taxonomy = 'addressee'
                     ) t_result1
                     
                     INNER JOIN (
-                        /* meta_values LIKE the input value */
-                        SELECT DISTINCT term_id
-                        FROM $wpdb->termmeta
-                        WHERE meta_value 
-                        LIKE '%" . $_GET['given_person'] . "%'
+                        
+                        (
+                            /* meta_values LIKE the input value */
+                            SELECT DISTINCT term_id
+                            FROM $wpdb->termmeta
+                            WHERE meta_value 
+                            LIKE '%" . $_GET['given_person'] . "%'
+                        )
+
+                        UNION
+
+                        (
+                            /* name LIKE the input value */
+                            SELECT term_id 
+                            FROM $wpdb->terms
+                            WHERE name
+                            LIKE '%" . $_GET['given_person'] . "%'
+                        )
+
                     ) t_result2
 
                     ON t_result1.term_id = t_result2.term_id
@@ -66,16 +80,6 @@ if ( isset( $_GET['given_person'] ) ) {
                 ) t_outer_result
 
                 ON $wpdb->terms.term_id = t_outer_result.term_id
-            )
-
-            UNION
-            
-            /* addressees which have names LIKE the input value */
-            (
-                SELECT name, term_id
-                FROM $wpdb->terms
-                WHERE name
-                LIKE '%" . $_GET['given_person'] . "%'
             )
 
             LIMIT 30
