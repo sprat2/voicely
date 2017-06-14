@@ -50,23 +50,33 @@ if ( isset( $_GET['given_person'] ) ) {
                             FROM $wpdb->termmeta
                             WHERE meta_value 
                             LIKE %s
+                            AND (
+                                meta_key = 'full_name' OR
+                                meta_key = 'pretty_name' OR
+                                meta_key = 'email_1' OR
+                                meta_key = 'fb_username' OR
+                                meta_key = 'fb_handle' OR
+                                /* Update when more email addresses are accepted! */
+                                meta_key = 'ig_handle'
+                            )
                         )
 
                         UNION
 
                         (
                             /* name LIKE the input value */
+                            /* (Twitter handle is assumed to be the term's name here) */
                             SELECT term_id 
                             FROM $wpdb->terms
                             WHERE name
                             LIKE %s
                         )
 
-                    ) t_result2
+                    ) AS t_result2
 
                     ON t_result1.term_id = t_result2.term_id
 
-                ) t_outer_result
+                ) AS t_outer_result
 
                 ON $wpdb->terms.term_id = t_outer_result.term_id
             )
