@@ -105,6 +105,9 @@ class Voicely_Core_Admin {
     * 
     * NOTE: Changing meta-key names will leave the old ones in the database
     *       Must manually clear them if desired.
+    *
+    * NOTE: It is expected that the addressee name is the user's twitter handle, complete with "@".'
+    *
     */
     function addressee_register_taxonomy_metabox() {
         $prefix = 'addressee_term_';
@@ -118,7 +121,7 @@ class Voicely_Core_Admin {
             'new_term_section' => true, // Will display in the "Add New Addressee" section
         ) );
 
-        // Template field:
+        // Template input field for the addition of a new addressee meta-field:
         // $cmb_term->add_field( array(
         //     'name' => 'field_title',
         //     'desc' => 'field_description',
@@ -134,7 +137,7 @@ class Voicely_Core_Admin {
             'id'   => 'pretty_name' // meta-key name
         ) );
 
-        // Full Name:
+        // Full name:
         $cmb_term->add_field( array(
             'name' => 'Full Name',
             'desc' => 'e.g., "Cornelius Crane Chase" rather than "Chevy Chase"',
@@ -150,7 +153,7 @@ class Voicely_Core_Admin {
             'id'   => 'address_1' // meta-key name
         ) );
 
-        // Phone Number:
+        // Phone number:
         $cmb_term->add_field( array(
             'name' => 'Phone Number',
             'desc' => 'e.g., 8015551234',
@@ -161,9 +164,33 @@ class Voicely_Core_Admin {
         // Email address:
         $cmb_term->add_field( array(
             'name' => 'Email Address',
-            'desc' => 'e.g., john@example.com',
+            'desc' => 'e.g., johnsmith@example.com',
             'type' => 'text_email',
             'id'   => 'email_1' // meta-key name
+        ) );
+
+        // Facebook user ID
+        $cmb_term->add_field( array(
+            'name' => 'Facebook User ID',
+            'desc' => 'e.g. 100000123456789',
+            'type' => 'text',
+            'id'   => 'fb_id' // meta-key name
+        ) );
+
+        // Facebook username
+        $cmb_term->add_field( array(
+            'name' => 'Facebook Username',
+            'desc' => 'e.g. JohnQSmith',
+            'type' => 'text',
+            'id'   => 'fb_username' // meta-key name
+        ) );
+
+        // Instagram handle
+        $cmb_term->add_field( array(
+            'name' => 'Instagram Handle',
+            'desc' => 'e.g. johnsmith',
+            'type' => 'text',
+            'id'   => 'ig_handle' // meta-key name
         ) );
 
     }
