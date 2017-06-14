@@ -5,7 +5,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Adjust this for SSL when applicable
+// Adjust this for HTTPS/SSL when applicable
 $ajax_host = "http://mymightypen.org/remote-letter/";
 
 ?>
@@ -355,6 +355,17 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
     // Populates the person selector with relevant people
     function personAddressedHasChanged() {
+
+        // Mark this call as the latest (so old ones won't update the UI)
+        $('#person-selected-table').data( 'most-recent-request', $('#person-textarea').val() );
+
+        // Only perform the request if at least 3 characters have been entered
+        if ( $('#person-textarea').val().length < 3 ) {
+            // Not enough characters - clear the area and return
+            $('#person-table').html('');
+            return;
+        }
+
         // Perform the AJAX request
         $.get(<?="\"".$ajax_host."\"";?>+"ajax/get-people.php", 
         {
@@ -451,6 +462,10 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     // Populate people search table given the data returned from its AJAX call
     function populatePeopleTable( returnedData ) {
 
+        // Ignore the response if it's not the result of the most recent request
+        if ( returnedData.input != $('#person-selected-table').data('most-recent-request') )
+            return;
+
         // List of selected people's IDs
         var selectedPeopleIDs = getSelectedPeopleIDs();
         var selectedPeopleNames = getSelectedPeopleNames();
@@ -460,17 +475,17 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         var allowance = 30 - ( getSelectedPeopleIDs.length + 3 );
         var unselectedPeopleIDs = [];
         var unselectedPeopleNames = [];
-        for ( i=0; (i<returnedData.length) && (i<allowance); i++ ) {
+        for ( i=0; (i<returnedData.result.length) && (i<allowance); i++ ) {
             // Only add elements to unselected if they're not already in the selected list
             //   Note: Older browsers will break on the indexOf check
-            if ( selectedPeopleIDs.indexOf( returnedData[i].term_id ) == -1 ) {
-                unselectedPeopleIDs.push( returnedData[i].term_id );
-                unselectedPeopleNames.push( returnedData[i].name );
+            if ( selectedPeopleIDs.indexOf( returnedData.result[i].term_id ) == -1 ) {
+                unselectedPeopleIDs.push( returnedData.result[i].term_id );
+                unselectedPeopleNames.push( returnedData.result[i].name );
             }
         }
 
         // Generate UI for the elements
-        // (returnedData is indexed from 0)
+        // (returnedData.result is indexed from 0)
         var newRows = "";
 
         // Generate UI for selected elements

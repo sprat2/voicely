@@ -76,11 +76,14 @@ if ( isset( $_GET['given_person'] ) ) {
             '%' . $input . '%',
             '%' . $input . '%'
         );
-            
-        $results = $wpdb->get_results( $query );
 
-        echo json_encode( $results );
-        // echo json_encode( $addressees_meta );
+        $returnArray = array(
+            'result' => $wpdb->get_results( $query ),
+            'input'  => $_GET['given_person']
+        );
+            
+
+        echo json_encode( $returnArray );
 
     } catch ( Exception $e ) {
         set_and_return_error( 'Error while fetching people.\n' . $e->getMessage() );
