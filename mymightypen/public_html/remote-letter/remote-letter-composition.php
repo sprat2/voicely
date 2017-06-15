@@ -361,8 +361,8 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
         // Only perform the request if at least 3 characters have been entered
         if ( $('#person-textarea').val().length < 3 ) {
-            // Not enough characters - clear the area and return
-            $('#person-table').html('');
+            // Not enough characters - redraw the table with ONLY the selected addressees
+            $('#person-table').html( getHTMLForSelectedPeople() );
             return;
         }
 
@@ -389,7 +389,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                         populatePeopleTable( returnedData );
                     }
                 }
-                // Handle server response JSON parse errors
+                // Handle server response JSON parse errors (evidently also errors resulting from populateTable()
                 catch ( e ) {
                     console.log(returnedData);
                 }
@@ -458,35 +458,13 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
         return true;
     }
+    function getHTMLForSelectedPeople() {
+        // Generate UI for the elements
+        var newRows = "";
 
-    // Populate people search table given the data returned from its AJAX call
-    function populatePeopleTable( returnedData ) {
-
-        // Ignore the response if it's not the result of the most recent request
-        if ( returnedData.input != $('#person-selected-table').data('most-recent-request') )
-            return;
-
-        // List of selected people's IDs
+        // Lists of selected people
         var selectedPeopleIDs = getSelectedPeopleIDs();
         var selectedPeopleNames = getSelectedPeopleNames();
-
-        // Lists of unselected people
-        //  allowance = max elements - selected elements, so we stay somewhat the same size
-        var allowance = 30 - ( getSelectedPeopleIDs.length + 3 );
-        var unselectedPeopleIDs = [];
-        var unselectedPeopleNames = [];
-        for ( i=0; (i<returnedData.result.length) && (i<allowance); i++ ) {
-            // Only add elements to unselected if they're not already in the selected list
-            //   Note: Older browsers will break on the indexOf check
-            if ( selectedPeopleIDs.indexOf( returnedData.result[i].term_id ) == -1 ) {
-                unselectedPeopleIDs.push( returnedData.result[i].term_id );
-                unselectedPeopleNames.push( returnedData.result[i].name );
-            }
-        }
-
-        // Generate UI for the elements
-        // (returnedData.result is indexed from 0)
-        var newRows = "";
 
         // Generate UI for selected elements
         for ( i=0; i<selectedPeopleIDs.length; i++ ) {
@@ -501,15 +479,47 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
         }
 
-        for ( i=0; (i<unselectedPeopleIDs.length) && (i<allowance); i++ ) {
+        return newRows;
+    }
+    // Populate people search table given the data returned from its AJAX call
+    function populatePeopleTable( returnedData ) {
 
-            if ( (i%3) == 0 )
-                newRows += '<tr>';
-            
-            newRows += '<td><button type="button" class="btn btn-default btn-block person-button-unsel" id="rlid-'+unselectedPeopleIDs[i]+'">' + unselectedPeopleNames[i] + '</button></td>';
+        // Lists of unselected people
+        //  allowance = max elements - selected elements, so we stay somewhat the same size
+        var allowance = 30 - ( getSelectedPeopleIDs().length + 3 );
+        var unselectedPeopleIDs = [];
+        var unselectedPeopleNames = [];
 
-            if ( (i%3) == 2 )
-                newRows += '</tr>';
+        // Only add elements to unselected if they're not already in the selected list
+        //   Note: Older browsers will break on the indexOf check
+        //   (returnedData.result is indexed from 0)
+        for ( i=0; (i<returnedData.result.length) && (i<allowance); i++ ) {
+            if ( getSelectedPeopleIDs().indexOf( returnedData.result[i].term_id ) == -1 ) {
+                unselectedPeopleIDs.push( returnedData.result[i].term_id );
+                unselectedPeopleNames.push( returnedData.result[i].name );
+            }
+        }
+
+        // Generate UI for the elements
+        var newRows = "";
+
+        // Add the selected people first
+        newRows += getHTMLForSelectedPeople();
+
+        // Ignore the AJAX response for unselected people if it's not the result of the most recent request
+        if ( returnedData.input == $('#person-selected-table').data('most-recent-request') ) {
+
+            // Generate UI for unselected elements
+            for ( i=0; (i<unselectedPeopleIDs.length) && (i<allowance); i++ ) {
+
+                if ( (i%3) == 0 )
+                    newRows += '<tr>';
+                
+                newRows += '<td><button type="button" class="btn btn-default btn-block person-button-unsel" id="rlid-'+unselectedPeopleIDs[i]+'">' + unselectedPeopleNames[i] + '</button></td>';
+
+                if ( (i%3) == 2 )
+                    newRows += '</tr>';
+            }
 
         }
 
@@ -585,26 +595,30 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         }
         else {
             // If empty
-            addressees = "";
+            addressees = " to the world";
         }
 
         // Tags
         var tags = document.getElementById("temp-textarea-tags").value; // get tags string
         tags = tags.split(' ').join(''); // remove spaces
         tags = tags.split(','); // convert to array (space after comma has been removed)
-        var tagsString = ""; // Prepend hashes
-        for ( var i=0; i<tags.length; i++) {
-            tagsString += ' #' + tags[i];
+        // Build list, prepending hashes if there exist any tags
+        var tagsString = "";
+        if ( !( tags == '' ) ) {
+            tagsString = " "; // leading space to separate tags from rest of message
+            for ( var i=0; i<tags.length; i++) {
+                tagsString += ' #' + tags[i];
+            }
         }
 
         // Combine & return
-        var result = "I just wrote an open letter" + addressees + title + "." + tagsString + " ";
+        var result = "I just wrote an open letter" + addressees + title + "." + tagsString;
         return result;
     }
 
     // Submits the letter using the user's entered parameters from the now-completed steps
     //   Calls processServerLetterResponse( jsonResponse ) on completion
-    function submitLetter() {        
+    function submitLetter() {
         // Create an array of parameters to be included in the AJAX request
         var postData = {
             addressees: $("#person-selected-table").data("selected-people-names"),
