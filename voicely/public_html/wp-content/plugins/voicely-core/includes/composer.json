@@ -1,6 +1,0 @@
-{
-    "minimum-stability": "dev",
-    "require" : {
-        "hybridauth/hybridauth" : "~3.0"
-    }
-}
