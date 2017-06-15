@@ -12,7 +12,7 @@
 
 # Include directories themselves and .gitignore
 !*/
-!.gitignore
+!/.gitignore
 
 # Include our directories
 !mymightypen/public_html/remote-letter/**
