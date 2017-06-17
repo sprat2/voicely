@@ -179,10 +179,9 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
 
     <script>
-    // Open and prepare for the first element
     $( document ).ready(function() {
 
-        // Initialize lists of selected addressees info
+        // Initialize lists of selected addressees
         var myArray = [];
         $('#person-selected-table').data('selected-people-ids', myArray.join(',')); // commit to DOM
         $('#person-selected-table').data('selected-people-names', myArray.join(',')); // commit to DOM
@@ -256,7 +255,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.panel-collapse.in').collapse('hide');
 
         // Set up the textarea's value using previously entered information
-        document.getElementById("share-message-fb").value = getShareMessageWithCurrentParams();
+        document.getElementById("share-message-fb").text = getShareMessageWithCurrentParams();
 
         // Open the accordion element
         $('#collapse4:not(".in")').collapse('show');
@@ -278,7 +277,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.panel-collapse.in').collapse('hide');
 
         // Set up the textarea's value using previous sharing message
-        document.getElementById("share-message-tw").value = document.getElementById("share-message-fb").value;
+        document.getElementById("share-message-tw").text = document.getElementById("share-message-fb").value;
 
         // Open the accordion element
         $('#collapse5:not(".in")').collapse('show');
@@ -332,9 +331,9 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
                         // Replace percentage field with the proper value
                         if ( returnedData.provider == 'facebook' )
-                            $('#fb-share-percentage').html(returnedData.result);
+                            $('#fb-share-percentage').text(returnedData.result);
                         else if ( returnedData.provider == 'twitter' )
-                            $('#tw-share-percentage').html(returnedData.result);
+                            $('#tw-share-percentage').text(returnedData.result);
                         else
                             console.log(returnedData);
                     }
