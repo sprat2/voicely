@@ -3,6 +3,7 @@ session_start();
 
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
 // NOTE: Does not interface with WP at all.  Does not need sanitization for our purposes.
 

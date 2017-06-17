@@ -2,6 +2,7 @@
 
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
 // Declare our response type as a JSON response
 // May not work with current config

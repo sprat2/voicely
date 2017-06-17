@@ -117,7 +117,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             <!-- Content -->
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="tags-selector">
-                    <textarea id="temp-textarea-tags" placeholder="Tag one, Tag two, etc."></textarea>
+                    <textarea id="tags-textarea" placeholder="Tag one, Tag two, etc."></textarea>
                     <br>
                 </div>
             </div>
@@ -316,9 +316,9 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         ).then(
             // Transmission success callback
             function( data ){
-                // Parse the server's response as JSON
+                // Access the server's response as JSON
                 try {
-                    var returnedData = JSON.parse( data );
+                    var returnedData = data;
 
                     // Handle server-specified errors if present
                     if ( returnedData.error === true ) {
@@ -338,7 +338,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                             console.log(returnedData);
                     }
                 }
-                // Handle server response JSON parse errors
+                // Handle server response access errors
                 catch ( e ) {
                     console.log(data);
                     return 'An unknown';
@@ -373,9 +373,9 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         ).then(
             // Transmission success callback
             function( data ){
-                // Parse the server's response as JSON
+                // Access the server's response as JSON
                 try {
-                    var returnedData = JSON.parse( data );
+                    var returnedData = data;
 
                     // Handle server-specified errors if present
                     if ( returnedData.error === true ) {
@@ -388,7 +388,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                         populatePeopleTable( returnedData );
                     }
                 }
-                // Handle server response JSON parse errors (evidently also errors resulting from populateTable()
+                // Handle server response access errors (evidently also errors resulting from populateTable()
                 catch ( e ) {
                     console.log(returnedData);
                 }
@@ -598,7 +598,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         }
 
         // Tags
-        var tags = document.getElementById("temp-textarea-tags").value; // get tags string
+        var tags = document.getElementById("tags-textarea").value; // get tags string
         tags = tags.split(' ').join(''); // remove spaces
         tags = tags.split(','); // convert to array (space after comma has been removed)
         // Build list, prepending hashes if there exist any tags
@@ -623,16 +623,16 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             addressees: $("#person-selected-table").data("selected-people-names"),
             title:      document.getElementById("letter-title").value,
             contents:   document.getElementById("letter-body").value,
-            tags:       document.getElementById("temp-textarea-tags").value,
+            tags:       document.getElementById("tags-textarea").value,
         };
 
         // Perform the AJAX request
         $.post(<?="\"".$ajax_host."\"";?>+"ajax/post.php", postData).then(
             // Transmission success callback
             function( data ){
-                // Parse the server's response as JSON
+                // Access the server's response as JSON
                 try {
-                    var returnedRemoteLetterData = JSON.parse( data );
+                    var returnedRemoteLetterData = data;
 
                     // Handle server-specified errors if present
                     if ( returnedRemoteLetterData.error === true ) {
@@ -648,7 +648,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                         processServerLetterResponse( returnedRemoteLetterData );
                     }
                 }
-                // Handle server response JSON parse errors
+                // Handle server response access errors
                 catch ( e ) {
                     alert( "JSON parse error: " + e.message + "\n\nServer response:" + data +
                         "\n\nThe application has not been cleaned up properly." );
@@ -710,9 +710,9 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         ).then(
             // Transmission success callback
             function( data ){
-                // Parse the server's response as JSON
+                // Access the server's response as JSON
                 try {
-                    var returnedData = JSON.parse( data );
+                    var returnedData = data;
 
                     // Handle server-specified errors if present
                     if ( returnedData.error === true ) {
@@ -741,7 +741,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                         }
                     }
                 }
-                // Handle server response JSON parse errors
+                // Handle server response access errors
                 catch ( e ) {
                     console.log(returnedData);
 
