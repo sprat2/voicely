@@ -5,7 +5,10 @@ session_start();
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-// NOTE: Does not interface with WP at all.  Does not need sanitization for our purposes.
+// Load WordPress functionality
+//   (required for nonce verification - may lighten later by only importing required functionality)
+define('WP_USE_THEMES', false);
+require('../../wp-load.php');
 
 // Set up Hybridauth
 // Import Hybridauth
@@ -28,6 +31,14 @@ $config = [
         ]
     ]
 ];
+
+// Verify the nonce
+if ( empty( $_GET['nonce'] ) ) {
+    set_and_return_error( "No nonce provided" );
+}
+if ( !wp_verify_nonce( $_GET['nonce'], 'share letter to social media' ) ) {
+    set_and_return_error( "Invalid nonce provided" );
+}
 
 // Configure PHP to throw exceptions for notices and warnings (to more easily debug via ajax)
 set_error_handler(function($errno, $errstr, $errfile, $errline) {

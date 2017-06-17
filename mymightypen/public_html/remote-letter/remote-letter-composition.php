@@ -174,6 +174,11 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         <!-- The "Next" button - this will proceed to the next accordion element -->
         <button id="next-button" type="button" class="btn btn-primary btn-block">Next</button>
 
+        <!-- Hidden fields which will store nonce values -->
+        <input type="hidden" id="post-nonce">
+        <input type="hidden" id="share-mark-nonce">
+        <input type="hidden" id="shared-to-social-media-nonce">
+
     </div>
 
 
@@ -188,6 +193,11 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
         // Initialize to step one
         startStepOne();
+
+        // Set nonces for the actions which require them
+        nonceRequest( 'post' );
+        nonceRequest( 'mark-shared' );
+        nonceRequest( 'share-to-social-media' );
 
         // Register the person-selector populating event
         $('#person-textarea').on('input', personAddressedHasChanged);
@@ -624,6 +634,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             title:      document.getElementById("letter-title").value,
             contents:   document.getElementById("letter-body").value,
             tags:       document.getElementById("tags-textarea").value,
+            nonce:      $('#shared-to-social-media-nonce').val(),
         };
 
         // Perform the AJAX request
@@ -904,7 +915,54 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     }
 
     function deleteAllCookies() {
-        $.get( <?="\"".$ajax_host."\"";?>+"auth/delete-auth-cookies.php" );
+        $.get( <?="\"".$ajax_host."\"";?>+"ajax/delete-auth-cookies.php" );
+    }
+
+    // Handles a single request to set a nonce.
+    function nonceRequest( action ) {
+        alert(<?"\"".$ajax_host."\"";?>+"auth/get-wp-nonce.php" );
+        $.get(<?="\"".$ajax_host."\"";?>+"auth/get-wp-nonce.php", 
+        {
+            nonce_action: action,
+        }
+        ).then(
+            // Transmission success callback
+            function( data ){
+                try {
+
+                    // Handle server-specified errors if present
+                    if ( data.error === true ) {
+                        console.log(data);
+                    }
+
+                    // Else no errors - proceed
+                    else {
+                        // Process response
+                        switch ( data.action ) {
+                            case 'post':
+                                $('#post-nonce').val(data.nonce);
+                                break;
+                            case 'mark-shared':
+                                $('#share-mark-nonce').val(data.nonce);
+                                break;
+                            case 'share-to-social-media':
+                                $('#shared-to-social-media-nonce').val(data.nonce);
+                                break;
+                            detault:
+                                console.log(data);
+                        }
+                    }
+                }
+                // Handle server response access errors
+                catch ( e ) {
+                    console.log(data);
+                }
+            },
+            // Transmission failure callback
+            function( data ){
+                console.log(data);
+            }
+        );
     }
     </script>
 
