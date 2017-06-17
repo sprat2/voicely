@@ -48,6 +48,13 @@ try {
         $addressees = explode( ',', $addressees );
         $tags = explode( ', ', $tags );
 
+        // Filter out addressees which don't exist (likely only the result of parameter manipulation)
+        foreach ($addressees as $key => $value) {
+            if ( !term_exists( $value, 'addressee' ) ) {
+                unset( $addressees[$key] );
+            }
+        }
+
         // Create the post
         $post = wp_insert_post( array(
             'post_type' => 'letter',
@@ -58,7 +65,7 @@ try {
             // 'post_type' => 'letter', custom types not yet supported by Avada
             // 'post_category' => array( get_category_by_slug( 'letter' )->term_id ),
             // 'tax_input' => array(
-            //     'addressee' => $addressees
+            //     'addressee' => $addressees // doesn't work, apparently
             // ),
         ) );
 
