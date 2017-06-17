@@ -8,15 +8,21 @@ header('Access-Control-Allow-Origin: *');
 define('WP_USE_THEMES', false);
 require('../../wp-load.php');
 
+// $wpdb->show_errors();
+
 // Set the provider
 if ( isset( $_GET['given_person'] ) ) {
     // Global unhelpful try/catch to obscure error messages
     try {
 
         global $wpdb;
-        // get inner union of the ids from 1 & 2, 
-        //      then join it with $wpdb->terms to get 'term_id' and 'name'
-        $query = 
+
+        // Escape the user-input query param for its LIKE statements
+        //   NOTE: Must still be SQL-escaped (by something like "prepare")
+        $input = $wpdb->esc_like( $_GET['given_person'] );
+
+        // Comments explain their following segments
+        $query = $wpdb->prepare(
             "
             /* addressees which have meta-values or names LIKE the input value */
             (
@@ -43,35 +49,51 @@ if ( isset( $_GET['given_person'] ) ) {
                             SELECT DISTINCT term_id
                             FROM $wpdb->termmeta
                             WHERE meta_value 
-                            LIKE '%" . $_GET['given_person'] . "%'
+                            LIKE %s
+                            AND (
+                                meta_key = 'full_name' OR
+                                meta_key = 'pretty_name' OR
+                                meta_key = 'email_1' OR
+                                meta_key = 'fb_username' OR
+                                meta_key = 'fb_handle' OR
+                                /* Update when more email addresses are accepted! */
+                                meta_key = 'ig_handle'
+                            )
                         )
 
                         UNION
 
                         (
                             /* name LIKE the input value */
+                            /* (Twitter handle is assumed to be the term's name here) */
                             SELECT term_id 
                             FROM $wpdb->terms
                             WHERE name
-                            LIKE '%" . $_GET['given_person'] . "%'
+                            LIKE %s
                         )
 
-                    ) t_result2
+                    ) AS t_result2
 
                     ON t_result1.term_id = t_result2.term_id
 
-                ) t_outer_result
+                ) AS t_outer_result
 
                 ON $wpdb->terms.term_id = t_outer_result.term_id
             )
 
             LIMIT 30
-            ";
-            
-        $results = $wpdb->get_results( $query );
+            ",
+            '%' . $input . '%',
+            '%' . $input . '%'
+        );
 
-        echo json_encode( $results );
-        // echo json_encode( $addressees_meta );
+        $returnArray = array(
+            'result' => $wpdb->get_results( $query ),
+            'input'  => $_GET['given_person']
+        );
+            
+
+        echo json_encode( $returnArray );
 
     } catch ( Exception $e ) {
         set_and_return_error( 'Error while fetching people.\n' . $e->getMessage() );

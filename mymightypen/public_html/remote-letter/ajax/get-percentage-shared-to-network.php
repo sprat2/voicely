@@ -29,7 +29,7 @@ if ( isset( $_GET['provider'] ) ) {
         if ( $totalLetters == 0 ) {
             $returnArray = array(
                 "result" => 100,
-                "provider" => $_GET['provider'],
+                "provider" => sanitize_text_field( $_GET['provider'] ),
             );
             echo json_encode( $returnArray );
             die();
@@ -40,13 +40,13 @@ if ( isset( $_GET['provider'] ) ) {
         $numShared = $query->found_posts;
 
         // Calculate
-        $percentageShared = $numShared / ((float) $totalLetters );
+        $percentageShared = $numShared / ( (float) $totalLetters );
         $wholePercentageShared = (int) ( $percentageShared * 10000 / 100 );
 
         // Return the percentage of posts shared
         $returnArray = array(
             "result" => $wholePercentageShared,
-            "provider" => $_GET['provider'],
+            "provider" => sanitize_text_field( $_GET['provider'] ),
         );
         echo json_encode( $returnArray );
         die();

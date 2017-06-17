@@ -22,6 +22,7 @@ if ( isset( $_GET['post_id'] ) && isset( $_GET['provider'] ) ) {
             set_and_return_error( 'Provider not as expected.' );
         }
 
+        // auto-sanitized (prepared) via WP's add_post_meta function
         add_post_meta( $_GET['post_id'], $key_name, 'its_a_flag', true );
         returnSuccess();
     } catch ( Exception $e ) {

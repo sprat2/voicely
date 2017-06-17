@@ -4,6 +4,8 @@ session_start();
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
 
+// NOTE: Does not interface with WP at all.  Does not need sanitization for our purposes.
+
 // Set up Hybridauth
 // Import Hybridauth
 include '../vendor/autoload.php';
@@ -53,13 +55,13 @@ try {
     try{
         // Perform the API authentication request
         $hybridauth = new Hybridauth($config);
-        $adapter = $hybridauth->getAdapter($_GET['provider']);
+        $adapter = $hybridauth->getAdapter(  $_GET['provider'] );
         $adapter->setAccessToken( json_decode( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) );
         if ( $adapter->isConnected() ) {
             // Share to twitter. Twitter currently errors with the preferred way of link sharing in HybridAuth.
             // NOTE: Twitter links are automatically shortened to 23 chars, regardless of original length
             if ( strtolower( $_GET['provider'] ) == 'twitter' )
-                $adapter->setUserStatus( urldecode(  $_GET['message'] ) . ' ' . urldecode( $_GET['url'] ) );
+                $adapter->setUserStatus( urldecode( $_GET['message'] . ' ' . urldecode( $_GET['url'] ) ) );
             // Share to Facebook/others.  This is the preferred way to share links with HybridAuth.
             else {
                 $adapter->setUserStatus( 

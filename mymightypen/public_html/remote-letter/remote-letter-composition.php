@@ -5,11 +5,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Load WordPress functionality
-define('WP_USE_THEMES', false);
-require('../wp-load.php');
-
-// Adjust this for SSL when applicable
+// Adjust this for HTTPS/SSL when applicable
 $ajax_host = "http://mymightypen.org/remote-letter/";
 
 ?>
@@ -121,7 +117,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             <!-- Content -->
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="tags-selector">
-                    <textarea id="temp-textarea-tags" placeholder="Enter tags"></textarea>
+                    <textarea id="temp-textarea-tags" placeholder="Tag one, Tag two, etc."></textarea>
                     <br>
                 </div>
             </div>
@@ -183,10 +179,9 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
 
     <script>
-    // Open and prepare for the first element
     $( document ).ready(function() {
 
-        // Initialize lists of selected addressees info
+        // Initialize lists of selected addressees
         var myArray = [];
         $('#person-selected-table').data('selected-people-ids', myArray.join(',')); // commit to DOM
         $('#person-selected-table').data('selected-people-names', myArray.join(',')); // commit to DOM
@@ -260,7 +255,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.panel-collapse.in').collapse('hide');
 
         // Set up the textarea's value using previously entered information
-        document.getElementById("share-message-fb").value = getShareMessageWithCurrentParams();
+        document.getElementById("share-message-fb").text = getShareMessageWithCurrentParams();
 
         // Open the accordion element
         $('#collapse4:not(".in")').collapse('show');
@@ -282,7 +277,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.panel-collapse.in').collapse('hide');
 
         // Set up the textarea's value using previous sharing message
-        document.getElementById("share-message-tw").value = document.getElementById("share-message-fb").value;
+        document.getElementById("share-message-tw").text = document.getElementById("share-message-fb").value;
 
         // Open the accordion element
         $('#collapse5:not(".in")').collapse('show');
@@ -336,9 +331,9 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
                         // Replace percentage field with the proper value
                         if ( returnedData.provider == 'facebook' )
-                            $('#fb-share-percentage').html(returnedData.result);
+                            $('#fb-share-percentage').text(returnedData.result);
                         else if ( returnedData.provider == 'twitter' )
-                            $('#tw-share-percentage').html(returnedData.result);
+                            $('#tw-share-percentage').text(returnedData.result);
                         else
                             console.log(returnedData);
                     }
@@ -359,6 +354,17 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
     // Populates the person selector with relevant people
     function personAddressedHasChanged() {
+
+        // Mark this call as the latest (so old ones won't update the UI)
+        $('#person-selected-table').data( 'most-recent-request', $('#person-textarea').val() );
+
+        // Only perform the request if at least 3 characters have been entered
+        if ( $('#person-textarea').val().length < 3 ) {
+            // Not enough characters - redraw the table with ONLY the selected addressees
+            $('#person-table').html( getHTMLForSelectedPeople() );
+            return;
+        }
+
         // Perform the AJAX request
         $.get(<?="\"".$ajax_host."\"";?>+"ajax/get-people.php", 
         {
@@ -382,7 +388,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                         populatePeopleTable( returnedData );
                     }
                 }
-                // Handle server response JSON parse errors
+                // Handle server response JSON parse errors (evidently also errors resulting from populateTable()
                 catch ( e ) {
                     console.log(returnedData);
                 }
@@ -451,31 +457,13 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
         return true;
     }
+    function getHTMLForSelectedPeople() {
+        // Generate UI for the elements
+        var newRows = "";
 
-    // Populate people search table given the data returned from its AJAX call
-    function populatePeopleTable( returnedData ) {
-
-        // List of selected people's IDs
+        // Lists of selected people
         var selectedPeopleIDs = getSelectedPeopleIDs();
         var selectedPeopleNames = getSelectedPeopleNames();
-
-        // Lists of unselected people
-        //  allowance = max elements - selected elements, so we stay somewhat the same size
-        var allowance = 30 - ( getSelectedPeopleIDs.length + 3 );
-        var unselectedPeopleIDs = [];
-        var unselectedPeopleNames = [];
-        for ( i=0; (i<returnedData.length) && (i<allowance); i++ ) {
-            // Only add elements to unselected if they're not already in the selected list
-            //   Note: Older browsers will break on the indexOf check
-            if ( selectedPeopleIDs.indexOf( returnedData[i].term_id ) == -1 ) {
-                unselectedPeopleIDs.push( returnedData[i].term_id );
-                unselectedPeopleNames.push( returnedData[i].name );
-            }
-        }
-
-        // Generate UI for the elements
-        // (returnedData is indexed from 0)
-        var newRows = "";
 
         // Generate UI for selected elements
         for ( i=0; i<selectedPeopleIDs.length; i++ ) {
@@ -490,15 +478,47 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
         }
 
-        for ( i=0; (i<unselectedPeopleIDs.length) && (i<allowance); i++ ) {
+        return newRows;
+    }
+    // Populate people search table given the data returned from its AJAX call
+    function populatePeopleTable( returnedData ) {
 
-            if ( (i%3) == 0 )
-                newRows += '<tr>';
-            
-            newRows += '<td><button type="button" class="btn btn-default btn-block person-button-unsel" id="rlid-'+unselectedPeopleIDs[i]+'">' + unselectedPeopleNames[i] + '</button></td>';
+        // Lists of unselected people
+        //  allowance = max elements - selected elements, so we stay somewhat the same size
+        var allowance = 30 - ( getSelectedPeopleIDs().length + 3 );
+        var unselectedPeopleIDs = [];
+        var unselectedPeopleNames = [];
 
-            if ( (i%3) == 2 )
-                newRows += '</tr>';
+        // Only add elements to unselected if they're not already in the selected list
+        //   Note: Older browsers will break on the indexOf check
+        //   (returnedData.result is indexed from 0)
+        for ( i=0; (i<returnedData.result.length) && (i<allowance); i++ ) {
+            if ( getSelectedPeopleIDs().indexOf( returnedData.result[i].term_id ) == -1 ) {
+                unselectedPeopleIDs.push( returnedData.result[i].term_id );
+                unselectedPeopleNames.push( returnedData.result[i].name );
+            }
+        }
+
+        // Generate UI for the elements
+        var newRows = "";
+
+        // Add the selected people first
+        newRows += getHTMLForSelectedPeople();
+
+        // Ignore the AJAX response for unselected people if it's not the result of the most recent request
+        if ( returnedData.input == $('#person-selected-table').data('most-recent-request') ) {
+
+            // Generate UI for unselected elements
+            for ( i=0; (i<unselectedPeopleIDs.length) && (i<allowance); i++ ) {
+
+                if ( (i%3) == 0 )
+                    newRows += '<tr>';
+                
+                newRows += '<td><button type="button" class="btn btn-default btn-block person-button-unsel" id="rlid-'+unselectedPeopleIDs[i]+'">' + unselectedPeopleNames[i] + '</button></td>';
+
+                if ( (i%3) == 2 )
+                    newRows += '</tr>';
+            }
 
         }
 
@@ -509,6 +529,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.person-button-unsel').on('click', personSelected);
         $('.person-button-sel').on('click', personUnselected);
     }
+    // Processes person selection
     function personSelected() {
 
         var selectedPersonID = $(this).attr('id');
@@ -526,6 +547,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         //    (have to call from here because we can no longer access unselected list after the callback)
         personAddressedHasChanged();
     }
+    // Process selected-person deselection
     function personUnselected() {
 
         var unselectedPersonID = $(this).attr('id');
@@ -572,26 +594,30 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         }
         else {
             // If empty
-            addressees = "";
+            addressees = " to the world";
         }
 
         // Tags
         var tags = document.getElementById("temp-textarea-tags").value; // get tags string
         tags = tags.split(' ').join(''); // remove spaces
         tags = tags.split(','); // convert to array (space after comma has been removed)
-        var tagsString = ""; // Prepend hashes
-        for ( var i=0; i<tags.length; i++) {
-            tagsString += ' #' + tags[i];
+        // Build list, prepending hashes if there exist any tags
+        var tagsString = "";
+        if ( !( tags == '' ) ) {
+            tagsString = " "; // leading space to separate tags from rest of message
+            for ( var i=0; i<tags.length; i++) {
+                tagsString += ' #' + tags[i];
+            }
         }
 
         // Combine & return
-        var result = "I just wrote an open letter" + addressees + title + "." + tagsString + " ";
+        var result = "I just wrote an open letter" + addressees + title + "." + tagsString;
         return result;
     }
 
     // Submits the letter using the user's entered parameters from the now-completed steps
     //   Calls processServerLetterResponse( jsonResponse ) on completion
-    function submitLetter() {        
+    function submitLetter() {
         // Create an array of parameters to be included in the AJAX request
         var postData = {
             addressees: $("#person-selected-table").data("selected-people-names"),
@@ -642,7 +668,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     }
 
     function processServerLetterResponse( returnedRemoteLetterData ) {
-        console.log( returnedRemoteLetterData );
+        //console.log( returnedRemoteLetterData );
         
         // Continue execution on a delay
         setTimeout(letterSuccessHandler, 700, returnedRemoteLetterData);
@@ -745,7 +771,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         );
     }
 
-    // Opens a new popup, centered
+    // Opens a new popup, centered (for sharing prompts)
     // From: http://www.xtf.dk/2011/08/center-new-popup-window-even-on.html
     function popupCenter(url, title, w, h) {
         // Fixes dual-screen position                         Most browsers      Firefox
