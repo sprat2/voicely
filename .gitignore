@@ -1,6 +1,20 @@
-#mymightypen/backups
-mymightypen/log
-mymightypen/public_html/wp-content/updraft
-#voicely/backups
-voicely/log
-voicely/public_html/wp-content/updraft
+## Old include-all version
+##mymightypen/backups
+#mymightypen/log
+#mymightypen/public_html/wp-content/updraft
+##voicely/backups
+#voicely/log
+#voicely/public_html/wp-content/updraft
+
+# New whitelist-only version
+# Ignore everything
+*
+
+# Include directories themselves and .gitignore
+!*/
+!/.gitignore
+
+# Include our directories
+!mymightypen/public_html/remote-letter/**
+!mymightypen/public_html/wp-content/plugins/voicely-core/**
+!voicely/public_html/wp-content/plugins/voicely-core/**
