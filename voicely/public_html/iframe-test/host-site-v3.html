@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Host site 3.0</title>
+</head>
+
+<body>
+    <!-- Include our script -->
+    <script src="our-script.js"></script>
+
+    <div>
+
+        <!-- Host's image' -->
+        <img src="http://lorempixel.com/500/300">
+
+        <!-- Remote letter button (designated by its class) -->
+        <button class="remote-letter-open-button">
+            <img src="http://mymightypen.org/remote-letter/icon.png">
+        </button>
+
+    </div>
+
+<!-- CSS -->
+<style>
+/* Button to initiate popup overlay (Host site owns and controls this) */
+.remote-letter-open-button {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    border-style: outset;
+    border-width: 1px;
+    background-color: #ccc;
+    opacity: 0.85;
+    transform: translate(-115%, -15%);
+}
+#remote-letter-open-overlay-button:hover {
+    background-color: #fff;
+    opacity: 1;
+}
+#remote-letter-open-overlay-button:active {
+    background-color: #ddd;
+    opacity: 1;
+}
+</style>
+
+</body>
+</html>
