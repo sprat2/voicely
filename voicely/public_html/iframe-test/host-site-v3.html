@@ -1,64 +1,30 @@
+
+<!DOCTYPE html>
 <head>
-    <title>Host site 2.0</title>
+    <meta charset="utf-8"/>
+    <title>Host site 3.0</title>
 </head>
 
 <body>
-    <!-- Include JQuery & the JQuery popup overlay JS code -->
-    <!-- Documentation: 
-        http://dev.vast.com/jquery-popup-overlay/          -->
-    <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script src="https://cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.13/jquery.popupoverlay.js"></script>
+    <!-- Include our script -->
+    <script src="our-script.js"></script>
 
-    <!-- Remote letter -->
-    <div id="remote-letter-element-div">
+    <div>
 
         <!-- Host's image' -->
         <img src="http://lorempixel.com/500/300">
 
-        <!-- Remote letter button -->
-        <button id="remote-letter-open-overlay-button">
-            <img src="http://mymightypen.org/remote-letter/icon.png" class="remote-letter-element">
+        <!-- Remote letter button (designated by its class) -->
+        <button class="remote-letter-open-button">
+            <img src="http://mymightypen.org/remote-letter/icon.png">
         </button>
 
-        <!-- Overlay dialog -->
-        <div id="remote-letter-popup-dialog" class="overlay">
-
-            <!-- Close button (disabled due to CSS difficulties) -->
-            <!-- <a id="remote-letter-close-overlay-button">&times;</a> -->
-
-            <!-- Overlay content -->
-            <div id="remote-letter-overlay-content">
-                <iframe id="remote-letter-iframe" src="http://mymightypen.org/remote-letter/remote-letter-composition.php"></iframe>
-            </div>
-
-        </div>
     </div>
-
-<!-- JS -->
-<script>
-    // Initialize the JQuery popup overlay
-    $(document).ready(function() {
-        $('#remote-letter-popup-dialog').popup({
-            openelement: "#remote-letter-open-overlay-button",
-            // closeelement: "#remote-letter-close-overlay-button",
-            opacity: 0.65,
-            escape: false,
-            blur: true,
-            backgroundactive: false,
-            scrolllock: true,
-            transition: 'all 0.1s',
-            beforeopen: function() {
-                // Set up the dialog
-            },
-        });
-    });
-</script>
-
 
 <!-- CSS -->
 <style>
-/* Button to initiate popup overlay */
-#remote-letter-open-overlay-button {
+/* Button to initiate popup overlay (Host site owns and controls this) */
+.remote-letter-open-button {
     margin: 0;
     padding: 0;
     position: relative;
@@ -66,7 +32,7 @@
     border-width: 1px;
     background-color: #ccc;
     opacity: 0.85;
-    transform: translate(-115%, -5%);
+    transform: translate(-115%, -15%);
 }
 #remote-letter-open-overlay-button:hover {
     background-color: #fff;
@@ -75,25 +41,6 @@
 #remote-letter-open-overlay-button:active {
     background-color: #ddd;
     opacity: 1;
-}
-
-/* Overlay-related CSS */
-#remote-letter-close-overlay-button {
-    z-index: 99999;
-    font-size: 400%;
-    /*position: fixed;
-    top: 0px;
-    right: 0px;*/
-}
-#remote-letter-iframe {
-    position: fixed;
-    left: 20%;
-    top: 15%;
-    width: 60%;
-    height: 70%;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #ccc;
 }
 </style>
 
