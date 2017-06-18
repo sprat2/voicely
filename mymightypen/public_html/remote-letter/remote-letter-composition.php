@@ -265,7 +265,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.panel-collapse.in').collapse('hide');
 
         // Set up the textarea's value using previously entered information
-        document.getElementById("share-message-fb").text = getShareMessageWithCurrentParams();
+        document.getElementById("share-message-fb").value = getShareMessageWithCurrentParams();
 
         // Open the accordion element
         $('#collapse4:not(".in")').collapse('show');
@@ -287,7 +287,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.panel-collapse.in').collapse('hide');
 
         // Set up the textarea's value using previous sharing message
-        document.getElementById("share-message-tw").text = document.getElementById("share-message-fb").value;
+        document.getElementById("share-message-tw").value = document.getElementById("share-message-fb").value;
 
         // Open the accordion element
         $('#collapse5:not(".in")').collapse('show');
@@ -634,7 +634,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             title:      document.getElementById("letter-title").value,
             contents:   document.getElementById("letter-body").value,
             tags:       document.getElementById("tags-textarea").value,
-            nonce:      $('#shared-to-social-media-nonce').val(),
+            nonce:      $('#post-nonce').val(),
         };
 
         // Perform the AJAX request
@@ -677,10 +677,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             }
         );
     }
-
-    function processServerLetterResponse( returnedRemoteLetterData ) {
-        //console.log( returnedRemoteLetterData );
-        
+    function processServerLetterResponse( returnedRemoteLetterData ) {        
         // Continue execution on a delay
         setTimeout(letterSuccessHandler, 700, returnedRemoteLetterData);
     }
@@ -689,7 +686,8 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     function markAsShared( provider, postID ) {
         $.get(<?="\"".$ajax_host."\"";?>+"auth/mark-as-shared.php", { 
             post_id: postID, 
-            provider: provider 
+            provider: provider,
+            nonce: $('#share-mark-nonce').val(),
         } ).then(
             function( data ){
                 console.log( data );
@@ -717,6 +715,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             provider: provider,
             message:  shareMessage,
             url:      returnedRemoteLetterData.url_to_letter,
+            nonce:    $('#shared-to-social-media-nonce').val(),
         }
         ).then(
             // Transmission success callback
@@ -915,13 +914,12 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     }
 
     function deleteAllCookies() {
-        $.get( <?="\"".$ajax_host."\"";?>+"ajax/delete-auth-cookies.php" );
+        $.get( <?="\"".$ajax_host."\"";?>+"auth/delete-auth-cookies.php" );
     }
 
     // Handles a single request to set a nonce.
     function nonceRequest( action ) {
-        alert(<?"\"".$ajax_host."\"";?>+"auth/get-wp-nonce.php" );
-        $.get(<?="\"".$ajax_host."\"";?>+"auth/get-wp-nonce.php", 
+        $.get(<?="\"".$ajax_host."\"";?>+"ajax/get-wp-nonce.php", 
         {
             nonce_action: action,
         }

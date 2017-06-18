@@ -67,19 +67,20 @@ try {
     try{
         // Perform the API authentication request
         $hybridauth = new Hybridauth($config);
-        $adapter = $hybridauth->getAdapter(  $_GET['provider'] );
-        $adapter->setAccessToken( json_decode( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) );
+        $adapter = $hybridauth->getAdapter( stripslashes_deep( $_GET['provider'] ) );
+        //set_and_return_error( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) );
+        $adapter->setAccessToken( json_decode( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) ) );
         if ( $adapter->isConnected() ) {
             // Share to twitter. Twitter currently errors with the preferred way of link sharing in HybridAuth.
             // NOTE: Twitter links are automatically shortened to 23 chars, regardless of original length
             if ( strtolower( $_GET['provider'] ) == 'twitter' )
-                $adapter->setUserStatus( urldecode( $_GET['message'] . ' ' . urldecode( $_GET['url'] ) ) );
+                $adapter->setUserStatus( urldecode( stripslashes_deep( $_GET['message'] ) . ' ' . urldecode( stripslashes_deep( $_GET['url'] ) ) ) );
             // Share to Facebook/others.  This is the preferred way to share links with HybridAuth.
             else {
                 $adapter->setUserStatus( 
                     array( 
-                        'message' => urldecode( $_GET['message'] ),
-                        'link'    => urldecode( $_GET['url'] ),
+                        'message' => urldecode( stripslashes_deep( $_GET['message'] ) ),
+                        'link'    => urldecode( stripslashes_deep( $_GET['url'] ) ),
                     )
                 );
             }
@@ -109,6 +110,7 @@ function returnSuccess() {
     );
 
     echo json_encode( $return_array );
+    die();
 }
 
 // Return an error via the expected JSON format
