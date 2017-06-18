@@ -117,7 +117,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             <!-- Content -->
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="tags-selector">
-                    <textarea id="temp-textarea-tags" placeholder="Tag one, Tag two, etc."></textarea>
+                    <textarea id="tags-textarea" placeholder="Tag one, Tag two, etc."></textarea>
                     <br>
                 </div>
             </div>
@@ -174,6 +174,11 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         <!-- The "Next" button - this will proceed to the next accordion element -->
         <button id="next-button" type="button" class="btn btn-primary btn-block">Next</button>
 
+        <!-- Hidden fields which will store nonce values -->
+        <input type="hidden" id="post-nonce">
+        <input type="hidden" id="share-mark-nonce">
+        <input type="hidden" id="shared-to-social-media-nonce">
+
     </div>
 
 
@@ -188,6 +193,11 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
         // Initialize to step one
         startStepOne();
+
+        // Set nonces for the actions which require them
+        nonceRequest( 'post' );
+        nonceRequest( 'mark-shared' );
+        nonceRequest( 'share-to-social-media' );
 
         // Register the person-selector populating event
         $('#person-textarea').on('input', personAddressedHasChanged);
@@ -255,7 +265,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.panel-collapse.in').collapse('hide');
 
         // Set up the textarea's value using previously entered information
-        document.getElementById("share-message-fb").text = getShareMessageWithCurrentParams();
+        document.getElementById("share-message-fb").value = getShareMessageWithCurrentParams();
 
         // Open the accordion element
         $('#collapse4:not(".in")').collapse('show');
@@ -277,7 +287,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         $('.panel-collapse.in').collapse('hide');
 
         // Set up the textarea's value using previous sharing message
-        document.getElementById("share-message-tw").text = document.getElementById("share-message-fb").value;
+        document.getElementById("share-message-tw").value = document.getElementById("share-message-fb").value;
 
         // Open the accordion element
         $('#collapse5:not(".in")').collapse('show');
@@ -316,9 +326,9 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         ).then(
             // Transmission success callback
             function( data ){
-                // Parse the server's response as JSON
+                // Access the server's response as JSON
                 try {
-                    var returnedData = JSON.parse( data );
+                    var returnedData = data;
 
                     // Handle server-specified errors if present
                     if ( returnedData.error === true ) {
@@ -338,7 +348,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                             console.log(returnedData);
                     }
                 }
-                // Handle server response JSON parse errors
+                // Handle server response access errors
                 catch ( e ) {
                     console.log(data);
                     return 'An unknown';
@@ -373,9 +383,9 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         ).then(
             // Transmission success callback
             function( data ){
-                // Parse the server's response as JSON
+                // Access the server's response as JSON
                 try {
-                    var returnedData = JSON.parse( data );
+                    var returnedData = data;
 
                     // Handle server-specified errors if present
                     if ( returnedData.error === true ) {
@@ -388,7 +398,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                         populatePeopleTable( returnedData );
                     }
                 }
-                // Handle server response JSON parse errors (evidently also errors resulting from populateTable()
+                // Handle server response access errors (evidently also errors resulting from populateTable()
                 catch ( e ) {
                     console.log(returnedData);
                 }
@@ -598,7 +608,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
         }
 
         // Tags
-        var tags = document.getElementById("temp-textarea-tags").value; // get tags string
+        var tags = document.getElementById("tags-textarea").value; // get tags string
         tags = tags.split(' ').join(''); // remove spaces
         tags = tags.split(','); // convert to array (space after comma has been removed)
         // Build list, prepending hashes if there exist any tags
@@ -623,16 +633,17 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             addressees: $("#person-selected-table").data("selected-people-names"),
             title:      document.getElementById("letter-title").value,
             contents:   document.getElementById("letter-body").value,
-            tags:       document.getElementById("temp-textarea-tags").value,
+            tags:       document.getElementById("tags-textarea").value,
+            nonce:      $('#post-nonce').val(),
         };
 
         // Perform the AJAX request
         $.post(<?="\"".$ajax_host."\"";?>+"ajax/post.php", postData).then(
             // Transmission success callback
             function( data ){
-                // Parse the server's response as JSON
+                // Access the server's response as JSON
                 try {
-                    var returnedRemoteLetterData = JSON.parse( data );
+                    var returnedRemoteLetterData = data;
 
                     // Handle server-specified errors if present
                     if ( returnedRemoteLetterData.error === true ) {
@@ -648,7 +659,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                         processServerLetterResponse( returnedRemoteLetterData );
                     }
                 }
-                // Handle server response JSON parse errors
+                // Handle server response access errors
                 catch ( e ) {
                     alert( "JSON parse error: " + e.message + "\n\nServer response:" + data +
                         "\n\nThe application has not been cleaned up properly." );
@@ -666,10 +677,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             }
         );
     }
-
-    function processServerLetterResponse( returnedRemoteLetterData ) {
-        //console.log( returnedRemoteLetterData );
-        
+    function processServerLetterResponse( returnedRemoteLetterData ) {        
         // Continue execution on a delay
         setTimeout(letterSuccessHandler, 700, returnedRemoteLetterData);
     }
@@ -678,7 +686,8 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
     function markAsShared( provider, postID ) {
         $.get(<?="\"".$ajax_host."\"";?>+"auth/mark-as-shared.php", { 
             post_id: postID, 
-            provider: provider 
+            provider: provider,
+            nonce: $('#share-mark-nonce').val(),
         } ).then(
             function( data ){
                 console.log( data );
@@ -706,13 +715,14 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             provider: provider,
             message:  shareMessage,
             url:      returnedRemoteLetterData.url_to_letter,
+            nonce:    $('#shared-to-social-media-nonce').val(),
         }
         ).then(
             // Transmission success callback
             function( data ){
-                // Parse the server's response as JSON
+                // Access the server's response as JSON
                 try {
-                    var returnedData = JSON.parse( data );
+                    var returnedData = data;
 
                     // Handle server-specified errors if present
                     if ( returnedData.error === true ) {
@@ -741,7 +751,7 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
                         }
                     }
                 }
-                // Handle server response JSON parse errors
+                // Handle server response access errors
                 catch ( e ) {
                     console.log(returnedData);
 
@@ -905,6 +915,52 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
 
     function deleteAllCookies() {
         $.get( <?="\"".$ajax_host."\"";?>+"auth/delete-auth-cookies.php" );
+    }
+
+    // Handles a single request to set a nonce.
+    function nonceRequest( action ) {
+        $.get(<?="\"".$ajax_host."\"";?>+"ajax/get-wp-nonce.php", 
+        {
+            nonce_action: action,
+        }
+        ).then(
+            // Transmission success callback
+            function( data ){
+                try {
+
+                    // Handle server-specified errors if present
+                    if ( data.error === true ) {
+                        console.log(data);
+                    }
+
+                    // Else no errors - proceed
+                    else {
+                        // Process response
+                        switch ( data.action ) {
+                            case 'post':
+                                $('#post-nonce').val(data.nonce);
+                                break;
+                            case 'mark-shared':
+                                $('#share-mark-nonce').val(data.nonce);
+                                break;
+                            case 'share-to-social-media':
+                                $('#shared-to-social-media-nonce').val(data.nonce);
+                                break;
+                            detault:
+                                console.log(data);
+                        }
+                    }
+                }
+                // Handle server response access errors
+                catch ( e ) {
+                    console.log(data);
+                }
+            },
+            // Transmission failure callback
+            function( data ){
+                console.log(data);
+            }
+        );
     }
     </script>
 

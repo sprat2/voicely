@@ -3,10 +3,19 @@ session_start();
 
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
 // Load WordPress functionality
 define('WP_USE_THEMES', false);
 require('../../wp-load.php');
+
+// Verify the nonce
+if ( empty( $_GET['nonce'] ) ) {
+    set_and_return_error( "No nonce provided" );
+}
+if ( !wp_verify_nonce( $_GET['nonce'], 'mark letter as shared' ) ) {
+    set_and_return_error( "Invalid nonce provided" );
+}
 
 // Set the provider
 if ( isset( $_GET['post_id'] ) && isset( $_GET['provider'] ) ) {

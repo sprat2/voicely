@@ -3,8 +3,12 @@ session_start();
 
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
-// NOTE: Does not interface with WP at all.  Does not need sanitization for our purposes.
+// Load WordPress functionality
+//   (required for nonce verification - may lighten later by only importing required functionality)
+define('WP_USE_THEMES', false);
+require('../../wp-load.php');
 
 // Set up Hybridauth
 // Import Hybridauth
@@ -27,6 +31,14 @@ $config = [
         ]
     ]
 ];
+
+// Verify the nonce
+if ( empty( $_GET['nonce'] ) ) {
+    set_and_return_error( "No nonce provided" );
+}
+if ( !wp_verify_nonce( $_GET['nonce'], 'share letter to social media' ) ) {
+    set_and_return_error( "Invalid nonce provided" );
+}
 
 // Configure PHP to throw exceptions for notices and warnings (to more easily debug via ajax)
 set_error_handler(function($errno, $errstr, $errfile, $errline) {
@@ -55,19 +67,20 @@ try {
     try{
         // Perform the API authentication request
         $hybridauth = new Hybridauth($config);
-        $adapter = $hybridauth->getAdapter(  $_GET['provider'] );
-        $adapter->setAccessToken( json_decode( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) );
+        $adapter = $hybridauth->getAdapter( stripslashes_deep( $_GET['provider'] ) );
+        //set_and_return_error( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) );
+        $adapter->setAccessToken( json_decode( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) ) );
         if ( $adapter->isConnected() ) {
             // Share to twitter. Twitter currently errors with the preferred way of link sharing in HybridAuth.
             // NOTE: Twitter links are automatically shortened to 23 chars, regardless of original length
             if ( strtolower( $_GET['provider'] ) == 'twitter' )
-                $adapter->setUserStatus( urldecode( $_GET['message'] . ' ' . urldecode( $_GET['url'] ) ) );
+                $adapter->setUserStatus( urldecode( stripslashes_deep( $_GET['message'] ) . ' ' . urldecode( stripslashes_deep( $_GET['url'] ) ) ) );
             // Share to Facebook/others.  This is the preferred way to share links with HybridAuth.
             else {
                 $adapter->setUserStatus( 
                     array( 
-                        'message' => urldecode( $_GET['message'] ),
-                        'link'    => urldecode( $_GET['url'] ),
+                        'message' => urldecode( stripslashes_deep( $_GET['message'] ) ),
+                        'link'    => urldecode( stripslashes_deep( $_GET['url'] ) ),
                     )
                 );
             }
@@ -97,6 +110,7 @@ function returnSuccess() {
     );
 
     echo json_encode( $return_array );
+    die();
 }
 
 // Return an error via the expected JSON format

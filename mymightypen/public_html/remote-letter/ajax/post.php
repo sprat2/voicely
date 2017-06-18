@@ -2,6 +2,7 @@
 
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
 // Declare our response type as a JSON response
 // May not work with current config
@@ -24,15 +25,24 @@ try {
     define('WP_HOME','http://mymightypen.org');
     define('WP_SITEURL','http://mymightypen.org');
 
-    // If form has been submitted, create the post and display sharing options
+    // Verify the nonce
+    if ( empty( $_POST['nonce'] ) ) {
+        set_and_return_error( "No nonce provided" );
+    }
+    if ( !wp_verify_nonce( $_POST['nonce'], 'post letter' ) ) {
+        set_and_return_error( "Invalid nonce provided" );
+    }
+
+    // Create the post and display sharing options
     if (( isset( $_POST['title'] ) ) &&
         ( isset( $_POST['contents'] ) ) ) {
 
         // Validate the input
-        if (empty( $_POST['title'] ) ||
+        if ( empty( $_POST['title'] ) ||
             empty( $_POST['contents'] ) ) {
             set_and_return_error( "Received empty parameter/s - must have a proper title and letter body" );
         }
+        
 
         // else input's valid - set and sanitize input variables
         $title = sanitize_text_field( $_POST['title'] );
