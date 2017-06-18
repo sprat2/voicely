@@ -1,11 +1,3 @@
-## Old include-all version
-##mymightypen/backups
-#mymightypen/log
-#mymightypen/public_html/wp-content/updraft
-##voicely/backups
-#voicely/log
-#voicely/public_html/wp-content/updraft
-
 # New whitelist-only version
 # Ignore everything
 *
