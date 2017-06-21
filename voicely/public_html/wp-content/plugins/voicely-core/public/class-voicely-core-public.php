@@ -434,9 +434,13 @@ class Voicely_Core_Public {
 	/**
 	 * Registers the addressees custom taxonomy.
 	 *
+	 *		Also adds the default addressee, "The World", if it doesn't already exist
+	 *
 	 * @since    1.0.0
 	 */
 	function register_addressee_taxonomy() {
+
+		// Register the addressee taxonomy
 		$labels = array(
 			'name'                       => 'Addressees',
 			'singular_name'              => 'Addressee',
@@ -464,10 +468,21 @@ class Voicely_Core_Public {
 			'hierarchical'               => false,
 			'public'                     => true,
 			'show_ui'                    => true,
+			'show_in_menu'				 => true,
 			'show_admin_column'          => true,
 			'show_in_nav_menus'          => true,
 			'show_tagcloud'              => true,
+			'description'				 => 'A person to whom a letter may be addressed',
 		);
 		register_taxonomy( 'addressee', array( 'letter' ), $args );
+
+		// Add the default addressee if not present
+		if ( !( term_exists( 'The World', 'addressee' ) ) ) {
+			$world_args = array(
+				'description' => 'Open to all!',
+			);
+
+			wp_insert_term( 'The World', 'addressee', $world_args );
+		}
 	}
 }
