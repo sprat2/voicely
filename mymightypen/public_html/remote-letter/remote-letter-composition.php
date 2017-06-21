@@ -690,9 +690,10 @@ $ajax_host = "http://mymightypen.org/remote-letter/";
             nonce: $('#share-mark-nonce').val(),
         } ).then(
             function( data ){
-                console.log( data );
+                // Success:
             },
             function( data ) {
+                // Failure:
                 console.log( data );
             }
         );
