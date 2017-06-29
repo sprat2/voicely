@@ -100,10 +100,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 
 			<?php if ( ! post_password_required( $post->ID ) ) : ?>
-				<?php //if ( get_post_type() == 'letter' ) ?>
-					<?php //echo wp_kses_post( fusion_render_letter_metadata( 'single' ) ); ?>
-				<?php //else ?>
-					<?php echo wp_kses_post( avada_render_post_metadata( 'single' ) ); ?>
+				<?php echo wp_kses_post( avada_render_post_metadata( 'single' ) ); ?>
 				<?php avada_render_social_sharing(); ?>
 				<?php $author_info = get_post_meta( $post->ID, 'pyre_author_info', true ); ?>
 				<?php if ( ( Avada()->settings->get( 'author_info' ) && 'no' !== $author_info ) || ( ! Avada()->settings->get( 'author_info' ) && 'yes' === $author_info ) ) : ?>
