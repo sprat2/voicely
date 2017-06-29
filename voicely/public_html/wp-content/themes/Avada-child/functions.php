@@ -147,7 +147,9 @@ function add_letters_to_archive_pages($query) {
 add_action('pre_get_posts', 'add_letters_to_archive_pages');
 
 // Add letters to the main loop of search pages so they'll be included in search queries
-//     Overriding behavior of search_filter in includes/class-avada-blog.php
+//     	Overriding behavior of:
+//			'search_filter' in includes/class-avada-blog.php, and
+// 			'modify_search_filter' in includes/class-avada-init.php
 function add_letters_to_search_pages($query) {
     if ( !is_admin() && $query->is_main_query() && $query->is_search() && is_search() ) {
         $query->set('post_type', array( 'post', 'letter' ));
@@ -155,34 +157,16 @@ function add_letters_to_search_pages($query) {
 }
 add_action('pre_get_posts', 'add_letters_to_search_pages');
 
-// Allow searches to query by addressee
-function add_addressees_to_search_params($query) {
-    if ( !is_admin() && $query->is_main_query() && $query->is_search() && is_search() ) {
-
-		echo '<pre>';
-		var_export( $query->tax_query );
-		echo '</pre><br><br>';
-
-		if ( !empty( $_GET['s'] ) ) {
-
-			$search_param = $_GET['s'];
-
-			$new_tax_query_params = array(
-				'taxonomy' => 'addressee',
-				'field' => 'slug',
-				'terms' => $search_param,
-				'operator' => 'IN',
-			);
-
-			$query->tax_query->queries[] = $new_tax_query_params;
-
-			$query->tax_query->relation = 'OR';
+// Display letters on the 'Open letters' page (currently hardcoded via page id on Voicely)
+function query_letters_for_letter_page($query) {
+    if ( !is_admin() && $query->is_main_query() && is_page() ) {
+		if ( get_query_var('page_id') == '992' ) {
+			echo '<pre>';
+			var_dump( $query );
+			echo '</pre>';
 		}
-
-		echo '<pre>';
-		var_export( $query->tax_query );
-		echo '</pre><br><br>';
-
+			
+        	// $query->set('post_type', array( 'post' ));
     }
 }
-add_action('pre_get_posts', 'add_addressees_to_search_params');
+add_action('pre_get_posts', 'query_letters_for_letter_page');
