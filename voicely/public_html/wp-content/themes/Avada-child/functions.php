@@ -159,14 +159,14 @@ add_action('pre_get_posts', 'add_letters_to_search_pages');
 function add_addressees_to_search_params($query) {
     if ( !is_admin() && $query->is_main_query() && $query->is_search() && is_search() ) {
 
-		// echo '<pre>';
-		// var_export( $query );
-		// echo '</pre><br><br><br><br>';
-		// echo $_GET['s'];
+		echo '<pre>';
+		var_export( $query->tax_query );
+		echo '</pre><br><br>';
 
 		if ( !empty( $_GET['s'] ) ) {
 
 			$search_param = $_GET['s'];
+
 			$new_tax_query_params = array(
 				'taxonomy' => 'addressee',
 				'field' => 'slug',
@@ -175,8 +175,13 @@ function add_addressees_to_search_params($query) {
 			);
 
 			$query->tax_query->queries[] = $new_tax_query_params;
+
 			$query->tax_query->relation = 'OR';
 		}
+
+		echo '<pre>';
+		var_export( $query->tax_query );
+		echo '</pre><br><br>';
 
     }
 }
