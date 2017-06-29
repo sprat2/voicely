@@ -156,17 +156,3 @@ function add_letters_to_search_pages($query) {
     }
 }
 add_action('pre_get_posts', 'add_letters_to_search_pages');
-
-// Display letters on the 'Open letters' page (currently hardcoded via page id on Voicely)
-function query_letters_for_letter_page($query) {
-    if ( !is_admin() && $query->is_main_query() && is_page() ) {
-		if ( get_query_var('page_id') == '992' ) {
-			echo '<pre>';
-			var_dump( $query );
-			echo '</pre>';
-		}
-			
-        	// $query->set('post_type', array( 'post' ));
-    }
-}
-add_action('pre_get_posts', 'query_letters_for_letter_page');
