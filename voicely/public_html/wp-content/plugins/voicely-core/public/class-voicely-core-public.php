@@ -444,7 +444,7 @@ class Voicely_Core_Public {
 		$labels = array(
 			'name'                       => 'Addressees',
 			'singular_name'              => 'Addressee',
-			'menu_name'                  => 'Addressee',
+			'menu_name'                  => 'Addressees',
 			'all_items'                  => 'All addressees',
 			'parent_item'                => 'Parent Addressee',
 			'parent_item_colon'          => 'Parent Addressee:',
