@@ -150,30 +150,18 @@ class Voicely_Core {
 
         $plugin_public = new Voicely_Core_Public( $this->get_voicely_core(), $this->get_version() );
 
-        // NOTE: Much is disabled until returning to old use case
-
         // Register custom types
         // Note: Not yet supported by Avada's blog displays
-        // Person post type
-        //add_action( 'init', array($plugin_public, 'register_person_post_type_and_meta') );
         // Letter post type
         add_action( 'init', array($plugin_public, 'register_letter_post_type') );
         // addressees taxonomy
         add_action( 'init', array($plugin_public, 'register_addressee_taxonomy') );
 
-        // Start the session in init, else "headers already sent" errors will occur
-        // add_action( 'init', array($plugin_public, 'start_session') );
-
+        // Enqueue default template & script files
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_styles') );
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts') );
 
-        // WIP: XXX means disabled, even for old use case
-        // XXXadd_filter( 'the_content', array($plugin_public, 'give_letter_an_image') );
-        // XXXadd_action( 'pre_get_posts', array($plugin_public, 'info_grab') );
-        
-        // XXXadd_filter( 'login_form', array($plugin_public, 'add_wsl_widget') );
-        // add_shortcode( 'voicely_frontend_letter_dialog', array($plugin_public, 'write_letter_dialog') );
-        // add_shortcode( 'voicely_frontend_letter_writing_dialog', array($plugin_public, 'voicely_frontend_letter_writing_dialog') );
+        add_shortcode( 'voicely_frontend_letter_dialog', array($plugin_public, 'write_letter_dialog') );
     }
 
     /**
