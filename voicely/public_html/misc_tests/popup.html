@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- This is a demo page for the the JQuery Mobile popup element -->
+
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+    <!-- Demo 1 -->
+    <div>
+        <a id="popup-button" href="#popup-content" data-rel="popup" class="ui-btn ui-btn-inline" data-position-to="#popup-position">Pop up below with an upward arrow</a>
+
+        <span id="popup-position">here!</span>
+
+        <div id="popup-content" data-role="popup" data-arrow="t">
+        <p>Popup content</p>
+        </div>
+    </div> 
+
+
+    <!-- Demo 2 -->
+    <div>
+        <span id="popup-position2">
+            <a id="popup-button2" href="#popup-content2" data-rel="popup" class="ui-btn ui-btn-inline" data-position-to="#popup-position2">
+                Below me, upward arrow
+            </a>
+        </span>
+
+        <div id="popup-content2" data-role="popup" data-arrow="t">
+        <p>Popup content</p>
+        </div>
+    </div>
+
+
+    <!-- Style (matched to Russ's mock-up) -->
+    <style>
+    .ui-popup.ui-body-inherit {
+        background-color: #444444;
+        border-color: #444444;
+        color: #eeeeee;
+        font-weight: 
+    }
+    .ui-popup-arrow-container.ui-popup-arrow-t .ui-popup-arrow {
+        background-color: #444444;
+        border-color: #444444;
+    }
+    </style>
+
+</body>
+</html>

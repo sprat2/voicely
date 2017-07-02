@@ -76,7 +76,6 @@ function fusion_render_post_metadata( $layout, $settings = array() ) {
 		// Render addressees if the post is a letter.		
 		if ( get_post_type() == 'letter' ) {
 			$addressees = get_the_term_list( get_the_ID(), 'addressee', '', ', ' );
-			//$addressees = implode( ', ', $addressees );
 			if ( $addressees ) {
 				$metadata .= sprintf( esc_html__( 'Addressees: %s', 'Avada' ), $addressees );
 				$metadata .= '<span class="fusion-inline-sep">|</span>';
