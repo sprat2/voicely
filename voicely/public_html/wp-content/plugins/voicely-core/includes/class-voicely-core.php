@@ -137,6 +137,15 @@ class Voicely_Core {
         // Register meta-field editing box for addressees
         //   Note: dependent on CMB2's hook
         add_action( 'cmb2_admin_init', array($plugin_admin, 'addressee_register_taxonomy_metabox') );
+
+
+        // // Display plugin activation errors
+        // function tl_save_error() {
+        //     update_option( 'plugin_error',  ob_get_contents() );
+        // }
+        // add_action( 'activated_plugin', 'tl_save_error' );
+        // echo get_option( 'plugin_error' );
+        // file_put_contents( 'C:\errors' , ob_get_contents() ); // or any suspected variable
     }
 
     /**

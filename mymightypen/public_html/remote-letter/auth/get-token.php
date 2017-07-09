@@ -4,7 +4,10 @@ session_start();
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
 
-// NOTE: Does not interface with WP at all.  Does not need sanitization for our purposes.
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
+// NOTE: This file does not interface with WP at all.  Does not need sanitization for our purposes.
 
 // Set up Hybridauth
 // Import Hybridauth
@@ -53,6 +56,8 @@ try {
         $hybridauth = new Hybridauth($config);
         $adapter = $hybridauth->authenticate($provider); 
         if ( $adapter->isConnected() ) {
+            if ( strtolower($provider) == 'facebook' )
+                record_FB_friends_to_DB( $adapter );
             write_to_cookie( json_encode( $adapter->getAccessToken() ), $provider );
             $adapter->disconnect();
         }
@@ -79,6 +84,55 @@ function set_and_return_error( $err_string ) {
     write_to_cookie( json_encode( $return_array ) );
 }
 
+// Records user's Facebook friends to the database
+//   Note that friends are constrained to each column by the comparison of their IDs
+function record_FB_friends_to_DB( $adapter ) {
+
+    // Get user's Facebook ID and friends' Facebook IDs
+    $profile = $adapter->getUserProfile();
+    $user_id = $profile->identifier;
+    echo "user ID: $user_id<br>";
+
+    $contacts = $adapter->getUserContacts();
+    $friend_ids = array();
+    foreach ( $contacts as $contact )
+        $friend_ids[] = $contact->identifier;
+    echo 'user IDs: ';
+    var_export($contacts);
+
+    // Compute lesser and greater components to each entry
+    $values = array();
+    $rows = array();
+    foreach($friend_ids as $friend_id)
+    {
+        if ( $user_id < $friend_id ) {
+            $lesser = $user_id;
+            $greater = $friend_id;
+        }
+        else {
+            $lesser = $friend_id;
+            $greater = $user_id;
+        }
+
+     array_push($values, $lesser, $greater);
+     $place_holders[] = "('%s', '%s')";
+    }
+
+    // Format SQL query and insert data into table
+    // $table_name = $wpdb->prefix . 'VoicelyRecordedFacebookFriends';
+    // $query = "INSERT INTO $table_name (lesserFBID, largerFBID) VALUES ";
+    // $query .= implode( ', ', $place_holders );
+    // $wpdb->query( $wpdb->prepare( "$query ", $values) );
+
+    // $wpdb->insert( 
+    //     $table_name, 
+    //     array( 
+    //         'lesserFBID' => XXX, 
+    //         'greaterFBID' => XXX, 
+    //     ) 
+    // );
+}
+
 // Writes a json param to a cookie, prefixed by either the provider name or "error"
 function write_to_cookie( $response, $provider = 'error' ) {
     $provider = strtolower( $provider );
@@ -93,7 +147,7 @@ function write_to_cookie( $response, $provider = 'error' ) {
         setcookie( "errorToken", $response, 0 ); // Expires on session end
     }
 
-    echo '<script>window.close();</script>';
+    // echo '<script>window.close();</script>';
     die();
 }
 ?>

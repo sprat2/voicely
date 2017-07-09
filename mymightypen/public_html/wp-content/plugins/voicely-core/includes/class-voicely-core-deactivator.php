@@ -33,8 +33,6 @@ class Voicely_Core_Deactivator {
 		// Note: Categories are not removed on deactivation.
 		//       This is a choice for stability over clean removal.
 		//       Categories may be removed manully if desired.
-
-
 	}
 
 }

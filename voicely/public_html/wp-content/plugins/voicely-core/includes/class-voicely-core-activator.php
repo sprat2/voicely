@@ -42,6 +42,18 @@ class Voicely_Core_Activator {
 		// wp_create_category( 'Topics' );
 
 
+		// Create the Facebook friends association table if it doesn't already exist
+		//   (or modified any such existing table to fit the following form)
+		global $wpdb;
+		$table_name = $wpdb->prefix . "VoicelyRecordedFacebookFriends";
+		$charset_collate = $wpdb->get_charset_collate();
+		$sql = "CREATE TABLE $table_name (
+			lesserFBID bigint(15) UNSIGNED,
+			largerFBID bigint(15) UNSIGNED,
+			PRIMARY KEY  (lesserFBID, largerFBID)
+		) $charset_collate;";
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' ); // importing dbDelta
+		dbDelta( $sql );
 	}
 
 }
