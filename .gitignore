@@ -9,6 +9,7 @@
 # Include our directories
 !mymightypen/public_html/remote-letter/**
 !mymightypen/public_html/wp-content/plugins/voicely-core/**
+!mymightypen/public_html/russtests/**
 !voicely/public_html/wp-content/plugins/voicely-core/**
 !voicely/public_html/iframe-test/**
 !voicely/public_html/wp-content/themes/Avada-child/**
