@@ -105,7 +105,7 @@ class Voicely_Core_Public {
 	 * @since    1.0.0
 	 */
 	public function write_letter_dialog() {
-		echo 'Here be a frontend, arrr';
+		require 'LetterWritingFlow/frontend_letter_writing_flow.php';
 	}
 
 	/**

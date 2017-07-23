@@ -29,24 +29,9 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 	
-	$(window).load( function() {
-
-		// Show the sharing modal on page load if it exists
-		if ( $('#myModal').length ) {
-			$('#myModal').modal('show');
-		}
+	// $(window).load( function() {
 		
-		// var url = pluginPublicUrl.pluginPublicUrl + "partials/social-auth/fb.php";
-		// $('#share-via-twitter').click(function() {
-		// 	$.ajax({
-		// 		type: "GET",
-		// 		url: url,
-		// 	}).done(function( msg ) {
-		// 		alert( "Done: " + url + "\nMsg: " + msg );
-		// 	});
-		// });
-
-	});
+	// });
 
 
 	
