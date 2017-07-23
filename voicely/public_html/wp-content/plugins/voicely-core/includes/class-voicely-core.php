@@ -160,8 +160,6 @@ class Voicely_Core {
         // Enqueue default template & script files
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_styles') );
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts') );
-
-        add_shortcode( 'voicely_frontend_letter_dialog', array($plugin_public, 'write_letter_dialog') );
     }
 
     /**

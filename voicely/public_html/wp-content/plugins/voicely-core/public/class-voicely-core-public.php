@@ -100,15 +100,6 @@ class Voicely_Core_Public {
 	}
 
 	/**
-	 * Display frontend letter-writing dialog.
-	 *
-	 * @since    1.0.0
-	 */
-	public function write_letter_dialog() {
-		require 'LetterWritingFlow/frontend_letter_writing_flow.php';
-	}
-
-	/**
 	 * Registers the 'letter' custom post type.
 	 *
 	 * @since    1.0.0
