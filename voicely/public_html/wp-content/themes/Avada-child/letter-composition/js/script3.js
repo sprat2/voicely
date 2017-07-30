@@ -7,9 +7,6 @@
   // XXX - Edit this when changing servers
   var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
 
-
-
-
   // Set "next" button up to store data from this step and set up the next
   $('#end-step3-button').click(function() {
     // SAVE DATA

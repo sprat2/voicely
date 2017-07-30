@@ -11,12 +11,12 @@
 
 
   // Set "next" button up to store data from this step and set up the next
-  $('#end-step2-button').click(function() {
+  $('#end-step2a-button').click(function() {
     // SAVE DATA
 
     // Load the next script
-    $('#html-display-container').load(ajaxLocation+'assets/step3.php', function() {
-        $.getScript(ajaxLocation+'js/script3.js');
+    $('#html-display-container').load(ajaxLocation+'assets/step2b.php', function() {
+        $.getScript(ajaxLocation+'js/script2b.js');
     });
   });
 

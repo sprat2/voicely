@@ -62,7 +62,7 @@ require('../../../../../wp-load.php')
         <textarea type="text" data-role="tagsinput" style="height:136px" placeholder="Add a tag..." class="form-control" id="tagsInput"></textarea>
 
         <!-- Related Tags button -->
-        <button id="related-tags-button" type="button" class="btn btn-default" data-toggle="popover" data-placement="bottom" data-container="body" data-html="true" data-content="Fetching...">Related Tags</button>
+        <button id="related-tags-button" type="button" class="btn btn-default" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="focus" data-html="true" data-content="Fetching...">Related Tags</button>
         
         <!-- Related recipients display -->
         <h3>More recipients</h3>

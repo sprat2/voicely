@@ -81,3 +81,94 @@
 .bootstrap-tagsinput {
   width: 100% !important;
 }
+
+
+/* Styles borrowed from remote-letter use case */
+/* Colors, etc. */
+.panel-default>.panel-heading {
+    background-color: #fff !important;
+}
+body {
+    background-color: #f5f5f5 !important;
+}
+.panel-collapse {
+    background-color: #fff !important;
+    padding: 0px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ccc;
+    display: none;
+}
+.panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {
+    font-size: 130%;
+}
+.panel-group .panel+.panel {
+    margin-top: 0px !important;
+}
+
+/* Post-submit view */
+#submit-view-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+#submit-view-container #submit-view {
+    font-size: 200%;
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ccc;
+    padding: 5px;
+}
+#remote-letter-link-textinput {
+    vertical-align: middle;
+    font-size: 80%;
+}
+#remote-letter-clipboard-image {
+    height: 31px;
+}
+#remote-letter-url-sharing-dialog button {
+    margin-left: 1px;
+}
+.remote-letter-error-message {
+    font-size: 70%;
+    font-style: italic;
+    font-family: sans-serif;
+}
+#no-share-warning {
+    margin-bottom: 7px;
+    font-size: 70%;
+}
+.sharing-icon img {
+    height: 40px;
+}
+.sharing-message {
+    vertical-align: bottom;
+}
+
+/* Animated ellipsis via https://codepen.io/thetallweeks/pen/yybGra */
+.loading {
+  font-size: 30px;
+}
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+  animation: ellipsis steps(4,end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+@keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
+}
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
+}

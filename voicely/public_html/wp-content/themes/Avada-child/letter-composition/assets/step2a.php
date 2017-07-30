@@ -1,6 +1,6 @@
 <?php
 
-/* This file contains the HTML display code for step 2 - user signin */
+/* This file contains the HTML display code for step 3 - social auth */
 
 $debug = true;
 
@@ -16,7 +16,9 @@ define('WP_USE_THEMES', false);
 require('../../../../../wp-load.php')
 
 ?>
-<!-- "Next" button -->
-User login/registration (if appropriate), followed by publishing
+Sign in or register
 <br>
-<button class="btn btn-large btn-primary" id="end-step2-button">NEXT</button>
+This page only displayed if user is not already logged in
+<br>
+<!-- "Next" button -->
+<button class="btn btn-large btn-primary" id="end-step2a-button">NEXT</button>

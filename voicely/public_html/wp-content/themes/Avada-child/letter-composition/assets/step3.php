@@ -16,7 +16,7 @@ define('WP_USE_THEMES', false);
 require('../../../../../wp-load.php')
 
 ?>
-Social auth
+Social auth:
 <br>
 Email, Facebook, Twitter, Instagram
 <br>

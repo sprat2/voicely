@@ -7,6 +7,55 @@
   // XXX - Edit this when changing servers
   var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
 
+  nonceRequest( 'post' );
+  nonceRequest( 'mark-shared' );
+  nonceRequest( 'share-to-social-media' );
+
+  // Handles a single request to set a nonce.
+  function nonceRequest( action ) {
+    $.get( ajaxLocation+"/assets/get-wp-nonce.php", 
+    {
+      nonce_action: action,
+    }
+    ).then(
+      // Transmission success callback
+      function( data ){
+        try {
+          // Handle server-specified errors if present
+          if ( data.error === true ) {
+              console.log(data);
+          }
+
+          // Else no errors - proceed
+          else {
+            // Process response
+            switch ( data.action ) {
+              case 'post':
+                $('#persistent-data-container').data('post-nonce', data.nonce);
+                break;
+              case 'mark-shared':
+                $('#persistent-data-container').data('share-mark-nonce', data.nonce);
+                break;
+              case 'share-to-social-media':
+                $('#persistent-data-container').data('shared-to-social-media-nonce', data.nonce);
+                break;
+              detault:
+                console.log(data);
+            }
+          }
+        }
+        // Handle server response access errors
+        catch ( e ) {
+            console.log(data);
+        }
+      },
+      // Transmission failure callback
+      function( data ){
+          console.log(data);
+      }
+    );
+  }
+
   // Initialize Bootstrap popover elements
   $(function () {
     $('[data-toggle="popover"]').popover()
@@ -89,15 +138,33 @@
 
   // Set "next" button up to store data from step one and set up step two
   $('#end-composition-button').click(function() {
+    // Store data
     $('#persistent-data-container').data('addressees', $('#toInput').tagsinput('items'));
     $('#persistent-data-container').data('tags', $('#tagsInput').tagsinput('items'));
     $('#persistent-data-container').data('title', $('#titleInput').val());
     $('#persistent-data-container').data('body', $('#bodyInput').val());
 
-    // Load the next script
-    $('#html-display-container').load(ajaxLocation+'assets/step2.php', function() {
-        $.getScript(ajaxLocation+'js/script2.js');
+    // Load the next script, depending on whether or not the user is logged in
+    $.ajax({
+      url: ajaxLocation+'assets/is-user-logged-in.php',
+      type: 'POST',
+      dataType: 'json',
+      success: function(data){
+        // If the user isn't logged in, ask them to log in or register
+        if ( ! data ) {
+          $('#html-display-container').load(ajaxLocation+'assets/step2a.php', function() {
+              $.getScript(ajaxLocation+'js/script2a.js');
+          });
+        }
+        // Else skip that step and proceed to 
+        else {
+          $('#html-display-container').load(ajaxLocation+'assets/step2b.php', function() {
+              $.getScript(ajaxLocation+'js/script2b.js');
+          });
+        }
+      }
     });
+
   });
 
 })( jQuery );
