@@ -7,6 +7,8 @@
   // XXX - Edit this when changing servers
   var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
 
+  // Custom AJAX eror handler - we're going to need it, since we load our scripts dynamically
+  //    (silently errors otherwise)
   $.ajaxSetup({
     timeout: 15000,
     error: function(event, request, settings){
@@ -17,6 +19,10 @@
     }
   });
 
+  // Delete past social media authorization cookies, so user may elect or abstain this session as well
+  $.get( ajaxLocation+"assets/delete-auth-cookies.php" );
+
+  // Fetch nonces
   nonceRequest( 'post' );
   nonceRequest( 'mark-shared' );
   nonceRequest( 'share-to-social-media' );

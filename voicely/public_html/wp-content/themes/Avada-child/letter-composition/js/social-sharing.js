@@ -1,7 +1,28 @@
 // This file contains the shared social sharing code for each of the social sharing JS components
+//    NOTE: Must use "jQuery" rather than the shorthand "$" syntax here.
+//          (It's a WP thing)
 
 // XXX - Edit this when changing servers
 var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
+
+// Returns the default sharing message using the user's entered parameters from the first few steps
+function getShareMessageWithCurrentParams() {
+  // Addressees
+  // Fetch the input & remove empty elements
+  var addressees = jQuery('#persistent-data-container').data('addressees');
+  if ( addressees.length == 0 )
+    addressees = "the world";
+
+  // Title
+  var title = jQuery('#persistent-data-container').data('title').trim();
+
+  // // Tags
+  // var tags = $('#persistent-data-container').data('tags');
+
+  // Combine & return
+  var result = "I just wrote an open letter to " + addressees + " entitled \"" + title + "\".";
+  return result;
+}
 
 // Get user's third party authorization token
 function getToken( provider ) {

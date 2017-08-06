@@ -25,12 +25,15 @@ require('../../../../../wp-load.php')
     <br>
     Authentication, Sharing Message Edit, Friend Selection(+Harvesting), Sharing(+Success/Failure)
     <br>
+    <br>
 </small>
 
+Facebook<br>
+<textarea id="sharing-message" style="display: none;"></textarea><br>
+
+<button id="prompt-button">Share to Facebook</button>
+<a id="skip-button">No thanks...</button>
 <br>
-Facebook
-<button id="prompt-button">Prompt</button>
-<button id="share-button">Share</button>
 
 <!-- "Next" button -->
-<button class="btn btn-large btn-primary" id="end-step3a-button">NEXT</button>
+<button class="btn btn-large btn-primary" id="end-step3a-button" disabled>NEXT</button>
