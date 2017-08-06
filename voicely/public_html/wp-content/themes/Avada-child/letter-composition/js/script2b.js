@@ -117,8 +117,8 @@
     // SAVE DATA
 
     // Load the next script
-    $('#html-display-container').load(ajaxLocation+'assets/step3.php', function() {
-        $.getScript(ajaxLocation+'js/script3.js');
+    $('#html-display-container').load(ajaxLocation+'assets/step3a.php', function() {
+        $.getScript(ajaxLocation+'js/script3a.js');
     });
   });
 

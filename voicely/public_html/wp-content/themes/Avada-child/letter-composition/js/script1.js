@@ -7,6 +7,16 @@
   // XXX - Edit this when changing servers
   var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
 
+  $.ajaxSetup({
+    timeout: 15000,
+    error: function(event, request, settings){
+      alert("Ajax error");
+      console.log(event);
+      console.log(request);
+      console.log(settings);
+    }
+  });
+
   nonceRequest( 'post' );
   nonceRequest( 'mark-shared' );
   nonceRequest( 'share-to-social-media' );

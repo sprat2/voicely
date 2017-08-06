@@ -46,10 +46,12 @@ try {
         // else input's valid - set and sanitize input variables
         $title = sanitize_text_field( $_POST['title'] );
         $contents = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['contents'] ) ) );
+        if ( !isset( $_POST['tags'] ) )
+            $_POST['tags'] = array();
         $tags = array_map( 'esc_attr', $_POST['tags'] );
         // Set default addressee if none is provided
         if ( empty( $_POST['addressees'] ) )
-            $addressees = 'The World';
+            $addressees = array( 'The World' );
         else
             $addressees = array_map( 'esc_attr', $_POST['addressees'] );
 
