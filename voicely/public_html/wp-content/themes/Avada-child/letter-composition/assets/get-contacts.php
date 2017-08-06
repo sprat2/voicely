@@ -3,8 +3,12 @@ session_start();
 
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
-// NOTE: Does not interface with WP at all.  Does not need sanitization for our purposes.
+// Load WordPress functionality
+//   (required for nonce verification - may lighten later by only importing required functionality)
+define('WP_USE_THEMES', false);
+require('../../../../../wp-load.php');
 
 // Set up Hybridauth
 // Import Hybridauth
@@ -29,25 +33,15 @@ $config = [
 ];
 
 // Configure PHP to throw exceptions for notices and warnings (to more easily debug via ajax)
-//    (Diabled for now - viewing errors by accessing the page directly - not by viewing the cookie output)
 set_error_handler(function($errno, $errstr, $errfile, $errline) {
     throw new RuntimeException($errstr . " on line " . $errline . " in file " . $errfile);
 });
 
-// Display errors
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Set the provider
-if ( isset( $_GET['provider'] ) ) {
-    $_SESSION['pastProvider'] = urldecode( $_GET['provider'] );
-    $provider =  urldecode( $_GET['provider'] );
-} elseif ( isset( $_SESSION['pastProvider'] ) ||
-           isset( $_GET['oauth_token'] ) ||
-           isset( $_GET['code'] ) ) {
-    $provider = $_SESSION['pastProvider']; // Already sanitized on last visit
-} else {
+// error if no provider specified
+if ( !isset( $_GET['provider'] ) ) {
     set_and_return_error( 'Provider not set' );
+} else {
+    $_GET['provider'] = urldecode( $_GET['provider'] );
 }
 
 // Global unhelpful try/catch to obscure error messages
@@ -55,9 +49,20 @@ try {
     try{
         // Perform the API authentication request
         $hybridauth = new Hybridauth($config);
-        $adapter = $hybridauth->authenticate($provider); 
+        $adapter = $hybridauth->getAdapter( stripslashes_deep( $_GET['provider'] ) );
+
+        // Err if cookie not found
+        if ( !isset( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) )
+            set_and_return_error('Authentication cookie not found.' . 
+                '  Cookie sought: ' . strtolower( $_GET['provider'] ) . 'Token.' . 
+                '  Cookies: ' . var_export($_COOKIE, true));
+
+        $adapter->setAccessToken( json_decode( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) ) );
         if ( $adapter->isConnected() ) {
-            write_to_cookie( json_encode( $adapter->getAccessToken() ), $provider );
+            // Fetch user's contacts
+            $user_contacts = $adapter->getUserContacts();
+            // Return success and disconnect
+            returnSuccess( $user_contacts );
             $adapter->disconnect();
         }
         else {
@@ -72,6 +77,17 @@ try {
     set_and_return_error( $e->getMessage() );
 }
 
+// Return successfully
+function returnSuccess( $return_value ) {
+    $return_array = array(
+        "success",
+        $return_value,
+    );
+
+    echo json_encode( $return_array );
+    die();
+}
+
 // Return an error via the expected JSON format
 function set_and_return_error( $err_string ) {
     $return_array = array(
@@ -79,18 +95,6 @@ function set_and_return_error( $err_string ) {
         "error_msg" => "Server: " . $err_string,
     );
 
-    unset( $provider );
-    write_to_cookie( json_encode( $return_array ) );
-}
-
-// Writes a json param to a cookie, prefixed by either the provider name or "error"
-function write_to_cookie( $response, $provider = 'error' ) {
-    $provider = strtolower( $provider );
-    $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
-    setcookie( $provider . "Token", $response, 0 ); // Expires on session end
-
-    echo '<script>window.close();</script>';
-    //echo var_export($response, true);
+    echo json_encode( $return_array );
     die();
 }
-?>

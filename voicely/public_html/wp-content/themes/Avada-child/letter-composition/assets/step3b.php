@@ -27,12 +27,15 @@ require('../../../../../wp-load.php')
     <br>
 </small>
 
-Facebook<br>
-<textarea id="sharing-message" style="display: none;"></textarea><br>
+Gmail Contacts
+<br>
 
-<button id="prompt-button">Share to Facebook</button>
+<button id="prompt-button">Authorize with Gmail</button>
+<button id="select-contacts-button" disabled>Select contacts</button>
+<br>
+
 <a id="skip-button">No thanks...</button>
 <br>
 
 <!-- "Next" button -->
-<button class="btn btn-large btn-primary" id="end-step3a-button" disabled>NEXT</button>
+<button class="btn btn-large btn-primary" id="end-step3b-button" disabled>NEXT</button>

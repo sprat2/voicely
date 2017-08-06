@@ -26,7 +26,7 @@ function getShareMessageWithCurrentParams() {
 
 // Get user's third party authorization token
 function getToken( provider ) {
-  var url = ajaxLocation+"assets/get-token.php?provider=" + encodeURI(provider);      
+  var url = ajaxLocation+"assets/get-token.php?provider=" + encodeURI(provider);
   popupCenter( url, provider + " Authorization", 500, 500 );
 }
 
@@ -85,6 +85,41 @@ function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, no
       // Handle server response access errors
       catch ( e ) {
           console.log(returnedData);
+      }
+    },
+    // Transmission failure callback
+    function( data ){
+      console.log(returnedData);
+    }
+  );
+}
+
+function getContacts( provider, successCallback ) {
+  // Perform the AJAX request
+  jQuery.get(ajaxLocation+"assets/get-contacts.php", 
+  {
+    provider: provider,
+  }
+  ).then(
+    // Transmission success callback
+    function( data ){
+      // Access the server's response as JSON
+      try {
+        var returnedData = data;
+
+        // Handle server-specified errors if present
+        if ( returnedData.error === true ) {
+          console.log(returnedData);
+        }
+        // Else no errors - proceed
+        else {
+          // Process response
+          successCallback( returnedData );
+        }
+      }
+      // Handle server response access errors
+      catch ( e ) {
+        console.log(returnedData);
       }
     },
     // Transmission failure callback

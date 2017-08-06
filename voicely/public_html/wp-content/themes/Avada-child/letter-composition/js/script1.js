@@ -26,6 +26,7 @@
   nonceRequest( 'post' );
   nonceRequest( 'mark-shared' );
   nonceRequest( 'share-to-social-media' );
+  nonceRequest( 'gmail-contacts' );
 
   // Handles a single request to set a nonce.
   function nonceRequest( action ) {
@@ -54,6 +55,9 @@
                 break;
               case 'share-to-social-media':
                 $('#persistent-data-container').data('shared-to-social-media-nonce', data.nonce);
+                break;
+              case 'gmail-contacts':
+                $('#persistent-data-container').data('gmail-contacts-nonce', data.nonce);
                 break;
               detault:
                 console.log(data);

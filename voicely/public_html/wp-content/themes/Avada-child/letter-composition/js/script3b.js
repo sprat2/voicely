@@ -15,38 +15,40 @@
 
     // Set up the page's buttons to perform their actions
 
-    // Sharing prompt button
+    // Authorization button
     $('#prompt-button').click(function() {
-      // Store Facebook token as a cookie, to be used later by postToSocialMedia
-      getToken('Facebook');
+      // Store Gmail contacts as a cookie, to be used by selectContacts
+      getToken('Google');
 
       // Enable the "Next" button and unhide the textarea
-      $('#end-step3a-button').prop('disabled', false);
-      $('#sharing-message').css( 'display', 'inline' );
+      $('#select-contacts-button').prop('disabled', false);
+    });
+
+    // Contact selection button
+    $('#select-contacts-button').click(function() {
+      // Store Gmail token as a cookie, to be used later
+      var userContacts = getContacts( 'Google', function( userContacts ) { 
+        console.log(userContacts);
+        // XXX RESUME HERE! (get contacts as a callback from this function, then select, then proceed via text doc's instructions)
+      });
+
+      // Enable the "Next" button and unhide the textarea
+      $('#end-step3b-button').prop('disabled', false);
     });
 
     // Skip button
     $('#skip-button').click(function() {
       // Enable the "Next" button
-      $('#end-step3a-button').prop('disabled', false);
+      $('#end-step3b-button').prop('disabled', false);
     });
 
   });
 
-  function facebookSuccess() {
-    alert('Success!');
-  }
-
   // Set "next" button up to share data from this step and set up the next
-  $('#end-step3a-button').click(function() {
-    // Attempt to share to Facebook (will only succeed if authorized
-    var returnedRemoteLetterData = $('#persistent-data-container').data('server-response');
-    var nonce = $('#persistent-data-container').data('shared-to-social-media-nonce');
-    postToSocialMedia( 'Facebook', $('#sharing-message').val(), returnedRemoteLetterData, nonce );
-
+  $('#end-step3b-button').click(function() {
     // Load the next script
-    $('#html-display-container').load(ajaxLocation+'assets/step3b.php', function() {
-        $.getScript(ajaxLocation+'js/script3b.js');
+    $('#html-display-container').load(ajaxLocation+'assets/step4.php', function() {
+        $.getScript(ajaxLocation+'js/script4.js');
     });
   });
 
