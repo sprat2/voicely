@@ -29,7 +29,6 @@
       // Store Gmail token as a cookie, to be used later
       var userContacts = getContacts( 'Google', function( userContacts ) { 
         console.log(userContacts);
-        // XXX RESUME HERE! (get contacts as a callback from this function, then select, then proceed via text doc's instructions)
       });
 
       // Enable the "Next" button and unhide the textarea

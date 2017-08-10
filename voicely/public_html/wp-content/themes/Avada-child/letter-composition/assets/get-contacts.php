@@ -61,8 +61,10 @@ try {
         if ( $adapter->isConnected() ) {
             // Fetch user's contacts
             $user_contacts = $adapter->getUserContacts();
+            //$user_contacts = $adapter->getUserProfile();
             // Return success and disconnect
-            returnSuccess( $user_contacts );
+            returnSuccess( $user_contacts ); // XXX: Returns null?
+            //returnSuccess( var_export( $user_contacts, true ) ); // XXX: Returns null?
             $adapter->disconnect();
         }
         else {
