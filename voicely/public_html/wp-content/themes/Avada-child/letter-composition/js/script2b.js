@@ -5,8 +5,10 @@
   'use strict';
 
   // XXX - Edit this when changing servers
-  var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
-
+  var detS = "";
+  if (location.protocol == 'https:') detS = "s";
+  var ajaxLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/";
+  
   // Set up the submitted dialog's letter portion
   // sharing-icon
   $('#letter-progress .sharing-icon').html('<img src="'+ajaxLocation+'img/loading.gif">');
@@ -117,8 +119,8 @@
     // SAVE DATA
 
     // Load the next script
-    $('#html-display-container').load(ajaxLocation+'assets/step3a.php', function() {
-        $.getScript(ajaxLocation+'js/script3a.js');
+    $('#html-display-container').load(ajaxLocation+'assets/step3a1.php', function() {
+        $.getScript(ajaxLocation+'js/script3a1.js');
     });
   });
 

@@ -20,19 +20,24 @@ require('../../../../../wp-load.php')
 <small>
     Social auth:
     <br>
-    Email, Facebook, Twitter, Instagram
+    Email
     <br>
     Authentication, Sharing Message Edit, Friend Selection(+Harvesting), Sharing(+Success/Failure)
     <br>
     <br>
 </small>
 
-Facebook<br>
-<textarea id="sharing-message" style="display: none;"></textarea><br>
+WindowsLive Contacts
+<br>
 
-<button id="prompt-button">Share to Facebook</button>
+<div id="contacts-selection-div"></div>
+
+<button id="prompt-button">Authorize with Windows Live</button>
+<button id="select-contacts-button" disabled>Select contacts</button>
+<br>
+
 <a id="skip-button">No thanks...</button>
 <br>
 
 <!-- "Next" button -->
-<button class="btn btn-large btn-primary" id="end-step3a-button" disabled>NEXT</button>
+<button class="btn btn-large btn-primary" id="end-step3b2-button" disabled>NEXT</button>

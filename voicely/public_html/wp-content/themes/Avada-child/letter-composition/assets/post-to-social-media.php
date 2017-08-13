@@ -15,22 +15,7 @@ require('../../../../../wp-load.php');
 include '../vendor/autoload.php';
 use Hybridauth\Hybridauth; 
 // Hybridauth configuration array
-$config = [
-    // Location where to redirect users once they authenticate with a provider
-    'callback' => (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH),
-
-    // Providers
-    'providers' => [
-        'Twitter'  => ['enabled' => true, 'keys' => [ 'key' => 'c4L94qXTR3hwCI1WUtGGAaBeF', 'secret' => 'RH1D8O3qazcveJMpDZfcm8CLQ7TJv24ReTi4FOCS3Z7snFqwri']],
-        'Google'   => ['enabled' => false,'keys' => [ 'id'  => '822285507867-779tnut9hd0bpvkk54oikgk9276tsb0q.apps.googleusercontent.com', 'secret' => '4subJgKfmnRHaZGWRr6cbAJ6']],
-        'Facebook' => [
-            'enabled' => true,
-            // 'scope'   => ['email', 'user_about_me', 'user_birthday', 'user_hometown']
-            'keys' => [ 'id'  => '132906143984825', 'secret' => '0a6b2eff6b61e0942f2c4e3371d0881d'],
-            'display' => 'popup',
-        ]
-    ]
-];
+require 'hybridauth-credentials.php';
 
 // Verify the nonce
 if ( empty( $_GET['nonce'] ) ) {
@@ -70,7 +55,9 @@ try {
         $adapter = $hybridauth->getAdapter( stripslashes_deep( $_GET['provider'] ) );
         //set_and_return_error( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) );
         if ( !isset( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) )
-            set_and_return_error('Authentication cookie not found.' . 
+            set_and_return_error( 'Not authorized.' .
+                '  Authentication cookie not found.' . 
+                '  Likely the result of user not granting access to their third party account.' . 
                 '  Cookie sought: ' . strtolower( $_GET['provider'] ) . 'Token.' . 
                 '  Cookies: ' . var_export($_COOKIE, true));
         $adapter->setAccessToken( json_decode( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) ) );
@@ -88,11 +75,10 @@ try {
                     )
                 );
             }
-            
+
             // Return success and disconnect
             returnSuccess();
             $adapter->disconnect();
-            
         }
         else {
             set_and_return_error( "not connected" );

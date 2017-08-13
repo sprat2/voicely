@@ -1,6 +1,6 @@
 <?php
 
-/* This file contains the HTML display code for step 3a - social auth - facebook */
+/* This file contains the HTML display code for step 3a - social auth - twitter */
 
 $debug = true;
 
@@ -20,22 +20,19 @@ require('../../../../../wp-load.php')
 <small>
     Social auth:
     <br>
-    Email, Facebook, Twitter, Instagram
+    Twitter
     <br>
     Authentication, Sharing Message Edit, Friend Selection(+Harvesting), Sharing(+Success/Failure)
     <br>
     <br>
 </small>
 
-Gmail Contacts
-<br>
+Twitter<br>
+<textarea id="sharing-message" style="display: none;"></textarea><br>
 
-<button id="prompt-button">Authorize with Gmail</button>
-<button id="select-contacts-button" disabled>Select contacts</button>
-<br>
-
+<button id="prompt-button">Share to Twitter</button>
 <a id="skip-button">No thanks...</button>
 <br>
 
 <!-- "Next" button -->
-<button class="btn btn-large btn-primary" id="end-step3b-button" disabled>NEXT</button>
+<button class="btn btn-large btn-primary" id="end-step3a2-button" disabled>NEXT</button>

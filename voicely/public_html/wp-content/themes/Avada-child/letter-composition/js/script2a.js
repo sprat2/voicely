@@ -5,11 +5,10 @@
   'use strict';
 
   // XXX - Edit this when changing servers
-  var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
-
-
-
-
+  var detS = "";
+  if (location.protocol == 'https:') detS = "s";
+  var ajaxLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/";
+  
   // Set "next" button up to store data from this step and set up the next
   $('#end-step2a-button').click(function() {
     // SAVE DATA

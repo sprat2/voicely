@@ -5,8 +5,9 @@
   'use strict';
 
   // XXX - Edit this when changing servers
-  var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
-
+var detS = "";
+if (location.protocol == 'https:') detS = "s";
+var ajaxLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/";
 
 
 

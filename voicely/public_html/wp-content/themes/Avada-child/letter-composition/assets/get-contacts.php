@@ -1,6 +1,15 @@
 <?php
 session_start();
 
+// Configure PHP to throw exceptions for notices and warnings (to more easily debug via ajax)
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    throw new RuntimeException($errstr . " on line " . $errline . " in file " . $errfile);
+});
+
+// Display errors
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -15,27 +24,7 @@ require('../../../../../wp-load.php');
 include '../vendor/autoload.php';
 use Hybridauth\Hybridauth; 
 // Hybridauth configuration array
-$config = [
-    // Location where to redirect users once they authenticate with a provider
-    'callback' => (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH),
-
-    // Providers
-    'providers' => [
-        'Twitter'  => ['enabled' => true, 'keys' => [ 'key' => 'c4L94qXTR3hwCI1WUtGGAaBeF', 'secret' => 'RH1D8O3qazcveJMpDZfcm8CLQ7TJv24ReTi4FOCS3Z7snFqwri']],
-        'Google'   => ['enabled' => true,'keys' => [ 'id'  => '822285507867-779tnut9hd0bpvkk54oikgk9276tsb0q.apps.googleusercontent.com', 'secret' => '4subJgKfmnRHaZGWRr6cbAJ6']],
-        'Facebook' => [
-            'enabled' => true,
-            // 'scope'   => ['email', 'user_about_me', 'user_birthday', 'user_hometown']
-            'keys' => [ 'id'  => '132906143984825', 'secret' => '0a6b2eff6b61e0942f2c4e3371d0881d'],
-            'display' => 'popup',
-        ]
-    ]
-];
-
-// Configure PHP to throw exceptions for notices and warnings (to more easily debug via ajax)
-set_error_handler(function($errno, $errstr, $errfile, $errline) {
-    throw new RuntimeException($errstr . " on line " . $errline . " in file " . $errfile);
-});
+require 'hybridauth-credentials.php';
 
 // error if no provider specified
 if ( !isset( $_GET['provider'] ) ) {
@@ -53,18 +42,21 @@ try {
 
         // Err if cookie not found
         if ( !isset( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) )
-            set_and_return_error('Authentication cookie not found.' . 
+            set_and_return_error( 'Not authorized.' .
+                '  Authentication cookie not found.' . 
+                '  Likely the result of user not granting access to their third party account.' . 
                 '  Cookie sought: ' . strtolower( $_GET['provider'] ) . 'Token.' . 
                 '  Cookies: ' . var_export($_COOKIE, true));
 
+        // Set token
         $adapter->setAccessToken( json_decode( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) ) );
         if ( $adapter->isConnected() ) {
             // Fetch user's contacts
-            $user_contacts = $adapter->getUserContacts();
-            //$user_contacts = $adapter->getUserProfile();
+            // $user_contacts = $adapter->getUserContacts();
+            $user_contacts = $adapter->getUserProfile();
             // Return success and disconnect
             returnSuccess( $user_contacts ); // XXX: Returns null?
-            //returnSuccess( var_export( $user_contacts, true ) ); // XXX: Returns null?
+            // returnSuccess( var_export( $user_contacts, true ) ); // XXX: Returns null?
             $adapter->disconnect();
         }
         else {

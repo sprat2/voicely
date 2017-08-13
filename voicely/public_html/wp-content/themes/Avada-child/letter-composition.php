@@ -26,15 +26,17 @@ if ( ! defined( 'ABSPATH' ) ) { exit( 'Direct script access denied.' ); }
     <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/bootstrap-tagsinput.css" rel="stylesheet">
     <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/typeaheadjs.css" rel="stylesheet">
+    <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/image-picker.css" rel="stylesheet">
+    <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/multi-select.dist.css" rel="stylesheet">
     <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/style.css" rel="stylesheet">
   </head>
   <body>
-	<?php get_header(); // Avada's header ?>
+    <?php get_header(); // Avada's header ?>
 
-	<!-- Invisible data container -->
-	<div id="persistent-data-container" style="display:none"></div>
+    <!-- Invisible data container -->
+    <div id="persistent-data-container" style="display:none"></div>
 
-	<!-- Displayed HTML container -->
+    <!-- Displayed HTML container -->
     <div class="container-fluid Col2" id="html-display-container"><p>Loading...</p></div>
 
     <?php do_action( 'avada_after_content' ); ?>
@@ -44,6 +46,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit( 'Direct script access denied.' ); }
     <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/bootstrap.min.js"></script>
     <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/bootstrap-tagsinput.js"></script>
     <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/typeahead.bundle.js"></script>
+    <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/image-picker.min.js"></script>
+    <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/jquery.multi-select.js"></script>
     <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/initscript.js"></script>
   </body>
 </html>

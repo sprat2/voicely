@@ -1,12 +1,14 @@
-/* This file contains the HTML display code for step 3 - social auth */
+/* This file contains the HTML display code for step 3 - social auth - Gmail */
 
 // Encapsulates code, applying $ to JQuery the WP way
 (function( $ ) {
   'use strict';
 
   // XXX - Edit this when changing servers
-  var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
-
+  var detS = "";
+  if (location.protocol == 'https:') detS = "s";
+  var ajaxLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/";
+  
   // Load sharing JS, then execute share function
   $.getScript(ajaxLocation+"js/social-sharing.js", function(){
 
@@ -32,22 +34,25 @@
       });
 
       // Enable the "Next" button and unhide the textarea
-      $('#end-step3b-button').prop('disabled', false);
+      $('#end-step3b1-button').prop('disabled', false);
     });
 
     // Skip button
     $('#skip-button').click(function() {
       // Enable the "Next" button
-      $('#end-step3b-button').prop('disabled', false);
+      $('#end-step3b1-button').prop('disabled', false);
     });
 
   });
 
   // Set "next" button up to share data from this step and set up the next
-  $('#end-step3b-button').click(function() {
+  $('#end-step3b1-button').click(function() {
+    // Save selected contacts here so we may use them at the end
+    //$('#persistent-data-container').data('gmail-selected-sharing-addresses', XXXX);
+
     // Load the next script
-    $('#html-display-container').load(ajaxLocation+'assets/step4.php', function() {
-        $.getScript(ajaxLocation+'js/script4.js');
+    $('#html-display-container').load(ajaxLocation+'assets/step3b2.php', function() {
+        $.getScript(ajaxLocation+'js/script3b2.js');
     });
   });
 

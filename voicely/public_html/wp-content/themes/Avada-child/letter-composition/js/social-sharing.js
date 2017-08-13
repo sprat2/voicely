@@ -3,7 +3,9 @@
 //          (It's a WP thing)
 
 // XXX - Edit this when changing servers
-var ajaxLocation = "http://voicely.org/wp-content/themes/Avada-child/letter-composition/";
+var detS = "";
+if (location.protocol == 'https:') detS = "s";
+var ajaxLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/";
 
 // Returns the default sharing message using the user's entered parameters from the first few steps
 function getShareMessageWithCurrentParams() {
@@ -26,7 +28,7 @@ function getShareMessageWithCurrentParams() {
 
 // Get user's third party authorization token
 function getToken( provider ) {
-  var url = ajaxLocation+"assets/get-token.php?provider=" + encodeURI(provider);
+  var url = ajaxLocation+"assets/get-token.php?provider=" + encodeURI(provider) + '&' + new Date().getTime();
   popupCenter( url, provider + " Authorization", 500, 500 );
 }
 
@@ -51,7 +53,7 @@ function popupCenter(url, title, w, h) {
 }
 
 // Note: Could be made to better handle arbitrary providers
-function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, nonce ) {
+function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, nonce, successCallback ) {
 
   // Perform the AJAX request
   jQuery.get(ajaxLocation+"assets/post-to-social-media.php", 
@@ -60,36 +62,30 @@ function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, no
     message:  shareMessage,
     url:      returnedRemoteLetterData.url_to_letter,
     nonce:    nonce,
-  }
-  ).then(
+    cachebust: new Date().getTime(),
+  }).then(
     // Transmission success callback
     function( data ){
       // Access the server's response as JSON
       try {
-        var returnedData = data;
-
         // Handle server-specified errors if present
         if ( returnedData.error === true ) {
-          console.log(returnedData);
+          console.log(data);
         }
         // Else no errors - proceed
         else {
           // Process response
-          if ( provider.toLowerCase() === 'facebook' ) {
-            facebookSuccess();
-          } else if ( provider.toLowerCase() === 'twitter' ) {
-            twitterSuccess();
-          }
+          successCallback(data);
         }
       }
       // Handle server response access errors
       catch ( e ) {
-          console.log(returnedData);
+          console.log(data);
       }
     },
     // Transmission failure callback
     function( data ){
-      console.log(returnedData);
+      console.log(data);
     }
   );
 }
@@ -99,32 +95,31 @@ function getContacts( provider, successCallback ) {
   jQuery.get(ajaxLocation+"assets/get-contacts.php", 
   {
     provider: provider,
+    cachebust: new Date().getTime(),
   }
   ).then(
     // Transmission success callback
     function( data ){
       // Access the server's response as JSON
       try {
-        var returnedData = data;
-
         // Handle server-specified errors if present
         if ( returnedData.error === true ) {
-          console.log(returnedData);
+          console.log(data);
         }
         // Else no errors - proceed
         else {
           // Process response
-          successCallback( returnedData );
+          successCallback(data);
         }
       }
       // Handle server response access errors
       catch ( e ) {
-        console.log(returnedData);
+        console.log(data);
       }
     },
     // Transmission failure callback
     function( data ){
-      console.log(returnedData);
+      console.log(data);
     }
   );
 }
