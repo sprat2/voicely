@@ -11,5 +11,7 @@ setcookie( "facebookToken", '', 1 );
 setcookie( "twitterToken", '', 1 );
 setcookie( "instagramToken", '', 1 );
 setcookie( "googleToken", '', 1 );
+setcookie( "windowsliveToken", '', 1 );
+setcookie( "windowsliveContacts", '', 1 );
 setcookie( "googleContacts", '', 1 );
 setcookie( "errorContacts", '', 1 );

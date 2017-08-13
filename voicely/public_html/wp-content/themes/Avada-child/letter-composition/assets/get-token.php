@@ -75,10 +75,9 @@ function write_to_cookie( $response, $provider = 'error' ) {
     $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
     setcookie( $provider . "Token", $response, 0 ); // Expires on session end
 
-    // echo '<script>window.close();</script>';
-    echo var_export($response, true);
-    echo '<br><br><br>';
-    echo var_export( $_COOKIE, true );
-    die();
+    echo '<script>window.close();</script>';
+    // echo var_export($response, true);
+    // echo '<br><br><br>';
+    // echo var_export( $_COOKIE, true );
 }
 ?>

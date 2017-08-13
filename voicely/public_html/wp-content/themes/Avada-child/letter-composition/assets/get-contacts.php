@@ -52,11 +52,13 @@ try {
         $adapter->setAccessToken( json_decode( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) ) );
         if ( $adapter->isConnected() ) {
             // Fetch user's contacts
-            // $user_contacts = $adapter->getUserContacts();
-            $user_contacts = $adapter->getUserProfile();
+            $user_contacts = $adapter->getUserContacts();
+            // $user_contacts = $adapter->getUserProfile();
+
             // Return success and disconnect
             returnSuccess( $user_contacts ); // XXX: Returns null?
             // returnSuccess( var_export( $user_contacts, true ) ); // XXX: Returns null?
+            
             $adapter->disconnect();
         }
         else {
@@ -79,7 +81,6 @@ function returnSuccess( $return_value ) {
     );
 
     echo json_encode( $return_array );
-    die();
 }
 
 // Return an error via the expected JSON format
@@ -90,5 +91,4 @@ function set_and_return_error( $err_string ) {
     );
 
     echo json_encode( $return_array );
-    die();
 }

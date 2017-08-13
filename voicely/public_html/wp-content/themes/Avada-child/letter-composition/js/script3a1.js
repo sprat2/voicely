@@ -40,11 +40,6 @@
     // Save FB sharing data so we may share at the end
     $('#persistent-data-container').data('fb-sharing-message', $('#sharing-message').val());
 
-    // Attempt to share to Facebook (will only succeed if authorized
-    var returnedRemoteLetterData = $('#persistent-data-container').data('server-response');
-    var nonce = $('#persistent-data-container').data('shared-to-social-media-nonce');
-    postToSocialMedia( 'Facebook', $('#sharing-message').val(), returnedRemoteLetterData, nonce, function(returnedData){} );
-
     // Load the next script
     $('#html-display-container').load(ajaxLocation+'assets/step3a2.php', function() {
         $.getScript(ajaxLocation+'js/script3a2.js');

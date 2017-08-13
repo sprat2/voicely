@@ -30,6 +30,8 @@ require('../../../../../wp-load.php')
 Gmail Contacts
 <br>
 
+<div id="contacts-selection-div"></div>
+
 <button id="prompt-button">Authorize with Gmail</button>
 <button id="select-contacts-button" disabled>Select contacts</button>
 <br>

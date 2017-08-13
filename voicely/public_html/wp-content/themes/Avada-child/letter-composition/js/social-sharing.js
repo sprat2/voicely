@@ -53,7 +53,7 @@ function popupCenter(url, title, w, h) {
 }
 
 // Note: Could be made to better handle arbitrary providers
-function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, nonce, successCallback ) {
+function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, nonce, successCallback, failureCallback ) {
 
   // Perform the AJAX request
   jQuery.get(ajaxLocation+"assets/post-to-social-media.php", 
@@ -69,8 +69,10 @@ function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, no
       // Access the server's response as JSON
       try {
         // Handle server-specified errors if present
-        if ( returnedData.error === true ) {
+        if ( data && data.hasOwnProperty('error') ) {
+          console.log('Server-specified error in getContacts');
           console.log(data);
+          failureCallback(data);
         }
         // Else no errors - proceed
         else {
@@ -80,12 +82,17 @@ function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, no
       }
       // Handle server response access errors
       catch ( e ) {
-          console.log(data);
+        console.log('Exception in getContacts');
+        console.log(e);
+        console.log(data);
+        failureCallback(data);
       }
     },
     // Transmission failure callback
     function( data ){
+      console.log('Transmission failure callback in postToSocialMedia');
       console.log(data);
+      failureCallback(data);
     }
   );
 }
@@ -103,22 +110,26 @@ function getContacts( provider, successCallback ) {
       // Access the server's response as JSON
       try {
         // Handle server-specified errors if present
-        if ( returnedData.error === true ) {
+        if ( data && data.hasOwnProperty('error') ) {
+          console.log('Server-specified error in getContacts');
           console.log(data);
         }
         // Else no errors - proceed
         else {
           // Process response
-          successCallback(data);
+          successCallback(data[1]); // Skip 'success' element, send payload
         }
       }
       // Handle server response access errors
       catch ( e ) {
+        console.log('Exception in getContacts');
+        console.log(e);
         console.log(data);
       }
     },
     // Transmission failure callback
     function( data ){
+      console.log('Transmission failure callback in getContacts');
       console.log(data);
     }
   );

@@ -11,15 +11,15 @@
   
   // Custom AJAX eror handler - we're going to need it, since we load our scripts dynamically
   //    (silently errors otherwise)
-  $.ajaxSetup({
-    timeout: 15000,
-    error: function(event, request, settings){
-      alert("Ajax error");
-      console.log(event);
-      console.log(request);
-      console.log(settings);
-    }
-  });
+  // $.ajaxSetup({
+  //   timeout: 15000,
+  //   error: function(event, request, settings){
+  //     alert("Ajax error");
+  //     console.log(event);
+  //     console.log(request);
+  //     console.log(settings);
+  //   }
+  // });
 
   // Delete past social media authorization cookies, so user may elect or abstain this session as well
   $.get( ajaxLocation+"assets/delete-auth-cookies.php" );
@@ -167,25 +167,31 @@
     $('#persistent-data-container').data('body', $('#bodyInput').val());
 
     // Load the next script, depending on whether or not the user is logged in
-    $.ajax({
-      url: ajaxLocation+'assets/is-user-logged-in.php',
-      type: 'POST',
-      dataType: 'json',
-      success: function(data){
-        // If the user isn't logged in, ask them to log in or register
-        if ( ! data ) {
-          $('#html-display-container').load(ajaxLocation+'assets/step2a.php', function() {
-              $.getScript(ajaxLocation+'js/script2a.js');
-          });
-        }
-        // Else skip that step and proceed to 
-        else {
-          $('#html-display-container').load(ajaxLocation+'assets/step2b.php', function() {
-              $.getScript(ajaxLocation+'js/script2b.js');
-          });
-        }
-      }
+    // $.ajax({
+    //   url: ajaxLocation+'assets/is-user-logged-in.php',
+    //   type: 'POST',
+    //   dataType: 'json',
+    //   success: function(data){
+    //     // If the user isn't logged in, ask them to log in or register
+    //     if ( ! data ) {
+    //       $('#html-display-container').load(ajaxLocation+'assets/step2a.php', function() {
+    //           $.getScript(ajaxLocation+'js/script2a.js');
+    //       });
+    //     }
+    //     // Else skip that step and proceed to 
+    //     else {
+    //       $('#html-display-container').load(ajaxLocation+'assets/step2b.php', function() {
+    //           $.getScript(ajaxLocation+'js/script2b.js');
+    //       });
+    //     }
+    //   }
+    // });
+
+    // Skip the two deprecated frames and proceed
+    $('#html-display-container').load(ajaxLocation+'assets/step3a1.php', function() {
+      $.getScript(ajaxLocation+'js/script3a1.js');
     });
+
   });
   
 })( jQuery );

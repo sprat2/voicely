@@ -1,4 +1,4 @@
-/* This file contains the HTML display code for step 3 - social auth - twitter */
+/* This file contains the HTML display code for step 3 - social auth - Twitter */
 
 // Encapsulates code, applying $ to JQuery the WP way
 (function( $ ) {
@@ -37,13 +37,8 @@
 
   // Set "next" button up to share data from this step and set up the next
   $('#end-step3a2-button').click(function() {
-    // Save FB sharing data so we may share at the end
+    // Save TW sharing data so we may share at the end
     $('#persistent-data-container').data('tw-sharing-message', $('#sharing-message').val());
-
-    // Attempt to share to Facebook (will only succeed if authorized
-    var returnedRemoteLetterData = $('#persistent-data-container').data('server-response');
-    var nonce = $('#persistent-data-container').data('shared-to-social-media-nonce');
-    postToSocialMedia( 'Twitter', $('#sharing-message').val(), returnedRemoteLetterData, nonce, function(returnedData){} );
 
     // Load the next script
     $('#html-display-container').load(ajaxLocation+'assets/step3b1.php', function() {

@@ -28,9 +28,21 @@
 
     // Contact selection button
     $('#select-contacts-button').click(function() {
-      // Store Gmail token as a cookie, to be used later
-      var userContacts = getContacts( 'Google', function( userContacts ) { 
-        console.log(userContacts);
+      // Store token as a cookie, to be used later
+      var userContacts = getContacts( 'Google', function( userContacts ) {
+        if ( userContacts ) {
+          // Pop up contacts display
+          var htmlString = '<select id="contact-select" multiple="multiple">';
+          for ( var i=0; i<userContacts.length; i++ ) {
+            // Omit those without email addresses
+            if ( userContacts[i].email != null ) {
+              htmlString += '<option value="' + userContacts[i].email + '">' + userContacts[i].displayName + "</option>";
+            }
+          }
+          htmlString += '</select">';
+          $('#contacts-selection-div').html(htmlString);
+          $('#contacts-selection-div').multiSelect();
+        }
       });
 
       // Enable the "Next" button and unhide the textarea
@@ -48,7 +60,7 @@
   // Set "next" button up to share data from this step and set up the next
   $('#end-step3b1-button').click(function() {
     // Save selected contacts here so we may use them at the end
-    //$('#persistent-data-container').data('gmail-selected-sharing-addresses', XXXX);
+    $('#persistent-data-container').data('gmail-selected-sharing-addresses', $('#contacts-selection-div').val());
 
     // Load the next script
     $('#html-display-container').load(ajaxLocation+'assets/step3b2.php', function() {

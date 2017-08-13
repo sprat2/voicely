@@ -30,13 +30,13 @@
     $('#select-contacts-button').click(function() {
       // Store token as a cookie, to be used later
       var userContacts = getContacts( 'WindowsLive', function( userContacts ) {
-        console.log(userContacts);
         // Pop up contacts display
         var htmlString = '<select id="contact-select" multiple="multiple">';
         for ( var i=0; i<userContacts.length; i++ ) {
           // Omit those without email addresses
-          if ( userContacts[i].email != null )
+          if ( userContacts[i].email != null ) {
             htmlString += '<option value="' + userContacts[i].email + '">' + userContacts[i].displayName + "</option>";
+          }
         }
         htmlString += '</select">';
         $('#contacts-selection-div').html(htmlString);
@@ -58,7 +58,7 @@
   // Set "next" button up to share data from this step and set up the next
   $('#end-step3b2-button').click(function() {
     // Save selected contacts here so we may use them at the end
-    //$('#persistent-data-container').data('windowslive-selected-sharing-addresses', XXXX);
+    $('#persistent-data-container').data('windowslive-selected-sharing-addresses', $('#contacts-selection-div').val());
 
     // Load the next script
     $('#html-display-container').load(ajaxLocation+'assets/step4.php', function() {

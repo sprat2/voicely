@@ -31,6 +31,7 @@ Facebook<br>
 <textarea id="sharing-message" style="display: none;"></textarea><br>
 
 <button id="prompt-button">Share to Facebook</button>
+<br>
 <a id="skip-button">No thanks...</button>
 <br>
 

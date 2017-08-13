@@ -100,7 +100,6 @@ function returnSuccess() {
     );
 
     echo json_encode( $return_array );
-    die();
 }
 
 // Return an error via the expected JSON format
@@ -111,5 +110,4 @@ function set_and_return_error( $err_string ) {
     );
 
     echo json_encode( $return_array );
-    die();
 }
