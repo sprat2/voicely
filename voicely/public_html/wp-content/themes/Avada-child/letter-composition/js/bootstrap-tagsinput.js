@@ -1,3 +1,5 @@
+// NOTE: Backspace and delete item removal disabled near lines 380 & 390
+//       (Updates will  break this)
 (function ($) {
   "use strict";
 
@@ -378,7 +380,7 @@
             if (doGetCaretPosition($input[0]) === 0) {
               var prev = $inputWrapper.prev();
               if (prev.length) {
-                self.remove(prev.data('item'));
+                // self.remove(prev.data('item'));
               }
             }
             break;
@@ -388,7 +390,7 @@
             if (doGetCaretPosition($input[0]) === 0) {
               var next = $inputWrapper.next();
               if (next.length) {
-                self.remove(next.data('item'));
+                // self.remove(next.data('item'));
               }
             }
             break;

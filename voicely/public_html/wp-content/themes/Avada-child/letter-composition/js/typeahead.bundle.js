@@ -2,6 +2,7 @@
  * typeahead.js 0.11.1
  * https://github.com/twitter/typeahead.js
  * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
+ * NOTE: Modified atound line 1965 to hard-code a minLength, since typeahead seems to fail to initialize one properly.
  */
 
 (function(root, factory) {
@@ -1961,7 +1962,9 @@
             }
             www.mixin(this);
             this.eventBus = o.eventBus;
-            this.minLength = _.isNumber(o.minLength) ? o.minLength : 1;
+            // Never properly detects minLength (Likely mishandled by tagsinput)
+            // this.minLength = _.isNumber(o.minLength) ? o.minLength : 1;
+            this.minLength = 3;
             this.input = o.input;
             this.menu = o.menu;
             this.enabled = true;

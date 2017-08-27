@@ -60,7 +60,7 @@
       },
       // Transmission failure callback
       function( data ){
-          alert( "Submission transmission failure." );
+          alert( "Submission transmission failure in submitLetter()." );
           console.log(data);
 
           // Update UI for letter sending failure
@@ -81,6 +81,9 @@
 
     // Save the response
     $('#persistent-data-container').data('server-response', returnedRemoteLetterData);
+
+    // Delete the saved letter body cookie
+    document.cookie = 'savedLetter=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
     // Make the calls to share to social media
     // Attempt to share to Facebook (will only succeed if authorized)
@@ -104,7 +107,6 @@
     $('#fb-share-progress .message').html('Sharing to Facebook...');
     $('#fb-share-progress .message').attr('class', 'message loading');
 
-    // var returnedRemoteLetterData = $('#persistent-data-container').data('server-response');
     var nonce = $('#persistent-data-container').data('shared-to-social-media-nonce');
     postToSocialMedia( 'Facebook', $('#persistent-data-container').data('fb-sharing-message'), returnedRemoteLetterData, nonce, function(returnedData){
       // Handle display elements for facebook success
@@ -117,6 +119,9 @@
       // Attempt to share to Twitter (will only succeed if authorized)
       shareToTwitter(returnedData);
     }, function(returnedData){
+      console.log('Error sharing to Facebook'); 
+      console.log(returnedData); 
+      
       // Handle display elements for facebook failure
       // sharing-icon
       $('#fb-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'img/x.png">');
@@ -150,6 +155,9 @@
 
       proceedPastSharing();
     }, function(returnedData){
+      console.log('Error sharing to Twitter'); 
+      console.log(returnedData); 
+
       // Handle display elements for twitter failure
       // sharing-icon
       $('#tw-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'img/x.png">');
@@ -163,8 +171,19 @@
 
 
   function proceedPastSharing() {
-    // TODO: Email prompt
-    //$('#mailto-link').html('<a href="mailto:someone@example.com?Subject=example">Email your contacts!</a>');
+    // Email mailto: prompt
+      $.getScript(ajaxLocation+"js/social-sharing.js", function(){
+      // Recipients
+      var recipients = $('#persistent-data-container').data('google-selected-sharing-addresses');
+      recipients = recipients.concat( $('#persistent-data-container').data('windowslive-selected-sharing-addresses') );
+      recipients = encodeURI( recipients.join(',') );
+      // Subject
+      var subject = encodeURI( getShareMessageWithCurrentParams() );
+      // Body
+      var letterResponseData = $('#persistent-data-container').data('server-response');
+      var body = encodeURI( 'Come check it out at ' + letterResponseData.url_to_letter );
+      $('#mailto-link').html('<a href="mailto:'+recipients+'?subject='+subject+'&body='+body+'">Email your contacts!</a>');
+    });
 
     // TODO: URL link display
     //$('#url-to-clipboard').html('Clipboard-copiable link to go here:<br><a href="' + $('#persistent-data-container').data('server-response').url_to_letter + '>your letter</a>.');
@@ -191,7 +210,7 @@
 
   // Set "next" button up to store data from this step and set up the next
   $('#end-step6-button').click(function() {
-    window.location.href = '/'; // XXX: Replace this with the URL of the published letter
+    window.location.href = $('#persistent-data-container').data('server-response').url_to_letter; // XXX: Replace this with the URL of the published letter
   });
 
 })( jQuery );

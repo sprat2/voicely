@@ -16,3 +16,4 @@
 !voicely/public_html/laravel-test/**
 !voicely/public_html/misc_tests/**
 !voicely/public_html/russtests/**
+!voicely/public_html/ha-test/**

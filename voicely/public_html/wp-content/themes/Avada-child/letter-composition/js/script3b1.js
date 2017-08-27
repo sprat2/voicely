@@ -1,4 +1,4 @@
-/* This file contains the HTML display code for step 3 - social auth - Gmail */
+/* This file contains the HTML display code for step 3 - social auth - google */
 
 // Encapsulates code, applying $ to JQuery the WP way
 (function( $ ) {
@@ -19,7 +19,7 @@
 
     // Authorization button
     $('#prompt-button').click(function() {
-      // Store Gmail contacts as a cookie, to be used by selectContacts
+      // Store google contacts as a cookie, to be used by selectContacts
       getToken('Google');
 
       // Enable the "Next" button and unhide the textarea
@@ -30,19 +30,33 @@
     $('#select-contacts-button').click(function() {
       // Store token as a cookie, to be used later
       var userContacts = getContacts( 'Google', function( userContacts ) {
-        if ( userContacts ) {
-          // Pop up contacts display
-          var htmlString = '<select id="contact-select" multiple="multiple">';
-          for ( var i=0; i<userContacts.length; i++ ) {
-            // Omit those without email addresses
-            if ( userContacts[i].email != null ) {
-              htmlString += '<option value="' + userContacts[i].email + '">' + userContacts[i].displayName + "</option>";
+        console.log( userContacts );
+
+        // Instantiate selected array
+        $('#persistent-data-container').data('google-selected-sharing-addresses', []);
+        // Pop up contacts display
+        var htmlString = '<select id="contact-select" multiple="multiple">';
+        for ( var i=0; i<userContacts.length; i++ ) {
+          // Omit those without email addresses
+          if ( ( userContacts[i].email != null ) && ( userContacts[i].email.trim() != "" ) ) {
+            // If name is empty, insert email address in its place
+            if ( !userContacts[i].displayName.trim() ) {
+              userContacts[i].displayName = userContacts[i].email;
             }
+            // Create the element for this entry
+            htmlString += '<option value="' + userContacts[i].email + '">' + userContacts[i].displayName + "</option>";
           }
-          htmlString += '</select">';
-          $('#contacts-selection-div').html(htmlString);
-          $('#contacts-selection-div').multiSelect();
         }
+        htmlString += '</select">';
+        $('#gmail-contacts-selection-div').html(htmlString);
+        $('#gmail-contacts-selection-div').multiSelect({
+          afterSelect: function(values){
+            addSelectedEmail(values[0]);
+          },
+          afterDeselect: function(values){
+            removeSelectedEmail(values[0]);
+          }
+        });
       });
 
       // Enable the "Next" button and unhide the textarea
@@ -57,10 +71,22 @@
 
   });
 
+  // Functions to add and remove emails from the selection (fired when selected/deselected)
+  function addSelectedEmail(email) {
+    var existing = $('#persistent-data-container').data('google-selected-sharing-addresses');
+    existing.push(email);
+    $('#persistent-data-container').data('google-selected-sharing-addresses', existing);
+  }
+  function removeSelectedEmail(email) {
+    var existing = $('#persistent-data-container').data('google-selected-sharing-addresses');
+    var i = existing.indexOf(email);
+    if(i != -1)
+      existing.splice(i, 1);
+    $('#persistent-data-container').data('google-selected-sharing-addresses', existing);
+  }
+
   // Set "next" button up to share data from this step and set up the next
   $('#end-step3b1-button').click(function() {
-    // Save selected contacts here so we may use them at the end
-    $('#persistent-data-container').data('gmail-selected-sharing-addresses', $('#contacts-selection-div').val());
 
     // Load the next script
     $('#html-display-container').load(ajaxLocation+'assets/step3b2.php', function() {

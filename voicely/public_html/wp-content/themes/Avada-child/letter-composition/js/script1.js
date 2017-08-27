@@ -11,15 +11,15 @@
   
   // Custom AJAX eror handler - we're going to need it, since we load our scripts dynamically
   //    (silently errors otherwise)
-  // $.ajaxSetup({
-  //   timeout: 15000,
-  //   error: function(event, request, settings){
-  //     alert("Ajax error");
-  //     console.log(event);
-  //     console.log(request);
-  //     console.log(settings);
-  //   }
-  // });
+  $.ajaxSetup({
+    timeout: 15000,
+    error: function(event, request, settings){
+      console.log("Ajax error (next 3 lines)");
+      console.log(event);
+      console.log(request);
+      console.log(settings);
+    }
+  });
 
   // Delete past social media authorization cookies, so user may elect or abstain this session as well
   $.get( ajaxLocation+"assets/delete-auth-cookies.php" );
@@ -61,7 +61,7 @@
               case 'gmail-contacts':
                 $('#persistent-data-container').data('gmail-contacts-nonce', data.nonce);
                 break;
-              detault:
+              default:
                 console.log(data);
             }
           }
@@ -114,10 +114,10 @@
     }
   });
   tagnames.initialize();
-
   // Modify "tags input" behavior
   $('#tagsInput').tagsinput({
     typeaheadjs: {
+      minLength: 3, // Doesn't work - hardcoded in typeahead source instead
       tag: 'tagnames',
       displayKey: 'tag',
       valueKey: 'tag',
@@ -143,20 +143,55 @@
     }
   });
   addresseenames.initialize();
-
   // Modify "addressees input" behavior
   $('#toInput').tagsinput({
     typeaheadjs: {
+      minLength: 3, // Doesn't work - hardcoded in typeahead source instead
       addressee: 'addresseenames',
       displayKey: 'addressee',
       valueKey: 'addressee',
       source: addresseenames.ttAdapter()
     },
+    // typeahead: {
+    //   minLength: 3
+    // },
     confirmKeys: [13/*, 44*/], // Confirm on enter only, not comma
     delimiter: 13, // Break on enter only, not comma
     trimValue: true, // Trim whitespace from addressees
     cancelConfirmKeysOnEmpty: false, // fix for carrying over comma to next addressee
   });
+
+  // If there's a cookie with a body value, load it back in
+  if ( readCookie('savedLetter') != null ) {
+    $('#bodyInput').val( readCookie('savedLetter') );
+  }
+
+  // Save the body to a cookie every 10 seconds
+  var saveInterval = setInterval(function() {
+    // Save letter as a cookie
+    createCookie( 'savedLetter', $('#bodyInput').val(), 3 );
+  }, 10000);
+
+  // Cookie handling functions
+  function createCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+  }
+  function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  }
 
   // Set "next" button up to store data from step one and set up step two
   $('#end-composition-button').click(function() {
@@ -165,6 +200,9 @@
     $('#persistent-data-container').data('tags', $('#tagsInput').tagsinput('items'));
     $('#persistent-data-container').data('title', $('#titleInput').val());
     $('#persistent-data-container').data('body', $('#bodyInput').val());
+
+    // Stop the letter saving mechanism
+    clearInterval( saveInterval );
 
     // Load the next script, depending on whether or not the user is logged in
     // $.ajax({

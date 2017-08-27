@@ -54,31 +54,29 @@ require('../../../../../wp-load.php')
 <!-- Right side -->
 <div class="right-side-bar">
     <div class="col-md-3" id="right-side-bar-child">
-    <form role="form">
-        <div class="form-group">
+        <form role="form">
+            <div class="form-group">
+                <!-- Tags input -->
+                <h4>Tags</h4>
+                <textarea type="text" data-role="tagsinput" style="height:136px" placeholder="Add a tag..." class="form-control" id="tagsInput"></textarea>
 
-        <!-- Tags input -->
-        <h4>Tags</h4>
-        <textarea type="text" data-role="tagsinput" style="height:136px" placeholder="Add a tag..." class="form-control" id="tagsInput"></textarea>
-
-        <!-- Related Tags button -->
-        <button id="related-tags-button" type="button" class="btn btn-default" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="focus" data-html="true" data-content="Fetching...">Related Tags</button>
-        
-        <!-- Related recipients display -->
-        <h3>More recipients</h3>
-        <div class="more-recipients" id="more-recipients">
-            <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
-            <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
-            <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
-            <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
-            <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
-            <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
-            <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
-            <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
-        </div>
-
-        </div>
-    </form>
+                <!-- Related Tags button -->
+                <button id="related-tags-button" type="button" class="btn btn-default" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="focus" data-html="true" data-content="Fetching...">Related Tags</button>
+                
+                <!-- Related recipients display -->
+                <h3>More recipients</h3>
+                <div class="more-recipients" id="more-recipients">
+                    <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
+                    <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
+                    <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
+                    <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
+                    <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
+                    <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
+                    <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
+                    <a href="#"><img src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/block_small.jpg" alt="recipients" width="44" height="44"></a>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -86,5 +84,5 @@ require('../../../../../wp-load.php')
 
 <!-- "Next" button -->
 <div class=form-progress id="composition-progress-button-div">
-<button type="Next" class="btn btn-large btn-primary" id="end-composition-button" style="width: 135px;">NEXT</button>
+<button type="Next" class="btn btn-large btn-primary" id="end-composition-button">NEXT</button>
 </div>

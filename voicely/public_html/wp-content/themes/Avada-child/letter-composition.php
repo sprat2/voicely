@@ -1,4 +1,6 @@
 <?php
+// NOTE: HSTS may cause social sharing errors - not sure (workaround SSL enforcement below)
+// header( 'Strict-Transport-Security: max-age=10886400' );
 /**
  * Template Name: Letter Composition
  *
@@ -15,6 +17,11 @@
 // Do not allow directly accessing this file. (mandate WP)
 if ( ! defined( 'ABSPATH' ) ) { exit( 'Direct script access denied.' ); }
 
+// Force SSL/HTTPS
+if (empty($_SERVER['HTTPS'])) {
+  wp_redirect('https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], 301 );
+  die();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -59,7 +59,7 @@ try {
             returnSuccess( $user_contacts ); // XXX: Returns null?
             // returnSuccess( var_export( $user_contacts, true ) ); // XXX: Returns null?
             
-            $adapter->disconnect();
+            // $adapter->disconnect();
         }
         else {
             set_and_return_error( "not connected" );

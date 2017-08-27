@@ -13,11 +13,22 @@ ini_set('display_errors', 1);
 // NOTE: Does not interface with WP/DB at all.  Does not need sanitization for our purposes.
 
 // Import Hybridauth
-include '../vendor/autoload.php';
+include 'vendor/autoload.php';
 use Hybridauth\Hybridauth;
 
 // Hybridauth configuration array
 require 'hybridauth-credentials.php';
+
+?>
+<script>
+// Script to return resulting data to calling window
+function close_myself( result ) {
+    window.opener.closePopupFromPopup( result );
+    window.close();
+    return false;
+}
+</script>
+<?php
 
 // Set the provider
 if ( isset( $_GET['provider'] ) ) {
@@ -39,7 +50,7 @@ try {
         if ( $adapter->isConnected() ) {
             if ( is_null( $adapter->getAccessToken() ) )
                 header("Refresh:0");
-            write_to_cookie( json_encode( $adapter->getAccessToken() ), $provider );
+            write_result( $adapter->getAccessToken() );
             // $adapter->disconnect();
             die();
         }
@@ -64,19 +75,21 @@ function set_and_return_error( $err_string ) {
 
     unset( $provider );
     unset( $_SESSION['pastProvider'] );
-    write_to_cookie( json_encode( $return_array ) );
+    write_result( $return_array );
     die();
 }
 
 // Writes a json param to a cookie, prefixed by either the provider name or "error"
-function write_to_cookie( $response, $provider = 'error' ) {
-    $provider = strtolower( $provider );
-    $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
-    setcookie( $provider . "Token", $response, 0 ); // Expires on session end
+function write_result( $response ) {
+    // $provider = strtolower( $provider );
+    // $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
+    // setcookie( $provider . "Token", $response, 0 ); // Expires on session end
 
-    echo '<script>window.close();</script>';
+    // echo '<script>window.close();</script>';
     // echo var_export($response, true);
     // echo '<br><br><br>';
     // echo var_export( $_COOKIE, true );
+    // var_export($response);
+    echo '<script>close_myself('.json_encode($response).');</script>';
 }
 ?>

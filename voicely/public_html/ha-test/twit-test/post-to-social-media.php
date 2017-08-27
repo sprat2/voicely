@@ -2,7 +2,9 @@
 session_start();
 
 // Allow any host site to access this script
-header('Access-Control-Allow-Origin: *');
+// DO NOT ACTIVATE THESE LINES!  When Twitter begins denying access to their resources, this is why!
+//    ... Maybe [XXX]
+// header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 // Configure PHP to throw exceptions for notices and warnings (to more easily debug via ajax)
@@ -15,11 +17,11 @@ ini_set('display_errors', 1);
 // Load WordPress functionality
 //   (required for nonce verification - may lighten later by only importing required functionality)
 define('WP_USE_THEMES', false);
-require('../../../../../wp-load.php');
+require('../../wp-load.php');
 
 // Set up Hybridauth
 // Import Hybridauth
-include '../vendor/autoload.php';
+include 'vendor/autoload.php';
 use Hybridauth\Hybridauth; 
 // Hybridauth configuration array
 require 'hybridauth-credentials.php';
@@ -34,6 +36,10 @@ if ( !wp_verify_nonce( $_GET['nonce'], 'share letter to social media' ) )
 // error if no provider specified
 if ( !isset( $_GET['provider'] ) )
     set_and_return_error( 'Provider not set' );
+
+// error if no token specified
+if ( !isset( $_GET['token'] ) )
+set_and_return_error( 'Token not set' );
 
 // error if no sharing message specified
 if ( !isset( $_GET['message'] ) )
@@ -63,7 +69,6 @@ if ( !isset( $_GET['url'] ) )
 // ';
 // die();
 
-
 // Global unhelpful try/catch to obscure error messages
 try {
     try{
@@ -72,21 +77,21 @@ try {
         $adapter = $hybridauth->getAdapter( stripslashes_deep( $_GET['provider'] ) );
 
         // Error if cookie token not set
-        if ( !isset( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) )
-            set_and_return_error( 'Not authorized.' .
-                '  Authentication cookie not found.' . 
-                '  Likely the result of user not granting access to their third party account.' . 
-                '  Cookie sought: ' . strtolower( $_GET['provider'] ) . 'Token.' . 
-                '  Cookies: ' . var_export($_COOKIE, true));
+        // if ( !isset( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) )
+        //     set_and_return_error( 'Not authorized.' .
+        //         '  Authentication cookie not found.' . 
+        //         '  Likely the result of user not granting access to their third party account.' . 
+        //         '  Cookie sought: ' . strtolower( $_GET['provider'] ) . 'Token.' . 
+        //         '  Cookies: ' . var_export($_COOKIE, true));
 
-        $adapter->setAccessToken( json_decode( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) ) );
+        $adapter->setAccessToken( $_GET['token'] );
         if ( $adapter->isConnected() ) {
             // Share to twitter. Twitter currently errors with the preferred way of link sharing in HybridAuth.
             // NOTE: Twitter links are automatically shortened to 23 chars, regardless of original length
             if ( strtolower( $_GET['provider'] ) == 'twitter' ) {
                 $message = urldecode( stripslashes_deep( $_GET['message'] ) . ' ' . urldecode( stripslashes_deep( $_GET['url'] ) ) );
-                var_export( $adapter->setUserStatus( $message ), true );
-                die();
+                // var_export( $adapter->setUserStatus( $message ), true );
+                $adapter->setUserStatus( $message );
             }
             // Share to Facebook/others.  This is the preferred way to share links with HybridAuth.
             else {
@@ -123,6 +128,7 @@ function returnSuccess() {
     );
 
     echo json_encode( $return_array );
+    die();
 }
 
 // Return an error via the expected JSON format

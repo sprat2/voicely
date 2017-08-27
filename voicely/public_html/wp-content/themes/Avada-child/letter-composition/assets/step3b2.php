@@ -30,7 +30,7 @@ require('../../../../../wp-load.php')
 WindowsLive Contacts
 <br>
 
-<div id="contacts-selection-div"></div>
+<div id="windowslive-contacts-selection-div"></div>
 
 <button id="prompt-button">Authorize with Windows Live</button>
 <button id="select-contacts-button" disabled>Select contacts</button>

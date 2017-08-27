@@ -1,4 +1,5 @@
 <?php
+// This file posts a letter to WordPress and returns relevant data
 
 // Allow any host site to access this script
 header('Access-Control-Allow-Origin: *');
