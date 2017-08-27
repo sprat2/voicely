@@ -24,9 +24,22 @@ $wp_addressees_objects = get_terms( array(
     'taxonomy' => 'addressee',
     'hide_empty' => false, // whether or not to hide unused terms
 ) );
+
 $wp_addressees = array();
 foreach ( $wp_addressees_objects as $addressee_object ) {
-    $wp_addressees[] = $addressee_object->name;
+
+    $meta = get_term_meta( $addressee_object->term_id );
+
+    // Currently omitting addressees without pretty_name set
+    if ( array_key_exists( 'pretty_name', $meta ) ) {
+        $pretty_name = get_term_meta( $addressee_object->term_id )['pretty_name'][0];
+
+        $wp_addressees[] = array(
+            "twitter_handle" => $addressee_object->name,
+            "term_id" => $addressee_object->term_id,
+            "pretty_name" => $pretty_name,
+        );
+    }
 }
 
 // Return

@@ -2,7 +2,7 @@
 // This file posts a letter to WordPress and returns relevant data
 
 // Allow any host site to access this script
-header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 // Declare our response type as a JSON response

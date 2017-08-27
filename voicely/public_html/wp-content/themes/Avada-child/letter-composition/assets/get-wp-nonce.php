@@ -1,7 +1,7 @@
 <?php
 
 // Allow any host site to access this script
-header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 // Load WordPress functionality

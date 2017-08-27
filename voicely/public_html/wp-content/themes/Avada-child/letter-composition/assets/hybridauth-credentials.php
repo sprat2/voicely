@@ -14,7 +14,7 @@ $config = [
             'enabled' => true,
             'keys' => [ 'id'  => '822285507867-779tnut9hd0bpvkk54oikgk9276tsb0q.apps.googleusercontent.com', 'secret' => '4subJgKfmnRHaZGWRr6cbAJ6'],
             'scope' => 'profile https://www.googleapis.com/auth/plus.login https://www.google.com/m8/feeds  https://www.googleapis.com/auth/contacts https://www.googleapis.com/auth/contacts.readonly',
-            'access_type' => 'offline',
+            // 'access_type' => 'offline', // Requires storing refresh token - don't use until persistent
             'approval_prompt' => 'force',
         ],
         'Facebook' => [

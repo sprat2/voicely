@@ -24,6 +24,7 @@ $wp_tags_objects = get_terms( array(
     'taxonomy' => 'post_tag',
     'hide_empty' => false, // whether or not to hide unused terms
 ) );
+
 $wp_tags = array();
 foreach ( $wp_tags_objects as $tag_object ) {
     $wp_tags[] = $tag_object->name;

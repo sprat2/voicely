@@ -11,7 +11,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Allow any host site to access this script
-header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 // Load WordPress functionality
@@ -25,6 +25,10 @@ include '../vendor/autoload.php';
 use Hybridauth\Hybridauth; 
 // Hybridauth configuration array
 require 'hybridauth-credentials.php';
+
+// error if no token specified
+if ( !isset( $_GET['token'] ) )
+    set_and_return_error( 'Token not set' );
 
 // error if no provider specified
 if ( !isset( $_GET['provider'] ) ) {
@@ -40,26 +44,16 @@ try {
         $hybridauth = new Hybridauth($config);
         $adapter = $hybridauth->getAdapter( stripslashes_deep( $_GET['provider'] ) );
 
-        // Err if cookie not found
-        if ( !isset( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) )
-            set_and_return_error( 'Not authorized.' .
-                '  Authentication cookie not found.' . 
-                '  Likely the result of user not granting access to their third party account.' . 
-                '  Cookie sought: ' . strtolower( $_GET['provider'] ) . 'Token.' . 
-                '  Cookies: ' . var_export($_COOKIE, true));
-
         // Set token
-        $adapter->setAccessToken( json_decode( stripslashes_deep( $_COOKIE[ strtolower( $_GET['provider'] ) . 'Token' ] ) ) );
+        $adapter->setAccessToken( $_GET['token'] );
         if ( $adapter->isConnected() ) {
             // Fetch user's contacts
             $user_contacts = $adapter->getUserContacts();
-            // $user_contacts = $adapter->getUserProfile();
 
             // Return success and disconnect
-            returnSuccess( $user_contacts ); // XXX: Returns null?
-            // returnSuccess( var_export( $user_contacts, true ) ); // XXX: Returns null?
-            
-            // $adapter->disconnect();
+            returnSuccess( $user_contacts );
+            $adapter->disconnect();
+            die();
         }
         else {
             set_and_return_error( "not connected" );

@@ -8,7 +8,7 @@
   var detS = "";
   if (location.protocol == 'https:') detS = "s";
   var ajaxLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/";
-  
+    
   // Load sharing JS, then execute share function
   $.getScript(ajaxLocation+"js/social-sharing.js", function(){
 
@@ -39,6 +39,7 @@
   $('#end-step3a2-button').click(function() {
     // Save TW sharing data so we may share at the end
     $('#persistent-data-container').data('tw-sharing-message', $('#sharing-message').val());
+    $('#persistent-data-container').data('tw-token', token);
 
     // Load the next script
     $('#html-display-container').load(ajaxLocation+'assets/step3b1.php', function() {

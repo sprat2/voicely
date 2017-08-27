@@ -8,7 +8,7 @@
   var detS = "";
   if (location.protocol == 'https:') detS = "s";
   var ajaxLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/";
-  
+    
   // Load sharing JS, then execute share function
   $.getScript(ajaxLocation+"js/social-sharing.js", function(){
 
@@ -29,8 +29,7 @@
     // Contact selection button
     $('#select-contacts-button').click(function() {
       // Store token as a cookie, to be used later
-      var userContacts = getContacts( 'WindowsLive', function( userContacts ) {
-        console.log( userContacts );
+      var userContacts = getContacts( 'WindowsLive', token, function( userContacts ) {
 
         // Instantiate selected array
         $('#persistent-data-container').data('windowslive-selected-sharing-addresses', []);

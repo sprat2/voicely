@@ -26,10 +26,20 @@ function getShareMessageWithCurrentParams() {
   return result;
 }
 
+
 // Get user's third party authorization token
 function getToken( provider ) {
   var url = ajaxLocation+"assets/get-token.php?provider=" + encodeURI(provider) + '&' + new Date().getTime();
   popupCenter( url, provider + " Authorization", 500, 500 );
+}
+
+var token = "";
+// Called from popup which requests user's token (stores token in token variable)
+function closePopupFromPopup( result ) {
+  // alert("result of popup is: " + result);
+  // console.log('Resulting token from popup:');
+  // console.log(result);
+  token = result;
 }
 
 // Opens a new popup, centered (for sharing prompts)
@@ -53,11 +63,12 @@ function popupCenter(url, title, w, h) {
 }
 
 // Note: Could be made to better handle arbitrary providers
-function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, nonce, successCallback, failureCallback ) {
+function postToSocialMedia( provider, token, shareMessage, returnedRemoteLetterData, nonce, successCallback, failureCallback ) {
   // Perform the AJAX request
   jQuery.get(ajaxLocation+"assets/post-to-social-media.php", 
   {
     provider:   provider,
+    token:      token,
     message:    shareMessage,
     url:        returnedRemoteLetterData.url_to_letter,
     nonce:      nonce,
@@ -92,11 +103,12 @@ function postToSocialMedia( provider, shareMessage, returnedRemoteLetterData, no
   );
 }
 
-function getContacts( provider, successCallback ) {
+function getContacts( provider, token, successCallback ) {
   // Perform the AJAX request
   jQuery.get(ajaxLocation+"assets/get-contacts.php", 
   {
     provider: provider,
+    token:      token,
     cachebust: new Date().getTime(),
   }
   ).then(

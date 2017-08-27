@@ -39,7 +39,8 @@
   $('#end-step3a1-button').click(function() {
     // Save FB sharing data so we may share at the end
     $('#persistent-data-container').data('fb-sharing-message', $('#sharing-message').val());
-
+    $('#persistent-data-container').data('fb-token', token);
+    
     // Load the next script
     $('#html-display-container').load(ajaxLocation+'assets/step3a2.php', function() {
         $.getScript(ajaxLocation+'js/script3a2.js');

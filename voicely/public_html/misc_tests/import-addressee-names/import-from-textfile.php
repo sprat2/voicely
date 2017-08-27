@@ -5,7 +5,7 @@
 
 // Set behavior
 $ERASE_ALL = false; // DO NOT BE NEGLIGENT WITH THIS VALUE!
-$ADD_NAMES = false;
+$ADD_NAMES = false; // WILL CRETE DUPLICATES IF MISHANDLED
 
 echo 'script started.<br><br>';
 
@@ -60,6 +60,8 @@ if ( $ADD_NAMES === true ) {
         echo "completed ($name).<br><br>";
     }
     unset($name);
+
+    echo 'addressees added.';
 }
 
 echo 'script completed.';

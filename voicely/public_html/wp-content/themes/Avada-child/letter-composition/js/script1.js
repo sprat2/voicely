@@ -108,8 +108,11 @@
     prefetch: {
       url: ajaxLocation+'assets/tagnames.php?cachebust=' + (new Date()).getTime(),
       filter: function(list) {
-        return $.map(list, function(tagname) {
-          return { tag: tagname }; });
+        return $.map(list, function(data) {
+          return {
+            tag: data,
+          };
+        });
       }
     }
   });
@@ -118,13 +121,12 @@
   $('#tagsInput').tagsinput({
     typeaheadjs: {
       minLength: 3, // Doesn't work - hardcoded in typeahead source instead
-      tag: 'tagnames',
       displayKey: 'tag',
       valueKey: 'tag',
       source: tagnames.ttAdapter()
     },
-    confirmKeys: [13/*, 44*/], // Confirm on enter only, not comma
-    delimiter: 13, // Break on enter only, not comma
+    confirmKeys: [13, 44, 59, 32], // Confirm on enter, comma, semicolon, space (ASCII codes)
+    delimiter: [13, 44, 59, 32], // Break on enter, comma, semicolon, space (ASCII codes)
     trimValue: true, // Trim whitespace from tags
     cancelConfirmKeysOnEmpty: false, // fix for carrying over comma to next tag
   });
@@ -132,13 +134,19 @@
 
   // Initialize the addressee fetching object
   var addresseenames = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('addressee'),
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('pretty_name'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
       url: ajaxLocation+'assets/addresseenames.php?cachebust=' + (new Date()).getTime(),
       filter: function(list) {
-        return $.map(list, function(addresseename) {
-          return { addressee: addresseename }; });
+        return $.map(list, function(data) {
+          return {
+            value: data,
+            addressee: data.twitter_handle,
+            term_id: data.term_id,
+            pretty_name: data.pretty_name,
+          };
+        });
       }
     }
   });
@@ -147,30 +155,56 @@
   $('#toInput').tagsinput({
     typeaheadjs: {
       minLength: 3, // Doesn't work - hardcoded in typeahead source instead
-      addressee: 'addresseenames',
-      displayKey: 'addressee',
-      valueKey: 'addressee',
+      displayKey: 'pretty_name',
+      valueKey: 'value',
       source: addresseenames.ttAdapter()
     },
     // typeahead: {
     //   minLength: 3
     // },
-    confirmKeys: [13/*, 44*/], // Confirm on enter only, not comma
-    delimiter: 13, // Break on enter only, not comma
+    itemValue: 'pretty_name',    
+    confirmKeys: [13, 44, 59, 32], // Confirm on enter, comma, semicolon, space (ASCII codes)
+    delimiter: [13, 44, 59, 32], // Break on enter, comma, semicolon, space (ASCII codes)
     trimValue: true, // Trim whitespace from addressees
     cancelConfirmKeysOnEmpty: false, // fix for carrying over comma to next addressee
   });
 
+  // Restore in-progress letter parameters, if detected
+  // If there's a cookie with a title value, load it back in
+  if ( readCookie('savedTitle') != null ) {
+    $('#titleInput').val( readCookie('savedTitle') );
+  }
+  // If there's a cookie with a tags value, load it back in
+  if ( readCookie('savedTags') != null ) {
+    var savedTags = readCookie('savedTags').split(',');
+    savedTags.forEach(function(tag){
+      $('#tagsInput').tagsinput('add', tag);
+    });
+  }
+  // If there's a cookie with an addressees value, load it back in
+  if ( readCookie('savedAddressees') != null ) {
+    try {
+      var savedAddressees = JSON.parse( readCookie('savedAddressees') );
+      savedAddressees.forEach(function(addressee){
+        $('#toInput').tagsinput('add', addressee);
+      });
+    }
+    catch(e) {
+      console.log(e);
+    }
+  }
   // If there's a cookie with a body value, load it back in
   if ( readCookie('savedLetter') != null ) {
     $('#bodyInput').val( readCookie('savedLetter') );
   }
 
-  // Save the body to a cookie every 10 seconds
+  // Save the letter data to cookies every 10 seconds
   var saveInterval = setInterval(function() {
-    // Save letter as a cookie
+    createCookie( 'savedTitle', $('#titleInput').val(), 3 );
+    createCookie( 'savedTags', $('#tagsInput').tagsinput('items'), 3 );
+    createCookie( 'savedAddressees', JSON.stringify( $('#toInput').tagsinput('items'), 3 ) );
     createCookie( 'savedLetter', $('#bodyInput').val(), 3 );
-  }, 10000);
+  }, 1000);
 
   // Cookie handling functions
   function createCookie(name,value,days) {
@@ -196,10 +230,15 @@
   // Set "next" button up to store data from step one and set up step two
   $('#end-composition-button').click(function() {
     // Store data
-    $('#persistent-data-container').data('addressees', $('#toInput').tagsinput('items'));
     $('#persistent-data-container').data('tags', $('#tagsInput').tagsinput('items'));
     $('#persistent-data-container').data('title', $('#titleInput').val());
     $('#persistent-data-container').data('body', $('#bodyInput').val());
+    // Convert selected addressees object to twitter handles for internal handling
+    var selectedAddressees = $('#toInput').tagsinput('items');
+    selectedAddressees = selectedAddressees.map( function(element){
+      return element.twitter_handle;
+    });
+    $('#persistent-data-container').data('addressees', selectedAddressees);
 
     // Stop the letter saving mechanism
     clearInterval( saveInterval );

@@ -29,8 +29,7 @@
     // Contact selection button
     $('#select-contacts-button').click(function() {
       // Store token as a cookie, to be used later
-      var userContacts = getContacts( 'Google', function( userContacts ) {
-        console.log( userContacts );
+      var userContacts = getContacts( 'Google', token, function( userContacts ) {
 
         // Instantiate selected array
         $('#persistent-data-container').data('google-selected-sharing-addresses', []);

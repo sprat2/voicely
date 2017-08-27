@@ -19,6 +19,17 @@ use Hybridauth\Hybridauth;
 // Hybridauth configuration array
 require 'hybridauth-credentials.php';
 
+?>
+<script>
+// Script to return resulting data to calling window
+function close_myself( result ) {
+    window.opener.closePopupFromPopup( result );
+    window.close();
+    return false;
+}
+</script>
+<?php
+
 // Set the provider
 if ( isset( $_GET['provider'] ) ) {
     $_SESSION['pastProvider'] = $_GET['provider'];
@@ -39,8 +50,9 @@ try {
         if ( $adapter->isConnected() ) {
             if ( is_null( $adapter->getAccessToken() ) )
                 header("Refresh:0");
-            write_to_cookie( json_encode( $adapter->getAccessToken() ), $provider );
-            // $adapter->disconnect();
+            write_result( $adapter->getAccessToken() );
+            if ( strtolower($provider) != 'twitter') // Bug fix - Don't disconnect Twitter's adapter
+                $adapter->disconnect();
             die();
         }
         else {
@@ -64,19 +76,15 @@ function set_and_return_error( $err_string ) {
 
     unset( $provider );
     unset( $_SESSION['pastProvider'] );
-    write_to_cookie( json_encode( $return_array ) );
+    write_result( $return_array );
     die();
 }
 
 // Writes a json param to a cookie, prefixed by either the provider name or "error"
-function write_to_cookie( $response, $provider = 'error' ) {
-    $provider = strtolower( $provider );
-    $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
-    setcookie( $provider . "Token", $response, 0 ); // Expires on session end
-
-    echo '<script>window.close();</script>';
+function write_result( $response ) {
     // echo var_export($response, true);
     // echo '<br><br><br>';
     // echo var_export( $_COOKIE, true );
+    echo '<script>close_myself('.json_encode($response).');</script>';
 }
 ?>
