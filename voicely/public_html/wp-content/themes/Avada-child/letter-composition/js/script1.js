@@ -145,6 +145,7 @@
             addressee: data.twitter_handle,
             term_id: data.term_id,
             pretty_name: data.pretty_name,
+            pretty_name_without_commas: data.pretty_name.split(",").join(""),
           };
         });
       }
@@ -155,14 +156,11 @@
   $('#toInput').tagsinput({
     typeaheadjs: {
       minLength: 3, // Doesn't work - hardcoded in typeahead source instead
-      displayKey: 'pretty_name',
-      valueKey: 'value',
+      displayKey: 'pretty_name_without_commas',
+      valueKey: 'value', // Value autocompleted
       source: addresseenames.ttAdapter()
     },
-    // typeahead: {
-    //   minLength: 3
-    // },
-    itemValue: 'pretty_name',    
+    itemValue: 'pretty_name', // Shows when locked in
     confirmKeys: [13, 44, 59, 32], // Confirm on enter, comma, semicolon, space (ASCII codes)
     delimiter: [13, 44, 59, 32], // Break on enter, comma, semicolon, space (ASCII codes)
     trimValue: true, // Trim whitespace from addressees

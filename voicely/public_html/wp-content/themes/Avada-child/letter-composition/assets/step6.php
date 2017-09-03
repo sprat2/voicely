@@ -49,4 +49,6 @@ Thank you
 
 <br>
 <!-- "Next" button -->
-<button class="btn btn-large btn-primary" id="end-step6-button">FINISH</button>
+<button class="btn btn-large btn-primary" id="end-step6-buttona" disabled>View this letter</button>
+<button class="btn btn-large btn-primary" id="end-step6-buttonc" disabled>View my letters</button>
+<button class="btn btn-large btn-primary" id="end-step6-buttonb">View all letters</button>

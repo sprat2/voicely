@@ -88,6 +88,9 @@
     document.cookie = 'savedTags=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     document.cookie = 'savedAddressees=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     document.cookie = 'savedLetter=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
+    // Enable the letter URL button
+    $('#end-step6-buttona').prop("disabled", false);
     
     // Make the calls to share to social media
     // Attempt to share to Facebook (will only succeed if authorized)
@@ -225,9 +228,14 @@
 
 
 
-  // Set "next" button up to store data from this step and set up the next
-  $('#end-step6-button').click(function() {
-    window.location.href = $('#persistent-data-container').data('server-response').url_to_letter; // XXX: Replace this with the URL of the published letter
+  // Set button up to take us to our letter
+  $('#end-step6-buttona').click(function() {
+    window.location.href = $('#persistent-data-container').data('server-response').url_to_letter;    
+  });
+
+  // Set button up to take us to the letters display page
+  $('#end-step6-buttonb').click(function() {
+    window.location.href = '/';
   });
 
 })( jQuery );
