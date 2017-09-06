@@ -1,1 +1,0 @@
-Shortcode: [voicely_frontend_letter_dialog] will show a frontend dialog from which logged-in users may submit letters.
