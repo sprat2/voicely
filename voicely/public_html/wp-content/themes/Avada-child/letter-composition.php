@@ -23,38 +23,38 @@ if (empty($_SERVER['HTTPS'])) {
   die();
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Your Open Letter</title>
-    <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/bootstrap-tagsinput.css" rel="stylesheet">
-    <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/typeaheadjs.css" rel="stylesheet">
-    <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/image-picker.css" rel="stylesheet">
-    <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/multi-select.dist.css" rel="stylesheet">
-    <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/style.css" rel="stylesheet">
-  </head>
-  <body>
-    <?php get_header(); // Avada's header ?>
+<!-- Header -->
+<?php get_header(); // Avada's header ?>
 
-    <!-- Invisible data container -->
-    <div id="persistent-data-container" style="display:none"></div>
+<!-- CSS -->
+<link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/bootstrap.min.css" rel="stylesheet">
+<link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/bootstrap-tagsinput.css" rel="stylesheet">
+<link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/typeaheadjs.css" rel="stylesheet">
+<link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/image-picker.css" rel="stylesheet">
+<link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/multi-select.dist.css" rel="stylesheet">
+<link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/style.css" rel="stylesheet">
 
-    <!-- Displayed HTML container -->
-    <div class="container-fluid Col2" id="html-display-container"><p>Loading...</p></div>
+<!-- Scripts -->
+<!-- Must be imported here to be used by the content -->
+<?php // (JQuery is included in WordPress) ?>
+<!--<script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/jquery.min.js"></script>-->
+<script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/thirdparty/bootstrap.min.js"></script>
+<script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/thirdparty/bootstrap-tagsinput.js"></script>
+<script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/thirdparty/image-picker.min.js"></script>
+<script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/thirdparty/jquery.multi-select.js"></script>
+<script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/thirdparty/typeahead.bundle.js"></script>
+<script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/shared.js"></script>
 
-    <?php do_action( 'avada_after_content' ); ?>
-    <?php get_footer(); // Avada's footer ?>
+<!-- Our content -->
+<center>Under construction</center>
+<?php
+  // If user isn't logged in, display the login screen. Otherwise display the page as expected.
+  if ( ! is_user_logged_in() )
+    include "letter-composition/partials/login.php";
+  else
+    include "letter-composition/partials/letter-composition.php";
+?>
 
-    <!--<script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/jquery.min.js"></script>-->
-    <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/bootstrap.min.js"></script>
-    <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/bootstrap-tagsinput.js"></script>
-    <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/typeahead.bundle.js"></script>
-    <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/image-picker.min.js"></script>
-    <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/jquery.multi-select.js"></script>
-    <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/initscript.js"></script>
-  </body>
-</html>
+<!-- Footer -->
+<?php do_action( 'avada_after_content' ); ?>
+<?php get_footer(); // Avada's footer ?>

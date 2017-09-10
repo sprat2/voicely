@@ -1,21 +1,4 @@
-<?php
-
-/* This file contains the HTML display code for step 6 - "thank you"/finished screen */
-
-$debug = true;
-
-// Display errors if debugging
-if ( $debug ) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
-
-// Load WordPress functionality
-define('WP_USE_THEMES', false);
-require('../../../../../wp-load.php')
-
-?>
+<button id="post-now-button" type="button" class="btn btn-default">Submit Letter</button>
 
 <!-- "Submitted" dialog. Hidden initially. Filled out dynamically. -->
 <div id="submit-view-container">
@@ -49,6 +32,8 @@ Thank you
 
 <br>
 <!-- "Next" button -->
-<button class="btn btn-large btn-primary" id="end-step6-buttona" disabled>View this letter</button>
-<button class="btn btn-large btn-primary" id="end-step6-buttonc" disabled>View my letters</button>
-<button class="btn btn-large btn-primary" id="end-step6-buttonb">View all letters</button>
+<button class="btn btn-large btn-primary" id="end-step6-buttona" type="button" class="btn btn-default" disabled>View this letter</button>
+<button class="btn btn-large btn-primary" id="end-step6-buttonc" type="button" class="btn btn-default" disabled>View my letters</button>
+<button class="btn btn-large btn-primary" id="end-step6-buttonb" type="button" class="btn btn-default">View all letters</button>
+
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri() ?>/letter-composition/js/postscreen.js"></script>

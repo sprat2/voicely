@@ -32,10 +32,10 @@ if ( isset( $_GET['nonce_action'] ) ) {
                     'nonce' => wp_create_nonce( 'share letter to social media' )
                 ) );
                 return;
-            case 'gmail-contacts':
+            case 'google-contacts':
                 echo json_encode( array(
                     'action' => $_GET['nonce_action'],
-                    'nonce' => wp_create_nonce( 'authorize with gmail for contact extraction' )
+                    'nonce' => wp_create_nonce( 'authorize with google for contact extraction' )
                 ) );
                 return;
             default:

@@ -5,10 +5,6 @@
 // header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-// Declare our response type as a JSON response
-// May not work with current config
-//header('Content-type: application/json');
-
 // Configure PHP to throw exceptions for notices and warnings (to more easily debug via ajax)
 set_error_handler(function($errno, $errstr, $errfile, $errline) {
     throw new RuntimeException($errstr . " on line " . $errline . " in file " . $errfile);
