@@ -46,14 +46,6 @@ function popupCenter(url, title, w, h) {
 	}
 }
 
-// Called from popup which requests user's token (stores token in token variable)
-function closePopupFromPopup( result, provider, syslogin = 'false' ) {
-  if (syslogin == 'true')
-    useTokenToLogin( result, provider );
-  else
-    useToken( result, provider );
-}
-
 // Get user's third party authorization token
 function getToken( provider, syslogin = false ) {
 	var url = ajaxLocation+"get-token.php?provider=" + encodeURI(provider) +
@@ -63,29 +55,12 @@ function getToken( provider, syslogin = false ) {
 	popupCenter( url, provider + " Authorization", 800, 800 );
 }
 
-function useToken( theToken, provider ) {
-	// Store the token in the appropriate DOM object
-  jQuery('#tokenholder').data( provider.toLowerCase()+'-token', theToken );
-
-	// Special extra handling for services if their handling functions are defined
-  switch ( provider.toLowerCase() ) {
-		case 'facebook':
-			if (typeof facebookTokenCallback === 'function')
-      	facebookTokenCallback( theToken ); // in facebook.js
-      break;
-    case 'twitter':
-      if (typeof twitterTokenCallback === 'function')
-        twitterTokenCallback( theToken ); // in twitter.js
-      break;
-    case 'google':
-      if (typeof loadGoogleContacts === 'function')
-        loadGoogleContacts( theToken ); // in google.js
-      break;
-    case 'windowslive':
-			if (typeof loadWindowsliveContacts === 'function')
-				loadWindowsliveContacts( theToken ); // in windowslive.js
-      break;
-  }
+// Called from popup which requests user's token (stores token in token variable)
+function closePopupFromPopup( result, provider, syslogin = 'false' ) {
+  if (syslogin == 'true')
+    useTokenToLogin( result, provider );
+  else
+    useToken( result, provider );
 }
 
 function useTokenToLogin( theToken, provider ) {
@@ -125,6 +100,31 @@ function useTokenToLogin( theToken, provider ) {
 			console.log( data );
 		}
 	);
+}
+
+function useToken( theToken, provider ) {
+	// Store the token in the appropriate DOM object
+  jQuery('#tokenholder').data( provider.toLowerCase()+'-token', theToken );
+
+	// Special extra handling for services if their handling functions are defined
+  switch ( provider.toLowerCase() ) {
+		case 'facebook':
+			if (typeof facebookTokenCallback === 'function')
+      	facebookTokenCallback( theToken ); // in facebook.js
+      break;
+    case 'twitter':
+      if (typeof twitterTokenCallback === 'function')
+        twitterTokenCallback( theToken ); // in twitter.js
+      break;
+    case 'google':
+      if (typeof loadGoogleContacts === 'function')
+        loadGoogleContacts( theToken ); // in google.js
+      break;
+    case 'windowslive':
+			if (typeof loadWindowsliveContacts === 'function')
+				loadWindowsliveContacts( theToken ); // in windowslive.js
+      break;
+  }
 }
 
 function getContacts( provider, token, successCallback ) {

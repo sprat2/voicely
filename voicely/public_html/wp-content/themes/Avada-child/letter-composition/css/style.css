@@ -258,3 +258,7 @@ body {
 #bodyInput {
   height: 470px;
 }
+
+#fb-login-div {
+    text-align: center;
+}

@@ -51,13 +51,15 @@ try {
     // Sign the user in and refresh
     wp_set_auth_cookie( $user_id );
     echo json_encode( 'User has been logged in' );
+    header("Refresh:0");
     die();
   }
   else {
     // Create account for this user, sign them in, and refresh
-    wp_create_user( $username, wp_generate_password(), $user_email );
+    $user_id = wp_create_user( $username, wp_generate_password(), $user_email );
     wp_set_auth_cookie( $user_id );
     echo json_encode( 'New account registered and user has been logged in' );
+    header("Refresh:0");
     die();
   }
 

@@ -236,11 +236,11 @@
     $('#end-step6-buttona').click(function() {
       window.location.href = serverResponse.url_to_letter;    
     });
-
-    // Set button up to take us to the letters display page
-    $('#end-step6-buttonb').click(function() {
-      window.location.href = '/';
-    });
+  });
+  
+  // Set button up to take us to the letters display page
+  $('#end-step6-buttonb').click(function() {
+    window.location.href = '/open-letters-2/'; // XXX - Change this as the view-all-letters page URL changes
   });
 
 })( jQuery );
