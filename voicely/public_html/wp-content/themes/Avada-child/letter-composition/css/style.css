@@ -1,6 +1,5 @@
 /* Begin old CSS */
 #html-display-container {
-    /* set border styling */
     border-color: #efefef;
     border-style: solid;
     border-width: 1px;
@@ -10,7 +9,6 @@
     /* width: 670px; */
     width: 1256px; 
     padding-top: 10px;
-    /* set border roundness */
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
@@ -27,10 +25,11 @@
 }
 
 #right-side-bar-child {
-    width: 22.5%;
+    /* width: 22.5%; */
     background-color: #f6f6f6;
-    padding-top: 8px;
-    height: 462px;
+    /* This was the old height which we temporarily */
+    /*   disabled for the single-panel non-scrolling display */
+    /* height: 462px; */
     margin-bottom: 24px;
     border: 1px;
     border-style: solid;
@@ -108,15 +107,19 @@ body {
 
 /* Post-submit view */
 #submit-view-container {
-    /* display: flex; */
-    display: none;
+    font-size: 200%;
+    display: block;
     align-items: center;
-    /* height: 100%; */
-    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    /* -ms-transform: translate(-50%,-50%); */
+    background-color: white;
+    padding: 1%;
 }
 #submit-view-container #submit-view {
-    font-size: 200%;
-    width: 100%;
+    width: 17em;
     text-align: center;
     background-color: #fff;
     border-style: solid;
@@ -149,98 +152,103 @@ body {
 .sharing-message {
     vertical-align: bottom;
 }
+#postscreen-buttons-div {
+    text-align: center;
+}
+/* .social-share-progress {
+    height: 40px;
+    border-style: none;
+    margin: 0px;
+    padding: 0px;
+} */
 
 /* Animated ellipsis via https://codepen.io/thetallweeks/pen/yybGra */
 .loading {
-  font-size: 30px;
+    font-size: 30px;
 }
 .loading:after {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
-  animation: ellipsis steps(4,end) 900ms infinite;
-  content: "\2026"; /* ascii code for the ellipsis character */
-  width: 0px;
+    position: absolute;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+    animation: ellipsis steps(4,end) 900ms infinite;
+    content: "\2026"; /* ascii code for the ellipsis character */
+    width: 0px;
 }
 @keyframes ellipsis {
-  to {
-    width: 1.25em;    
-  }
+    to {
+        width: 1.25em;    
+    }
 }
 @-webkit-keyframes ellipsis {
-  to {
-    width: 1.25em;    
-  }
+    to {
+        width: 1.25em;    
+    }
 }
 /* End old CSS */
 
 /* Begin new Russ CSS */
 .col-md-9 {
     width: 60%;
-  }
+}
   
-  #right-side-bar-child {
-    width: 40%;
-    height: 535px;
-  }
-  
-  .mini-nav {
+.mini-nav {
     float: right;
     margin-top: -2px;
     margin-left: -3px;
-  }
+}
   
-  .medium-nav {
+.medium-nav {
     margin-left: 182px;
     margin-top: 6px;
     margin-bottom: 2px;
-  }
+}
   
-  #last-section {
+#last-section {
     text-align: center;
     padding-bottom: 6px;
     /* border-bottom: 3px solid #b8b6b6; */
-  }
+}
   
-  #right-side-bar-child h4 {
+#right-side-bar-child h4 {
     padding-bottom: 5px;
-  }
+}
   
-  #right-side-bar-child img {
+#right-side-bar-child img {
     margin-bottom: 5px;
     margin-left: 1px;
-  }
+}
   
-  #form-tag {
+#form-tag {
     padding-bottom: 0px;
-  }
+}
   
-  #form-tag-blue {
+#form-tag-blue {
     margin-top: -5px;
     padding: 0px;
-  }
+}
   
-  #form-tag-gray {
+#form-tag-gray {
     margin-top: -10px;
     margin-bottom: 9px;
-  }
+}
   
-  #form-tag-gray h3 {
+#form-tag-gray h3 {
     margin-top: 15px;
     margin-bottom: 5px
-  }
-  
-  #section-2 {
+}
+
+#section-2 {
     padding-bottom: 0px;
-  }
+}
 /* End new Russ CSS */
 
 /* Begin sidebar CSS */
 #div-display-window{
     height: 100%;
     /* width: 300px; */
-    overflow: hidden;
+    overflow: visible;
   }
   #all-inner-divs{
     height: 100%;
@@ -251,14 +259,204 @@ body {
     display: block;
     float: left;
     height: 100%;
+    padding: 7px; 
     /* width: (100% / numChildren); Set in script to autodetect child count */
   }
 /* End sidebar CSS */
 
 #bodyInput {
-  height: 470px;
+    /* height: 470px; */
+    height: 100%;
 }
 
 #fb-login-div {
     text-align: center;
+}
+
+#recipients-table td, #add-images-table td {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 0px;
+    border-top: 0px;
+}
+
+#recipients-table, #add-images-table {
+    /* To compensate for the edge cases: */
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+#facebook-signin-button-div {
+    /* width: 30%; */
+    margin: auto;
+}
+
+#main-row .panel {
+    float: none;
+    vertical-align: top;
+}
+
+#main-row {
+    display: flex;
+}
+
+#facebook-signin-button-div {
+    width: 15em;
+}
+
+#text-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+#sharing-divs > div {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.skip-button {
+    position: absolute;
+    transform: translate(0%, 25%);
+    cursor: pointer;
+}
+
+#post-now-button, #tooltip {
+    width: 100%;
+}
+
+#end-step6-buttonc-wrapper {
+    display: inline;
+}
+
+.social-btn-div > span {
+    background-color: #000000;
+    display: block;
+    border-radius: 4px; /* Same as buttons on top of it */
+}
+
+/* Support disabling links */
+a.disabled {
+    pointer-events: none;
+}
+
+textarea {
+    resize: none;
+}
+
+#fb-copyover-button-div, .sharing-message-textarea {
+    padding: 0px;
+}
+
+.sharing-message-textarea {
+    border: 1px solid lightgray;
+}
+
+/* Tooltip element */
+#tooltip {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+}
+
+/* Tooltip text */
+#tooltip #tooltiptext {
+    visibility: hidden;
+    padding: 5px;
+    width: 60%;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    top: -8px;
+    right: 101%;
+}
+
+/* Tooltip arrow */
+#tooltip #tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+
+/* Show tooltip only on hover only when enabled */
+#tooltip:hover #tooltiptext.display-enabled {
+    visibility: visible;
+}
+
+#postscreen-overlay {
+    position: fixed;
+    display: none;
+    /* display: block; */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#google-contacts-selection-overlay {
+    position: fixed;
+    display: none;
+    /* display: block; */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#google-contacts-selection-overlay-content {
+    font-size: 200%;
+    display: block;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    /* -ms-transform: translate(-50%,-50%); */
+    background-color: white;
+    padding: 1%;
+}
+
+#windowslive-contacts-selection-overlay {
+    position: fixed;
+    display: none;
+    /* display: block; */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#windowslive-contacts-selection-overlay-content {
+    font-size: 200%;
+    display: block;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    /* -ms-transform: translate(-50%,-50%); */
+    background-color: white;
+    padding: 1%;
 }

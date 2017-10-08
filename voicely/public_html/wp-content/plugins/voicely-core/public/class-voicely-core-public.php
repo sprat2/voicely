@@ -213,4 +213,16 @@ class Voicely_Core_Public {
 			wp_insert_term( 'The World', 'addressee', $world_args );
 		}
 	}
+
+
+	// Prevent users from accessing WP's login page
+	function prevent_wp_login() {
+		// WP tracks the current page - global the variable to access it
+		global $pagenow;
+		$action = (isset($_GET['action'])) ? $_GET['action'] : '';
+		if( $pagenow == 'wp-login.php' && ( ! $action || ( $action && ! in_array($action, array('logout', 'lostpassword', 'rp', 'resetpass'))))) {
+			wp_redirect( get_bloginfo('url') );
+			exit();
+		}
+	}
 }

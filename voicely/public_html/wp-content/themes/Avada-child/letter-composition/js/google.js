@@ -8,19 +8,35 @@ function loadGoogleContacts( token ){
 (function( $ ) {
   'use strict';
 
+  // Hide the overlay when clicked
+  $('#google-contacts-selection-overlay').unbind('click').click( function () {
+    $('#google-contacts-selection-overlay').css( 'display', 'none' );
+  });
+
+  // Stop clicks on the overlay div from propagating to the overlay itself
+  //   (so that they don't close the overlay)
+  $('#google-contacts-selection-overlay-content').unbind('click').click( function (e) {
+    e.stopPropagation();
+  });
+    
   // Authorization button
   $('#google-prompt-button').click(function() {
     // Store google contacts as a cookie, to be used by selectContacts
     getToken('Google');
+    // Show the overlay
+    $('#google-contacts-selection-div').html('Loading contacts...');
+    $('#google-contacts-selection-overlay').css( 'display', 'block' );
   });
 
   // Contact selection
   loadGoogleContacts = function( token ) {
     // Hide the authentication button now that we've been granted access
-    $('#google-prompt-button').css( 'display', 'none' );
+    // $('#google-prompt-button').css( 'display', 'none' );
+    // Gray out & disable the button
+    $('#google-prompt-button').css('opacity', '0.5');
+    $('#google-prompt-button').addClass('disabled');
 
     // Get their contacts and display them appropriately
-    $('#google-contacts-selection-div').html('Loading contacts...');
     var userContacts = getContacts( 'Google', token, function( userContacts ) {
 
       // Instantiate array of selected contacts
@@ -55,9 +71,15 @@ function loadGoogleContacts( token ){
   }
 
   // Skip button
-  $('#skip-button').click(function() {
+  $('#google-skip-button').click(function() {
     // Enable the "Next" button
     // $('#end-step3b1-button').prop('disabled', false);
+    // Gray out & disable the button
+    $('#google-prompt-button').css('opacity', '0.5');
+    $('#google-prompt-button').addClass('disabled');
+    // Remove the token (so that the user may take back their authorization)
+    $('#tokenholder').removeData( 'google-token' );
+    $('#google-contacts-selection-div').removeData( 'selected-sharing-addresses' );
   });
 
 

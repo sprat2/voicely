@@ -160,6 +160,9 @@ class Voicely_Core {
         // Enqueue default template & script files
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_styles') );
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts') );
+
+        // Prevent users from accessing WP's login page
+        add_action('init', array($plugin_public, 'prevent_wp_login') );
     }
 
     /**

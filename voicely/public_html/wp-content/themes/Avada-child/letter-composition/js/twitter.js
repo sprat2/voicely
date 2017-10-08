@@ -17,7 +17,10 @@ function twitterTokenCallback( token ){
   // Callback after token retrieved
   twitterTokenCallback = function( token ) {
     // Hide the button
-    $('#twitter-prompt-button').css('display', 'none');
+    // $('#twitter-prompt-button').css('display', 'none');
+    // Gray out & disable the button
+    $('#twitter-prompt-button').css('opacity', '0.5');
+    $('#twitter-prompt-button').addClass('disabled');
     
     // Set the sharing message appropriately
     $('#twitter-sharing-message').val( getShareMessageWithCurrentParams() );
@@ -30,6 +33,11 @@ function twitterTokenCallback( token ){
   $('#twitter-skip-button').click(function() {
     // Enable the "Next" button
     // $('#end-step3a2-button').prop('disabled', false);
+    // Gray out & disable the button
+    $('#twitter-prompt-button').css('opacity', '0.5');
+    $('#twitter-prompt-button').addClass('disabled');
+    // Remove the token (so that the user may take back their authorization)
+    $('#tokenholder').removeData( 'twitter-token' );
   })
 
 })( jQuery );

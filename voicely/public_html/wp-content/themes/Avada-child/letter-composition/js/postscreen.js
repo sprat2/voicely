@@ -4,7 +4,6 @@
 
   // Elevate the scope of certain variables we'll use throughout this script
   var serverResponse = null;
-  
   var selectedAddressees = null;
   var title = null;
   var body = null;
@@ -12,7 +11,13 @@
   var postNonce = null;
   var shareNonce = null;
 
-  $('#post-now-button').click( function () {
+  // Hide the overlay background when clicked
+  // $('#postscreen-overlay').unbind('click').click( function () {
+  //   $('#postscreen-overlay').css( 'display', 'none' );    
+  // });
+
+  // Handle click event for the Publish button, removing previous event handlers to avoid a duplication bug
+  $('#post-now-button').unbind('click').click( function () {
     // Lock the inputs so that the user can't edit them anymore
     $('#titleInput').prop('disabled', true);
     $('#bodyInput').prop('disabled', true);
@@ -38,7 +43,8 @@
     // Message
     $('#letter-progress .message').html('Publishing letter');
     $('#letter-progress .message').attr('class', 'message loading');
-    $('#submit-view-container').css( 'display', 'flex' );
+    // $('#submit-view-container').css( 'display', 'flex' );
+    $('#postscreen-overlay').css( 'display', 'block' );
     
 
     // Start the letter submitting process
@@ -48,11 +54,11 @@
     function submitLetter() {
       // Create an array of parameters to be included in the AJAX request
       var postData = {
-          addressees: selectedAddressees,
-          title:      title,
-          contents:   body,
-          tags:       tags,
-          nonce:      postNonce,
+        addressees: selectedAddressees,
+        title:      title,
+        contents:   body,
+        tags:       tags,
+        nonce:      postNonce,
       };
       // Perform the AJAX request
       $.post( ajaxLocation+"post.php", postData ).then(
@@ -78,7 +84,7 @@
           // Handle server response access errors
           catch ( e ) {
             alert( "JSON parse error: " + e.message + "\n\nServer response:" + data +
-                "\n\nThe application has not been cleaned up properly." );
+              "\n\nThe application has not been cleaned up properly." );
 
             // Update UI for letter sending failure
             setTimeout(letterFailureHandler, 700);
@@ -86,11 +92,11 @@
         },
         // Transmission failure callback
         function( data ){
-            alert( "Submission transmission failure in submitLetter()." );
-            console.log(data);
+          alert( "Submission transmission failure in submitLetter()." );
+          console.log(data);
 
-            // Update UI for letter sending failure
-            setTimeout(letterFailureHandler, 700);
+          // Update UI for letter sending failure
+          setTimeout(letterFailureHandler, 700);
         }
       );
     }
@@ -110,7 +116,9 @@
 
       // Stop saving and delete the letter progress cookies
       if ( saveInterval != null )
-        clearInterval( saveInterval );
+        clearInterval( window.saveInterval );
+      else
+        console.error("Unable to stop letter progress saving.");
       document.cookie = 'savedTitle=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
       document.cookie = 'savedTags=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
       document.cookie = 'savedAddressees=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -138,7 +146,7 @@
       // sharing-icon
       $('#fb-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/loading.gif">');
       // Message
-      $('#fb-share-progress .message').html('Sharing to Facebook...');
+      $('#fb-share-progress .message').html('Sharing to Facebook');
       $('#fb-share-progress .message').attr('class', 'message loading');
 
       postToSocialMedia( 'Facebook',
@@ -179,7 +187,7 @@
       // sharing-icon
       $('#tw-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/loading.gif">');
       // Message
-      $('#tw-share-progress .message').html('Sharing to Twitter...');
+      $('#tw-share-progress .message').html('Sharing to Twitter');
       $('#tw-share-progress .message').attr('class', 'message loading');
 
       var returnedRemoteLetterData = serverResponse;
@@ -236,11 +244,6 @@
     $('#end-step6-buttona').click(function() {
       window.location.href = serverResponse.url_to_letter;    
     });
-  });
-  
-  // Set button up to take us to the letters display page
-  $('#end-step6-buttonb').click(function() {
-    window.location.href = '/open-letters-2/'; // XXX - Change this as the view-all-letters page URL changes
   });
 
 })( jQuery );

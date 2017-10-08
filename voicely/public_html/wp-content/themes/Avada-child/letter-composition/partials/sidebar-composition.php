@@ -1,102 +1,55 @@
 <!-- Section 1 - Popular Recipients -->
-<div class="rhs-sections" id="section-1">
-  <div class="mini-nav">
-    <div class="btn-group">
-    <button class="btn btn-default btn-xs" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
-    <button class="btn btn-default btn-xs" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
-    </div>
+<div class="rhs-composition-section" id="composition-section-1">
+  <!-- Arrow buttons -->
+  <div class="mini-nav btn-group" id="popular-recipients-buttons">
+    <button class="btn btn-default btn-xs left-button" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
+    <button class="btn btn-default btn-xs right-button" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
   </div>
-  <div class="title-w-buttons">
-    <h4>Popular receipients</h4>
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    <h4>Popular Recipients</h4>
   </div>
-  <div class="image-rows">
-    <div class="images">
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    </div>
+  <!-- Popular Recipients Table -->
+  <div id="popular-recipients-div">
+    <?php include 'sidebar-composition-popular-recipients-table.php' ?>
   </div>
-  </div>
+</div>
 
-  <!-- Section 2 - Tags -->
-  <div class="rhs-sections" id="section-2">
-  <div class="mini-nav">
-    <div class="btn-group">
-    <button class="btn btn-default btn-xs" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
-    <button class="btn btn-default btn-xs" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
-    </div>
+<!-- Section 2 - Tags -->
+<div class="rhs-composition-section" id="composition-section-2">
+  <!-- Arrow buttons -->
+  <div class="mini-nav btn-group" id="tags-buttons">
+    <button class="btn btn-default btn-xs left-button" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
+    <button class="btn btn-default btn-xs right-button" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
   </div>
-  <div class="title-w-buttons">
+  <!-- Heading -->
+  <div class="sidebar-heading">
     <h4>Tags</h4>
   </div>
+  <!-- Tags Input -->
   <div class="tags">
+    <!-- Tags Input -->
     <div class="form-group" id="form-tag">
-    <textarea type="text" data-role="tagsinput" placeholder="Add a tag..." class="form-control" id="tagsInput"></textarea>
+      <textarea type="text" data-role="tagsinput" placeholder="Add a tag..." class="form-control" id="tagsInput" autocomplete="off"></textarea>
     </div>
-    <div class="form-group" id="form-tag-blue">
-    <textarea class="form-control" rows="1"></textarea>
-    </div>
+    <!-- Suggested Tags -->
     <div class="form-group" id="form-tag-gray">
-    <h3>Suggested Tags</h3>
-    <textarea class="form-control" rows="1"></textarea>
+      <center>[SUGGESTED TAGS]</center>
     </div>
   </div>
-  </div>
+</div>
 
-  <!-- Section 3 - Add images -->
-  <div class="rhs-sections">
-  <div class="mini-nav">
-    <div class="btn-group">
-    <button class="btn btn-default btn-xs" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
-    <button class="btn btn-default btn-xs" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
-    </div>
+<!-- Section 3 - Add images -->
+<div class="rhs-composition-section">
+  <!-- Arrow buttons -->
+  <div class="mini-nav btn-group" id="add-image-buttons">
+    <button class="btn btn-default btn-xs left-button" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
+    <button class="btn btn-default btn-xs right-button" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
   </div>
-  <div class="title-w-buttons">
-    <h4>Add images</h4>
+  <div class="sidebar-heading">
+    <h4>Add Images to Letter</h4>
   </div>
-  <div class="image-rows">
-    <div class="images">
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    <a href="#"><img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/block_small.jpg" alt="recipients" width="32" height="32" /></a>
-    </div>
+  <div id="add-images-div">
+    <?php include 'sidebar-composition-add-images-table.php' ?>
   </div>
 </div>

@@ -32,6 +32,8 @@ if (empty($_SERVER['HTTPS'])) {
 <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/typeaheadjs.css" rel="stylesheet">
 <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/image-picker.css" rel="stylesheet">
 <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/multi-select.dist.css" rel="stylesheet">
+<link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/bootstrap-social.css" rel="stylesheet">
+<link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/thirdparty/font-awesome.css" rel="stylesheet">
 <link href="<?= get_stylesheet_directory_uri().'/'?>letter-composition/css/style.css" rel="stylesheet">
 
 <!-- Scripts -->

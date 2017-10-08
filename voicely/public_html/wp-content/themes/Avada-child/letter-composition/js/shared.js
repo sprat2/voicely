@@ -47,7 +47,8 @@ function popupCenter(url, title, w, h) {
 }
 
 // Get user's third party authorization token
-function getToken( provider, syslogin = false ) {
+function getToken( provider, syslogin ) {
+  var syslogin = syslogin || false; // Because IE doesn't support default parameters yet
 	var url = ajaxLocation+"get-token.php?provider=" + encodeURI(provider) +
     '&' + new Date().getTime();
   if ( syslogin )
@@ -56,7 +57,8 @@ function getToken( provider, syslogin = false ) {
 }
 
 // Called from popup which requests user's token (stores token in token variable)
-function closePopupFromPopup( result, provider, syslogin = 'false' ) {
+function closePopupFromPopup( result, provider, syslogin ) {
+  var syslogin = syslogin || 'false'; // Because IE doesn't support default parameters yet  
   if (syslogin == 'true')
     useTokenToLogin( result, provider );
   else

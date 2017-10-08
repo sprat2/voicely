@@ -8,19 +8,35 @@ function loadWindowsliveContacts( token ){
 (function( $ ) {
   'use strict';
 
+  // Hide the overlay when clicked
+  $('#windowslive-contacts-selection-overlay').unbind('click').click( function () {
+    $('#windowslive-contacts-selection-overlay').css( 'display', 'none' );    
+  });
+  
+  // Stop clicks on the overlay div from propagating to the overlay itself
+  //   (so that they don't close the overlay)
+  $('#windowslive-contacts-selection-overlay-content').unbind('click').click( function (e) {
+    e.stopPropagation();
+  });
+
   // Authorization button
   $('#windowslive-prompt-button').click(function() {
     // Store windowslive contacts as a cookie, to be used by selectContacts
     getToken('WindowsLive');
+    // Show the overlay
+    $('#windowslive-contacts-selection-div').html('Loading contacts...');
+    $('#windowslive-contacts-selection-overlay').css( 'display', 'block' );
   });
 
   // Contact selection
   loadWindowsliveContacts = function( token ) {
     // Hide the authentication button now that we've been granted access
-    $('#windowslive-prompt-button').css( 'display', 'none' );
+    // $('#windowslive-prompt-button').css( 'display', 'none' );
+    // Gray out & disable the button
+    $('#windowslive-prompt-button').css('opacity', '0.5');
+    $('#windowslive-prompt-button').addClass('disabled');
 
     // Get their contacts and display them appropriately
-    $('#windowslive-contacts-selection-div').html('Loading contacts...');
     var userContacts = getContacts( 'WindowsLive', token, function( userContacts ) {
 
       // Instantiate array of selected contacts
@@ -55,9 +71,15 @@ function loadWindowsliveContacts( token ){
   }
 
   // Skip button
-  $('#skip-button').click(function() {
+  $('#windowslive-skip-button').click(function() {
     // Enable the "Next" button
     // $('#end-step3b2-button').prop('disabled', false);
+    // Gray out & disable the button
+    $('#windowslive-prompt-button').css('opacity', '0.5');
+    $('#windowslive-prompt-button').addClass('disabled');
+    // Remove the token (so that the user may take back their authorization)
+    $('#tokenholder').removeData( 'windowslive-token' );
+    $('#windowslive-contacts-selection-div').removeData( 'selected-sharing-addresses' );
   });
 
 
