@@ -1,7 +1,7 @@
 <!-- Section 1 - Popular Recipients -->
 <div class="rhs-composition-section" id="composition-section-1">
   <!-- Arrow buttons -->
-  <div class="mini-nav btn-group" id="popular-recipients-buttons">
+  <div class="mini-nav btn-group scroll-container-buttons" id="popular-recipients-buttons">
     <button class="btn btn-default btn-xs left-button" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
     <button class="btn btn-default btn-xs right-button" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
   </div>
@@ -9,9 +9,11 @@
   <div class="sidebar-heading">
     <h4>Popular Recipients</h4>
   </div>
-  <!-- Popular Recipients Table -->
-  <div id="popular-recipients-div">
-    <?php include 'sidebar-composition-popular-recipients-table.php' ?>
+  <!-- Popular Recipients Scrolling Container -->
+  <div class="scroll-container-wrapper"> <!-- Sets width only -->
+    <div class="scroll-container">
+      <?php //include dirname(__FILE__).'/../sidebar-composition-popular-recipients-table.php' ?>
+    </div>
   </div>
 </div>
 
@@ -50,6 +52,6 @@
     <h4>Add Images to Letter</h4>
   </div>
   <div id="add-images-div">
-    <?php include 'sidebar-composition-add-images-table.php' ?>
+    <?php include dirname(__FILE__).'/../ajax/sidebar-composition-add-images-table.php' ?>
   </div>
 </div>

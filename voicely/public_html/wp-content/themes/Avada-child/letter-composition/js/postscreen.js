@@ -25,6 +25,12 @@
     $('#toInput').prop('disabled', true);
     $('#facebook-sharing-message').prop('disabled', true);
     $('#twitter-sharing-message').prop('disabled', true);
+    $('#facebook-prompt-button').addClass('disabled');
+    $('#twitter-prompt-button').addClass('disabled');
+    $('#google-prompt-button').addClass('disabled');
+    $('#windowslive-prompt-button').addClass('disabled');
+    $('#fax-prompt-button').addClass('disabled');
+    $('#hardcopy-prompt-button').addClass('disabled');
     
     // Gather the inputs
     selectedAddressees = $('#toInput').tagsinput('items');
@@ -37,15 +43,7 @@
     // var shareMarkNonce = $('#nonceholder').data( 'share-mark-nonce' );
     // var googleContactsNonce = $('#nonceholder').data( 'google-contacts-nonce' );
 
-    // Set up the submitted dialog's letter portion
-    // sharing-icon
-    $('#letter-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/loading.gif">');
-    // Message
-    $('#letter-progress .message').html('Publishing letter');
-    $('#letter-progress .message').attr('class', 'message loading');
-    // $('#submit-view-container').css( 'display', 'flex' );
-    $('#postscreen-overlay').css( 'display', 'block' );
-    
+    // $('#postscreen-overlay').css( 'display', 'block' );
 
     // Start the letter submitting process
     submitLetter();
@@ -104,12 +102,6 @@
 
     // Handles letter submission success
     function letterSuccessHandler( returnedRemoteLetterData ) {
-      // Update the UI to indicate that the letter has been published successfully
-      // sharing-icon
-      $('#letter-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/check.png">');
-      // Message
-      $('#letter-progress .message').html('Published!');
-      $('#letter-progress .message').attr('class', 'message');
 
       // Save the response
       serverResponse = returnedRemoteLetterData;
@@ -131,23 +123,13 @@
       // Attempt to share to Facebook (will only succeed if authorized)
       shareToFacebook(returnedRemoteLetterData);
     }
-    // Alters the UI to signal letter publishing failure
-    function letterFailureHandler() {
-      // sharing-icon
-      $('#letter-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/x.png">');
-      // Message
-      $('#letter-progress .message').html('Failed to publish letter');
-      $('#letter-progress .message').attr('class', 'message');
-    }
-
 
     function shareToFacebook(returnedRemoteLetterData) {
       // Set up the sharing status display
-      // sharing-icon
-      $('#fb-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/loading.gif">');
-      // Message
-      $('#fb-share-progress .message').html('Sharing to Facebook');
-      $('#fb-share-progress .message').attr('class', 'message loading');
+      // Update status 
+      $('#fb-status-indicator').html('…');
+      $('#fb-status-indicator').css('color', 'white');
+      $('#facebook-prompt-button .social-prompt-text').text('Sharing to Facebook...');
 
       postToSocialMedia( 'Facebook',
         $('#tokenholder').data( 'facebook-token' ),
@@ -155,25 +137,26 @@
         returnedRemoteLetterData,
         shareNonce,
         function(returnedData){
-          // Handle display elements for facebook success
-          // sharing-icon
-          $('#fb-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/check.png">');
-          // Message
-          $('#fb-share-progress .message').html('Shared to Facebook!');
-          $('#fb-share-progress .message').attr('class', 'message');
-
-          // Attempt to share to Twitter (will only succeed if authorized)
-          shareToTwitter( returnedData );
+          // On a delay...
+          setTimeout(function() {
+            // Handle display elements for facebook success
+            // Update status icon
+            $('#fb-status-indicator').html('✓');
+            $('#fb-status-indicator').css('color', 'lightgreen');
+            $('#facebook-prompt-button .social-prompt-text').text('Shared to Facebook!');
+  
+            // Attempt to share to Twitter (will only succeed if authorized)
+            shareToTwitter( returnedData );
+          }, 350);
         }, function(returnedData){
           console.log('Error sharing to Facebook'); 
           console.log(returnedData); 
           
-          // Handle display elements for facebook failure
-          // sharing-icon
-          $('#fb-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/x.png">');
-          // Message
-          $('#fb-share-progress .message').html('Failed to share to Facebook');
-          $('#fb-share-progress .message').attr('class', 'message');
+          // Handle display elements for facebook failure  
+          // Update status icon
+          $('#fb-status-indicator').html('🗙');
+          $('#fb-status-indicator').css('color', 'red');
+          $('#facebook-prompt-button .social-prompt-text').text('Not shared to Facebook');
           
           // Attempt to share to Twitter (will only succeed if authorized)
           shareToTwitter( returnedData );
@@ -184,11 +167,10 @@
 
     function shareToTwitter(returnedFromFacebookSharingCall) {
       // Set up the sharing status display
-      // sharing-icon
-      $('#tw-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/loading.gif">');
-      // Message
-      $('#tw-share-progress .message').html('Sharing to Twitter');
-      $('#tw-share-progress .message').attr('class', 'message loading');
+      // Update status 
+      $('#tw-status-indicator').html('…');
+      $('#tw-status-indicator').css('color', 'white');
+      $('#twitter-prompt-button .social-prompt-text').text('Sharing to Twitter...');
 
       var returnedRemoteLetterData = serverResponse;
       
@@ -198,24 +180,25 @@
         returnedRemoteLetterData,
         shareNonce,
         function(returnedData){
-          // Handle display elements for twitter success
-          // sharing-icon
-          $('#tw-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/check.png">');
-          // Message
-          $('#tw-share-progress .message').html('Shared to Twitter!');
-          $('#tw-share-progress .message').attr('class', 'message');
+          // On a delay...
+          setTimeout(function() {
+            // Handle display elements for twitter success
+            // Update status icon
+            $('#tw-status-indicator').html('✓');
+            $('#tw-status-indicator').css('color', 'lightgreen');
+            $('#twitter-prompt-button .social-prompt-text').text('Shared to Twitter!');
 
-          proceedPastSharing();
+            proceedPastSharing();
+          }, 350);
         }, function(returnedData){
           console.log('Error sharing to Twitter'); 
           console.log(returnedData); 
 
           // Handle display elements for twitter failure
-          // sharing-icon
-          $('#tw-share-progress .sharing-icon').html('<img src="'+ajaxLocation+'../img/x.png">');
-          // Message
-          $('#tw-share-progress .message').html('Failed to share to Twitter');
-          $('#tw-share-progress .message').attr('class', 'message');
+          // Update status icon
+          $('#tw-status-indicator').html('🗙');
+          $('#tw-status-indicator').css('color', 'red');
+          $('#twitter-prompt-button .social-prompt-text').text('Not shared to Twitter');
           
           proceedPastSharing();
         }
@@ -238,6 +221,35 @@
 
       // TODO: URL link display
       //$('#url-to-clipboard').html('Clipboard-copiable link to go here:<br><a href="' + serverResponse.url_to_letter + '>your letter</a>.');
+      
+      // Update status  UI
+      $('#publish-button-div .status-display-button').html('…');
+      $('#publish-button-div .status-display-button').css('color', 'white');
+      $('#post-now-button').text('Publishing...');
+
+      // On a delay...
+      setTimeout(function() {
+        // Update the UI to indicate that the letter has been published successfully
+        $('#publish-button-div .status-display-button').html('✓');
+        $('#publish-button-div .status-display-button').css('color', 'lightgreen');
+        $('#post-now-button').text('Published!');
+
+        // Display links
+        $('#postscreen-buttons-div').css( 'display', 'block' );
+
+        // On a delay...
+        setTimeout(function() {
+          // Redirect
+          window.location.href = serverResponse.url_to_letter; 
+        }, 3000);
+      }, 700);
+    }
+    // Alters the UI to signal letter publishing failure
+    function letterFailureHandler() {
+      // Update status 
+      $('#publish-button-div .status-display-button').html('🗙');
+      $('#publish-button-div .status-display-button').css('color', 'red');
+      $('#post-now-button').text('Not Published');
     }
 
     // Set button up to take us to our letter

@@ -1,14 +1,15 @@
-<div class="row" id="windowslive-sharing-div">
-  <div class="col-xs-9 social-btn-div">
-    <span>
-      <a class="btn btn-block btn-social btn-microsoft" id="windowslive-prompt-button">
-        <span class="fa fa-windows"></span> Share to Windows Live
+<div class="flex-display" id="windowslive-sharing-div">
+  <span class="status-display-button"><i class="fa-alph">4</i></span>
+    <span class="btn-social-span">
+      <a class="btn btn-block btn-social btn-microsoft disabled" id="windowslive-prompt-button">
+        <span class="fa fa-windows"></span>
+        <span class="social-prompt-text">Share to Windows Live</span>
       </a>
     </span>
-  </div>
-  <div class="col-xs-3">
-    <a id="windowslive-skip-button" class="skip-button">No thanks...</a>
-  </div>
+  <span id="fb-status-indicator" class="status-display-button"></span>
+  <!-- <div class="col-xs-3"> -->
+    <!-- <a id="windowslive-skip-button" class="skip-button">No thanks...</a> -->
+  <!-- </div> -->
 </div>
 
 <div id="windowslive-contacts-selection-overlay">

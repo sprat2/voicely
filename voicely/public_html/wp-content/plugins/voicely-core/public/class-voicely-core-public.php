@@ -96,7 +96,8 @@ class Voicely_Core_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->voicely_core, plugin_dir_url( __FILE__ ) . 'js/voicely-core-public.js', array( 'jquery' ), $this->version, false );
+		 wp_enqueue_script( $this->voicely_core, plugin_dir_url( __FILE__ ) . 'js/voicely-core-public.js', array( 'jquery' ), $this->version, false );
+		 wp_enqueue_script( $this->voicely_core + '-2', plugin_dir_url( __FILE__ ) . 'js/login-logout-menu-entry.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -224,5 +225,20 @@ class Voicely_Core_Public {
 			wp_redirect( get_bloginfo('url') );
 			exit();
 		}
+	}
+
+	// Handle/process Login/logout menu entry
+	function loginout_setup_nav_menu_item( $item ) {
+		// If this is the login/logout entry...
+		if ( (basename($_SERVER['PHP_SELF']) != 'nav-menus.php') && isset( $item->url ) && ($item->url === '#loginout') ) {
+			// Act on it appropriately
+			$item->title = is_user_logged_in() ? 'Logout' : 'Login';
+			$item->url = is_user_logged_in() ? wp_logout_url( get_permalink() ) : '';
+
+			// Add an identifying DOM class for our JS script to identify this by in order to add the click event
+			if ( !is_user_logged_in() )
+				$item->classes[] = 'login-logout-in';
+		}			
+		return $item;
 	}
 }

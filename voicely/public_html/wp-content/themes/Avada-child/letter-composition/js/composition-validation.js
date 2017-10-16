@@ -18,10 +18,19 @@ var saveInterval = null;
     var bodyIsSatisfactory = ( $('#bodyInput').val().trim().length >= 10 );
     // var hasAddressees = ( $('#toInput').tagsinput('items').length > 0 );
 
-    if ( titleIsSatisfactory && bodyIsSatisfactory )
-      $('#post-now-button').prop('disabled', false);
-    else
+    if ( titleIsSatisfactory && bodyIsSatisfactory ) {
+      // Enable Publish button
+      //$('#post-now-button').prop('disabled', false);
+
+      // Enable facebook sharing button if appropriate
+      if ( ! $('#facebook-prompt-button').hasClass('button-clicked') )
+        $('#facebook-prompt-button').removeClass('disabled');
+    }
+    else {
+      // Disable Publish & sharing buttons
       $('#post-now-button').prop('disabled', true);
+      $('#facebook-prompt-button').addClass('disabled');
+    }
   }
 
   // Determines tooltip text when user hovers over the Publish button

@@ -1,29 +1,31 @@
-<div class="row" id="fax-sharing-div">
-  <div class="col-xs-9 social-btn-div">
-    <span>
-      <a class="btn btn-block btn-social btn-github" id="fax-prompt-button">
-        <span class="fa fa-fax"></span> Send Fax
+<div class="flex-display" id="fax-sharing-div">
+  <span class="status-display-button"><i class="fa-alph">5</i></span>
+    <span class="btn-social-span">
+      <a class="btn btn-block btn-social btn-github disabled" id="fax-prompt-button">
+        <span class="fa fa-fax"></span>
+        <span class="social-prompt-text">Send Fax</span>
       </a>
     </span>
-  </div>
-  <div class="col-xs-3">
-    <a id="fax-skip-button" class="skip-button">No thanks...</a>
-  </div>
+  <span id="fb-status-indicator" class="status-display-button"></span>
+  <!-- <div class="col-xs-3"> -->
+    <!-- <a id="fax-skip-button" class="skip-button">No thanks...</a> -->
+  <!-- </div> -->
 </div>
 
 <textarea id="fax-sharing-message" style="display: none;"></textarea>
 
-<div class="row" id="hardcopy-sharing-div">
-  <div class="col-xs-9 social-btn-div">
-    <span>
-      <a class="btn btn-block btn-social btn-adn" id="hardcopy-prompt-button">
-        <span class="fa fa-envelope"></span> Send Hardcopy
+<div class="flex-display" id="hardcopy-sharing-div">
+  <span class="status-display-button"><i class="fa-alph">6</i></span>
+    <span class="btn-social-span">
+      <a class="btn btn-block btn-social btn-adn disabled" id="hardcopy-prompt-button">
+        <span class="fa fa-envelope"></span>
+        <span class="social-prompt-text">Send Hardcopy</span>
       </a>
     </span>
-  </div>
-  <div class="col-xs-3">
-    <a id="hardcopy-skip-button" class="skip-button">No thanks...</a>
-  </div>
+  <span id="fb-status-indicator" class="status-display-button"></span>
+  <!-- <div class="col-xs-3"> -->
+    <!-- <a id="hardcopy-skip-button" class="skip-button">No thanks...</a> -->
+  <!-- </div> -->
 </div>
 
 <textarea id="hardcopy-sharing-message" style="display: none;"></textarea>

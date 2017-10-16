@@ -99,8 +99,8 @@
       valueKey: 'tag',
       source: tagnames.ttAdapter()
     },
-    confirmKeys: [13, 44, 59, 32], // Confirm on enter, comma, semicolon, space (ASCII codes)
-    delimiter: [13, 44, 59, 32], // Break on enter, comma, semicolon, space (ASCII codes)
+    confirmKeys: [13, 44, 59, 32, 9], // Confirm on enter, comma, semicolon, space (ASCII codes)
+    delimiter: [13, 44, 59, 32, 9], // Break on enter, comma, semicolon, space (ASCII codes)
     trimValue: true, // Trim whitespace from tags
     cancelConfirmKeysOnEmpty: false, // fix for carrying over comma to next tag
   });
@@ -136,8 +136,8 @@
     },
     itemValue: 'pretty_name', // Shows when locked in
     // Note: These settings are currently useless, as new objects can't be added via text-input
-    confirmKeys: [13, 44, 59, 32], // Confirm on enter, comma, semicolon, space (ASCII codes)
-    delimiter: [13, 44, 59, 32], // Break on enter, comma, semicolon, space (ASCII codes)
+    confirmKeys: [13, 44, 59, 32, 9], // Confirm on enter, comma, semicolon, space (ASCII codes)
+    delimiter: [13, 44, 59, 32, 9], // Break on enter, comma, semicolon, space (ASCII codes)
     trimValue: true, // Trim whitespace from addressees
     cancelConfirmKeysOnEmpty: false, // fix for carrying over comma to next addressee
   });
@@ -210,5 +210,54 @@
       $('#bodyInput').val( readCookie('savedLetter') );
     }
   });
+
+  // Infinite scroll containers
+  var scrollAnimationSpeed = 500;
+  var displayedSetIndex = 0;
+  var loadedSetIndex = 0;
+  var emulatedAjaxDelay = 0;
+  // Left scroll button clicked...
+  $('.scroll-container-buttons .left-button').unbind('click').click( function () {
+    // Scroll one screen to the left
+    // Update scroll index
+    displayedSetIndex = ( displayedSetIndex > 0 ) ? displayedSetIndex-1 : 0;
+    // Update scroll position
+    $('.scroll-container').scroll();
+  });
+
+  // Right scroll button clicked...
+  $('.scroll-container-buttons .right-button').unbind('click').click( function () {
+    // Scroll one screen to the right
+    // Update scroll index
+    displayedSetIndex++;
+    // Update scroll position
+    $('.scroll-container').scroll();
+  });
+
+  // On scroll event...
+  $('.scroll-container').scroll( function() {
+    // Update scroll position
+    var currentScrollPosition = $('.scroll-container').scrollLeft();    
+    var newScrollPosition = $('.scroll-container').width() * displayedSetIndex;
+    if ( currentScrollPosition != newScrollPosition ) {
+      // TODO: Make this more efficient (Only cancel animation if isn't going to right place)
+      $('.scroll-container').stop(); // Stop previous animations to update to the new position
+      $('.scroll-container').animate( { scrollLeft: newScrollPosition }, scrollAnimationSpeed);
+    }
+    // If scroll is (nearly) maxxed out...
+    var scrollbarRightPosition = $('.scroll-container').scrollLeft() + $('.scroll-container').width();
+    var scrollbarMaxPosition = $('.scroll-container')[0].scrollWidth;
+    if ( scrollbarRightPosition >= scrollbarMaxPosition ) {
+      // Request more content and add it to the element
+      $.get(ajaxLocation+'/sidebar-composition-popular-recipients-table.php?index='+loadedSetIndex++, function(newContent) {
+        setTimeout(function() {
+          $('.scroll-container').append(newContent);
+          $('.scroll-container').scroll(); // Update scroll position
+        }, emulatedAjaxDelay);    
+      }); 
+    }
+  });
+  // Trigger first scroll event to load default content
+  $('.scroll-container').scroll();
 
 })( jQuery );

@@ -11,6 +11,8 @@ function twitterTokenCallback( token ){
   
   // Sharing prompt button
   $('#twitter-prompt-button').click(function() {
+    $('#twitter-prompt-button').addClass('disabled');
+    $('#google-prompt-button').removeClass('disabled');
     getToken('Twitter');
   });
 

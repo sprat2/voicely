@@ -1,7 +1,22 @@
 <!-- Publish Button -->
-<div id="tooltip">
-  <button id="post-now-button" type="button" class="btn btn-primary center-block" disabled>Publish</button>
-  <span id="tooltiptext" class="display-enabled"></span>
+<div id="publish-button-div">
+  <span id="tooltip">
+    <button id="post-now-button" type="button" class="btn btn-primary center-block" disabled>Publish</button>
+    <span id="tooltiptext" class="display-enabled"></span>
+  </span>
+  <span class="status-display-button"><i class="fa-alph"></i></span>
+</div>
+
+<!-- Buttons -->
+<div id="postscreen-buttons-div" style="display: none;">
+  <?php // This button is handled dynamically, as we don't have access to the letter's URL yet ?>
+  <button class="btn btn-large btn-info" id="end-step6-buttona" type="button" disabled>View this letter</button>
+  <form action="<?= get_author_posts_url( get_current_user_id() ) ?>" id="end-step6-buttonc-wrapper">
+    <button class="btn btn-large btn-info" id="end-step6-buttonc" type="submit">View my letters</button>
+  </form>
+  <form action="/open-letters-2/" id="end-step6-buttonc-wrapper">
+    <button class="btn btn-large btn-info" id="end-step6-buttonb" type="submit">View all letters</button>
+  </form>
 </div>
 
 <!-- Overlay -->
@@ -32,18 +47,6 @@
     </div>
 
     <center>Thank You!</center>
-
-    <!-- Buttons -->
-    <div id="postscreen-buttons-div">
-      <?php // This button is handled dynamically, as we don't have access to the letter's URL yet ?>
-      <button class="btn btn-large btn-info" id="end-step6-buttona" type="button" disabled>View this letter</button>
-      <form action="<?= get_author_posts_url( get_current_user_id() ) ?>" id="end-step6-buttonc-wrapper">
-        <button class="btn btn-large btn-info" id="end-step6-buttonc" type="submit">View my letters</button>
-      </form>
-      <form action="/open-letters-2/" id="end-step6-buttonc-wrapper">
-        <button class="btn btn-large btn-info" id="end-step6-buttonb" type="submit">View all letters</button>
-      </form>
-    </div>
 
   </div>
 </div> 

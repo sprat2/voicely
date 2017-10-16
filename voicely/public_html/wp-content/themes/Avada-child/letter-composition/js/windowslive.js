@@ -21,17 +21,19 @@ function loadWindowsliveContacts( token ){
 
   // Authorization button
   $('#windowslive-prompt-button').click(function() {
+    $('#windowslive-prompt-button').addClass('disabled');
+    $('#fax-prompt-button').removeClass('disabled');
     // Store windowslive contacts as a cookie, to be used by selectContacts
     getToken('WindowsLive');
-    // Show the overlay
-    $('#windowslive-contacts-selection-div').html('Loading contacts...');
-    $('#windowslive-contacts-selection-overlay').css( 'display', 'block' );
   });
 
   // Contact selection
   loadWindowsliveContacts = function( token ) {
     // Hide the authentication button now that we've been granted access
     // $('#windowslive-prompt-button').css( 'display', 'none' );
+    // Show the overlay
+    $('#windowslive-contacts-selection-div').html('Loading contacts...');
+    $('#windowslive-contacts-selection-overlay').css( 'display', 'block' );
     // Gray out & disable the button
     $('#windowslive-prompt-button').css('opacity', '0.5');
     $('#windowslive-prompt-button').addClass('disabled');

@@ -149,6 +149,10 @@ class Voicely_Core {
     private function define_public_hooks() {
 
         $plugin_public = new Voicely_Core_Public( $this->get_voicely_core(), $this->get_version() );
+        
+        // Enqueue default template & script files
+        add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_styles') );
+        add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts') );
 
         // Register custom types
         // Note: Not yet supported by Avada's blog displays
@@ -157,12 +161,11 @@ class Voicely_Core {
         // addressees taxonomy
         add_action( 'init', array($plugin_public, 'register_addressee_taxonomy') );
 
-        // Enqueue default template & script files
-        add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_styles') );
-        add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts') );
-
         // Prevent users from accessing WP's login page
         add_action('init', array($plugin_public, 'prevent_wp_login') );
+
+        // Add Facebook login/logout to menu
+        add_filter( 'wp_setup_nav_menu_item', array($plugin_public, 'loginout_setup_nav_menu_item') );        
     }
 
     /**

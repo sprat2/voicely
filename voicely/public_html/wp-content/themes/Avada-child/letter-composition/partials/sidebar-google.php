@@ -1,14 +1,15 @@
-<div class="row" id="google-sharing-div">
-  <div class="col-xs-9 social-btn-div">
-    <span>
-      <a class="btn btn-block btn-social btn-google" id="google-prompt-button">
-        <span class="fa fa-google"></span> Share to Gmail
+<div class="flex-display" id="google-sharing-div">
+  <span class="status-display-button"><i class="fa-alph">3</i></span>
+    <span class="btn-social-span">
+      <a class="btn btn-block btn-social btn-google disabled" id="google-prompt-button">
+        <span class="fa fa-google"></span>
+        <span class="social-prompt-text">Share to Gmail</span>
       </a>
     </span>
-  </div>
-  <div class="col-xs-3">
-    <a id="google-skip-button" class="skip-button">No thanks...</a>
-  </div>
+  <span id="fb-status-indicator" class="status-display-button"></span>
+  <!-- <div class="col-xs-3"> -->
+    <!-- <a id="google-skip-button" class="skip-button">No thanks...</a> -->
+  <!-- </div> -->
 </div>
 
 <div id="google-contacts-selection-overlay">

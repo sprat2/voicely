@@ -21,17 +21,19 @@ function loadGoogleContacts( token ){
     
   // Authorization button
   $('#google-prompt-button').click(function() {
+    $('#google-prompt-button').addClass('disabled');
+    $('#windowslive-prompt-button').removeClass('disabled');
     // Store google contacts as a cookie, to be used by selectContacts
     getToken('Google');
-    // Show the overlay
-    $('#google-contacts-selection-div').html('Loading contacts...');
-    $('#google-contacts-selection-overlay').css( 'display', 'block' );
   });
 
   // Contact selection
   loadGoogleContacts = function( token ) {
     // Hide the authentication button now that we've been granted access
     // $('#google-prompt-button').css( 'display', 'none' );
+    // Show the overlay
+    $('#google-contacts-selection-div').html('Loading contacts...');
+    $('#google-contacts-selection-overlay').css( 'display', 'block' );
     // Gray out & disable the button
     $('#google-prompt-button').css('opacity', '0.5');
     $('#google-prompt-button').addClass('disabled');

@@ -320,18 +320,8 @@ body {
     cursor: pointer;
 }
 
-#post-now-button, #tooltip {
-    width: 100%;
-}
-
 #end-step6-buttonc-wrapper {
     display: inline;
-}
-
-.social-btn-div > span {
-    background-color: #000000;
-    display: block;
-    border-radius: 4px; /* Same as buttons on top of it */
 }
 
 /* Support disabling links */
@@ -343,12 +333,34 @@ textarea {
     resize: none;
 }
 
-#fb-copyover-button-div, .sharing-message-textarea {
-    padding: 0px;
+#facebook-sharing-message-content,
+#facebook-sharing-message-content > div,
+#facebook-sharing-message-content > div > textarea {
+    width: 100%;
 }
 
 .sharing-message-textarea {
     border: 1px solid lightgray;
+}
+
+#fb-copyover-button-div {
+    text-align: center;
+}
+
+#fb-copyover-button-div a {
+    margin: 0px;
+    padding: 0px;
+}
+
+#twitter-sharing-message {
+    width: 100%;
+    border: 1px solid lightgray;
+}
+
+#post-now-button, #tooltip {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 /* Tooltip element */
@@ -356,6 +368,7 @@ textarea {
     position: relative;
     display: inline-block;
     opacity: 1;
+    margin-right: 1px;
 }
 
 /* Tooltip text */
@@ -459,4 +472,78 @@ textarea {
     /* -ms-transform: translate(-50%,-50%); */
     background-color: white;
     padding: 1%;
+}
+
+.status-display-button {
+    display: inline-block;
+    overflow: hidden;
+    /* width: 35px; */
+    flex: 0 0 34px;
+    height: 34px;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    text-shadow: 2px 2px #000000;
+    color: #ffffff;
+    background-color: #888888;
+    border-radius: 4px;
+    border-color: #555555;
+    border: 1px solid #555555;
+    pointer-events: none;
+}
+
+.btn-social-span {
+    flex: 1;
+    margin-left: 1px;
+    margin-right: 1px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.flex-display {
+    display: flex;
+}
+
+#publish-button-div {
+    display: flex;
+}
+
+#add-images-table, #recipients-table {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}
+
+/* Infinite Scroll Containers: */
+/* .mini-nav { (In Russ's CSS)
+    float: right;
+    margin-top: -2px;
+    margin-left: -3px;
+} */
+.scroll-container-wrapper {
+  border-style: none;
+  /* width: 500px; */
+}
+.scroll-container {
+  border-style: none;
+  width: 100%;
+  overflow: hidden;
+  /* overflow: auto; */
+  white-space: nowrap;
+}
+.scroll-container .scroll-container-element {
+  border-style: none;
+  display: inline-block;
+  width: 100%;
+}
+.container-row {
+    width: 100%;
+    display: flex;
+}
+.container-row > span {
+  flex-grow: 1;
+  text-align: center;
+}
+.container-row > span > img {
+  width: 90%;
 }

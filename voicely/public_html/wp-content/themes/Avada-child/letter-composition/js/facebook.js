@@ -11,6 +11,9 @@ function facebookTokenCallback( token ){
   
   // Sharing prompt button
   $('#facebook-prompt-button').click(function() {
+    $('#facebook-prompt-button').removeClass('button-clicked');
+    $('#facebook-prompt-button').addClass('disabled');
+    $('#twitter-prompt-button').removeClass('disabled');
     getToken('Facebook');
   });
   

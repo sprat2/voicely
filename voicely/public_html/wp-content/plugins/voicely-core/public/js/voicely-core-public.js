@@ -30,9 +30,7 @@
 	 */
 	
 	// $(window).load( function() {
-		
+
 	// });
-
-
 	
 })( jQuery );
