@@ -2,7 +2,7 @@
 (function( $ ) {
   'use strict';
 
-  /* Scrolling sidebar implementation: */
+  /* Scrolling sidebar panels implementation: */
   /* Set up container sizes per number of children */
   /* Limitation: Dynamically-added child elements won't have these rules applied.
   *             If we need these in the future, either reapply this process or change class rules. */
@@ -209,55 +209,77 @@
     if ( readCookie('savedLetter') != null ) {
       $('#bodyInput').val( readCookie('savedLetter') );
     }
+    
   });
-
-  // Infinite scroll containers
-  var scrollAnimationSpeed = 500;
-  var displayedSetIndex = 0;
-  var loadedSetIndex = 0;
-  var emulatedAjaxDelay = 0;
-  // Left scroll button clicked...
-  $('.scroll-container-buttons .left-button').unbind('click').click( function () {
-    // Scroll one screen to the left
-    // Update scroll index
-    displayedSetIndex = ( displayedSetIndex > 0 ) ? displayedSetIndex-1 : 0;
-    // Update scroll position
-    $('.scroll-container').scroll();
-  });
-
-  // Right scroll button clicked...
-  $('.scroll-container-buttons .right-button').unbind('click').click( function () {
-    // Scroll one screen to the right
-    // Update scroll index
-    displayedSetIndex++;
-    // Update scroll position
-    $('.scroll-container').scroll();
-  });
-
-  // On scroll event...
-  $('.scroll-container').scroll( function() {
-    // Update scroll position
-    var currentScrollPosition = $('.scroll-container').scrollLeft();    
-    var newScrollPosition = $('.scroll-container').width() * displayedSetIndex;
-    if ( currentScrollPosition != newScrollPosition ) {
-      // TODO: Make this more efficient (Only cancel animation if isn't going to right place)
-      $('.scroll-container').stop(); // Stop previous animations to update to the new position
-      $('.scroll-container').animate( { scrollLeft: newScrollPosition }, scrollAnimationSpeed);
-    }
-    // If scroll is (nearly) maxxed out...
-    var scrollbarRightPosition = $('.scroll-container').scrollLeft() + $('.scroll-container').width();
-    var scrollbarMaxPosition = $('.scroll-container')[0].scrollWidth;
-    if ( scrollbarRightPosition >= scrollbarMaxPosition ) {
-      // Request more content and add it to the element
-      $.get(ajaxLocation+'/sidebar-composition-popular-recipients-table.php?index='+loadedSetIndex++, function(newContent) {
-        setTimeout(function() {
-          $('.scroll-container').append(newContent);
-          $('.scroll-container').scroll(); // Update scroll position
-        }, emulatedAjaxDelay);    
-      }); 
-    }
-  });
-  // Trigger first scroll event to load default content
-  $('.scroll-container').scroll();
 
 })( jQuery );
+
+// Fires when an addressee is selected from the "Popular Recipients" section
+//   Selects or deselects them appropriately
+function addresseeClicked( addresseeId, addresseeName, addresseePrettyName ) {
+  // Determine if the element has already been selected
+  var previouslySelected = false;
+  if ( jQuery('#scroll-recipient-id-'+addresseeId).data('isSelected') === true )
+    previouslySelected = true;
+
+  // Adds the clicked recipient to the selection list if not already selected
+  if ( ! previouslySelected ) {
+    var recipientToAdd = {
+      twitter_handle: addresseeName,
+      term_id: addresseeId,
+      pretty_name: addresseePrettyName
+    }
+    jQuery('#toInput').tagsinput('add', recipientToAdd);
+
+    // Mark the element as selected
+    jQuery('#scroll-recipient-id-'+addresseeId).data('isSelected', true);
+
+    // Adjust display appropriately
+    jQuery('#scroll-recipient-id-'+addresseeId).css('opacity', '0.25');  
+  }
+  // Otherwise, removes the selected recipient
+  else {
+    var recipientToRemove = {
+      twitter_handle: addresseeName,
+      term_id: addresseeId,
+      pretty_name: addresseePrettyName
+    }
+    jQuery('#toInput').tagsinput('remove', recipientToRemove);
+
+    // Mark the element as selected
+    jQuery('#scroll-recipient-id-'+addresseeId).data('isSelected', false);
+
+    // Adjust display appropriately
+    jQuery('#scroll-recipient-id-'+addresseeId).css('opacity', '1.0');  
+  }
+}
+
+// Fires when a suggested tag is selected from the "Suggested Tags" section
+//   Selects or deselects them appropriately
+function suggestedTagClicked( tagId, tagName ) {
+  // Determine if the element has already been selected
+  var previouslySelected = false;
+  if ( jQuery('#related-tag-id-'+tagId).data('isSelected') === true )
+    previouslySelected = true;
+
+  // Adds the clicked recipient to the selection list if not already selected
+  if ( ! previouslySelected ) {
+    jQuery('#tagsInput').tagsinput('add', tagName);
+
+    // Mark the element as selected
+    jQuery('#related-tag-id-'+tagId).data('isSelected', true);
+
+    // Adjust display appropriately
+    jQuery('#related-tag-id-'+tagId).css('opacity', '0.25');  
+  }
+  // Otherwise, removes the selected recipient
+  else {
+    jQuery('#tagsInput').tagsinput('remove', tagName);
+    
+    // Mark the element as selected
+    jQuery('#related-tag-id-'+tagId).data('isSelected', false);
+
+    // Adjust display appropriately
+    jQuery('#related-tag-id-'+tagId).css('opacity', '1.0');  
+  }
+}

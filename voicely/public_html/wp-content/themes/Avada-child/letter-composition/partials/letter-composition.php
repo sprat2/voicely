@@ -86,4 +86,5 @@
 </div>
 
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri() ?>/letter-composition/js/composition.js"></script>
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri() ?>/letter-composition/js/composition-scrollelements.js"></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri() ?>/letter-composition/js/composition-validation.js"></script>

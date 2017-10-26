@@ -13,6 +13,7 @@ function twitterTokenCallback( token ){
   $('#twitter-prompt-button').click(function() {
     $('#twitter-prompt-button').addClass('disabled');
     $('#google-prompt-button').removeClass('disabled');
+    $('#twitter-prompt-button').data("stepCompleted", true);
     getToken('Twitter');
   });
 

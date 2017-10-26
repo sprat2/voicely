@@ -23,6 +23,7 @@ function loadGoogleContacts( token ){
   $('#google-prompt-button').click(function() {
     $('#google-prompt-button').addClass('disabled');
     $('#windowslive-prompt-button').removeClass('disabled');
+    $('#google-prompt-button').data("stepCompleted", true);
     // Store google contacts as a cookie, to be used by selectContacts
     getToken('Google');
   });

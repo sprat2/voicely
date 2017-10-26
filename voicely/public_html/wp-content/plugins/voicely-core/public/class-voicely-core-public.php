@@ -210,8 +210,8 @@ class Voicely_Core_Public {
 			$world_args = array(
 				'description' => 'Open to all!',
 			);
-
-			wp_insert_term( 'The World', 'addressee', $world_args );
+			$result = wp_insert_term( 'The World', 'addressee', $world_args );
+			add_term_meta( $result['term_id'], 'pretty_name', 'The World', true );
 		}
 	}
 

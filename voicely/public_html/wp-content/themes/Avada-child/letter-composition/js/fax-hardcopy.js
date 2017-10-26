@@ -5,6 +5,7 @@
   // Callback after token retrieved
   $('#fax-prompt-button').click(function() {
     $('#fax-prompt-button').addClass('disabled');
+    $('#fax-prompt-button').data("stepCompleted", true);
     $('#hardcopy-prompt-button').removeClass('disabled');
   });
 
@@ -18,6 +19,7 @@
   // Callback after token retrieved
   $('#hardcopy-prompt-button').click(function() {
     $('#hardcopy-prompt-button').addClass('disabled');
+    $('#hardcopy-prompt-button').data("stepCompleted", true);
     // Enable "Publish"
     $('#post-now-button').prop('disabled', false);
   });

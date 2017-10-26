@@ -1,4 +1,5 @@
 <!-- Section 1 - Popular Recipients -->
+<?php // (This section labelled as section 1 in composition-scrollelements.js) ?>
 <div class="rhs-composition-section" id="composition-section-1">
   <!-- Arrow buttons -->
   <div class="mini-nav btn-group scroll-container-buttons" id="popular-recipients-buttons">
@@ -17,13 +18,13 @@
   </div>
 </div>
 
-<!-- Section 2 - Tags -->
-<div class="rhs-composition-section" id="composition-section-2">
+<!-- Section 3 - Tags -->
+<div class="rhs-composition-section" id="composition-section-3">
   <!-- Arrow buttons -->
-  <div class="mini-nav btn-group" id="tags-buttons">
+  <!-- <div class="mini-nav btn-group" id="tags-buttons">
     <button class="btn btn-default btn-xs left-button" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
     <button class="btn btn-default btn-xs right-button" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
-  </div>
+  </div> -->
   <!-- Heading -->
   <div class="sidebar-heading">
     <h4>Tags</h4>
@@ -36,22 +37,27 @@
     </div>
     <!-- Suggested Tags -->
     <div class="form-group" id="form-tag-gray">
-      <center>[SUGGESTED TAGS]</center>
+      <?php include dirname(__FILE__).'/suggested-tags.php' ?>
     </div>
   </div>
 </div>
 
-<!-- Section 3 - Add images -->
-<div class="rhs-composition-section">
+<!-- Section 2 - Add images -->
+<?php // (This section labelled as section 2 in composition-scrollelements.js) ?>
+<div class="rhs-composition-section" id="composition-section-2">
   <!-- Arrow buttons -->
-  <div class="mini-nav btn-group" id="add-image-buttons">
+  <div class="mini-nav btn-group scroll-container-buttons" id="add-image-buttons">
     <button class="btn btn-default btn-xs left-button" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
     <button class="btn btn-default btn-xs right-button" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
   </div>
+  <!-- Heading -->
   <div class="sidebar-heading">
     <h4>Add Images to Letter</h4>
   </div>
-  <div id="add-images-div">
-    <?php include dirname(__FILE__).'/../ajax/sidebar-composition-add-images-table.php' ?>
+  <!-- Add Images Scrolling Container -->
+  <div class="scroll-container-wrapper"> <!-- Sets width only -->
+    <div class="scroll-container">
+      <?php //include dirname(__FILE__).'/../sidebar-composition-add-images-table.php' ?>
+    </div>
   </div>
 </div>

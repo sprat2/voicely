@@ -14,6 +14,7 @@ function facebookTokenCallback( token ){
     $('#facebook-prompt-button').removeClass('button-clicked');
     $('#facebook-prompt-button').addClass('disabled');
     $('#twitter-prompt-button').removeClass('disabled');
+    $('#facebook-prompt-button').data("stepCompleted", true);
     getToken('Facebook');
   });
   

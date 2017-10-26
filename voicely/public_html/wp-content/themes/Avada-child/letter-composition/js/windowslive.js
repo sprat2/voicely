@@ -23,6 +23,7 @@ function loadWindowsliveContacts( token ){
   $('#windowslive-prompt-button').click(function() {
     $('#windowslive-prompt-button').addClass('disabled');
     $('#fax-prompt-button').removeClass('disabled');
+    $('#windowslive-prompt-button').data("stepCompleted", true);
     // Store windowslive contacts as a cookie, to be used by selectContacts
     getToken('WindowsLive');
   });
