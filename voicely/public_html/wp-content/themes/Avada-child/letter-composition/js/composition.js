@@ -105,7 +105,6 @@
     cancelConfirmKeysOnEmpty: false, // fix for carrying over comma to next tag
   });
 
-
   // Initialize the addressee fetching object
   var addresseenames = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('pretty_name'),
@@ -141,6 +140,49 @@
     trimValue: true, // Trim whitespace from addressees
     cancelConfirmKeysOnEmpty: false, // fix for carrying over comma to next addressee
   });
+  // Add an event to update which elements are selected when new scroll container data is loaded
+  $('#toInput').on( 'newScrollContainerContentLoaded', {}, function() {
+    // For each selected recipient item...
+    var selectedTags = $('#toInput').tagsinput('items');
+    selectedTags.forEach(function(item, index){
+      // Re-add it to trigger the selection functionality
+      // Mark the element as selected
+      jQuery('#scroll-recipient-id-'+item.term_id).data('isSelected', true);
+      // Adjust display appropriately
+      jQuery('#scroll-recipient-id-'+item.term_id).css('opacity', '0.25');  
+    });
+  });
+
+  // Hooks to select/deselect recipients/tags in the scroll containers when added/removed
+  // When an item is added to the recipients list, select it on the right side
+  jQuery('#toInput').on('itemAdded', function(event) {
+    // Mark the element as selected
+    jQuery('#scroll-recipient-id-'+event.item.term_id).data('isSelected', true);
+    // Adjust display appropriately
+    jQuery('#scroll-recipient-id-'+event.item.term_id).css('opacity', '0.25');  
+  });
+  // When an item is removed from the recipients list, deselect it on the right side
+  jQuery('#toInput').on('itemRemoved', function(event) {
+    // Mark the element as selected
+    jQuery('#scroll-recipient-id-'+event.item.term_id).data('isSelected', false);
+    // Adjust display appropriately
+    jQuery('#scroll-recipient-id-'+event.item.term_id).css('opacity', '1.0');  
+  });
+
+  // When an item is added to the recipients list, select it on the right side
+  jQuery('#tagsInput').on('itemAdded', function(event) {
+    // Mark the element as selected
+    jQuery('#related-tag-id-'+event.item).data('isSelected', true);
+    // Adjust display appropriately
+    jQuery('#related-tag-id-'+event.item).css('opacity', '0.25');  
+  });
+  // When an item is removed from the recipients list, deselect it on the right side
+  jQuery('#tagsInput').on('itemRemoved', function(event) {
+    // Mark the element as selected
+    jQuery('#related-tag-id-'+event.item).data('isSelected', false);
+    // Adjust display appropriately
+    jQuery('#related-tag-id-'+event.item).css('opacity', '1.0');  
+  });
 
   // Cookie handling functions
   function createCookie(name,value,days) {
@@ -163,6 +205,15 @@
     return null;
   }
 
+  // Set login button's functionality
+  jQuery('#fb-signin-button').click(function() {
+    getToken( 'Facebook', true );
+  });
+
+  // Hide the body-blocking overlay if the user is logged in
+  if ( $('#body-blocking-overlay').data('logged-in') === true )
+  $('#body-blocking-overlay').css('display', 'none');
+
   $(document).ready(function() {
     // Fetch & set nonces
     nonceRequest( 'post' );
@@ -178,7 +229,10 @@
       createCookie( 'savedTitle', $('#titleInput').val(), 3 );
       createCookie( 'savedTags', $('#tagsInput').tagsinput('items'), 3 );
       createCookie( 'savedAddressees', JSON.stringify( $('#toInput').tagsinput('items'), 3 ) );
-      createCookie( 'savedLetter', $('#bodyInput').val(), 3 );
+      // Only save the body of the letter if the user is logged in
+      //   (else it'll overwrite their saved letter, since it's not loaded in the first place)
+      if ( $('#body-blocking-overlay').data('logged-in') === true )
+        createCookie( 'savedLetter', $('#bodyInput').val(), 3 );
     }, 1000);
 
     // Restore in-progress letter parameters, if detected
@@ -207,7 +261,9 @@
     }
     // If there's a cookie with a body value, load it back in
     if ( readCookie('savedLetter') != null ) {
-      $('#bodyInput').val( readCookie('savedLetter') );
+      // Only do so if the user is logged in
+      if ( $('#body-blocking-overlay').data('logged-in') === true )
+        $('#bodyInput').val( readCookie('savedLetter') );
     }
     
   });
@@ -230,12 +286,6 @@ function addresseeClicked( addresseeId, addresseeName, addresseePrettyName ) {
       pretty_name: addresseePrettyName
     }
     jQuery('#toInput').tagsinput('add', recipientToAdd);
-
-    // Mark the element as selected
-    jQuery('#scroll-recipient-id-'+addresseeId).data('isSelected', true);
-
-    // Adjust display appropriately
-    jQuery('#scroll-recipient-id-'+addresseeId).css('opacity', '0.25');  
   }
   // Otherwise, removes the selected recipient
   else {
@@ -245,12 +295,6 @@ function addresseeClicked( addresseeId, addresseeName, addresseePrettyName ) {
       pretty_name: addresseePrettyName
     }
     jQuery('#toInput').tagsinput('remove', recipientToRemove);
-
-    // Mark the element as selected
-    jQuery('#scroll-recipient-id-'+addresseeId).data('isSelected', false);
-
-    // Adjust display appropriately
-    jQuery('#scroll-recipient-id-'+addresseeId).css('opacity', '1.0');  
   }
 }
 
@@ -259,27 +303,15 @@ function addresseeClicked( addresseeId, addresseeName, addresseePrettyName ) {
 function suggestedTagClicked( tagId, tagName ) {
   // Determine if the element has already been selected
   var previouslySelected = false;
-  if ( jQuery('#related-tag-id-'+tagId).data('isSelected') === true )
+  if ( jQuery('#related-tag-id-'+tagName).data('isSelected') === true )
     previouslySelected = true;
 
   // Adds the clicked recipient to the selection list if not already selected
   if ( ! previouslySelected ) {
     jQuery('#tagsInput').tagsinput('add', tagName);
-
-    // Mark the element as selected
-    jQuery('#related-tag-id-'+tagId).data('isSelected', true);
-
-    // Adjust display appropriately
-    jQuery('#related-tag-id-'+tagId).css('opacity', '0.25');  
   }
   // Otherwise, removes the selected recipient
   else {
     jQuery('#tagsInput').tagsinput('remove', tagName);
-    
-    // Mark the element as selected
-    jQuery('#related-tag-id-'+tagId).data('isSelected', false);
-
-    // Adjust display appropriately
-    jQuery('#related-tag-id-'+tagId).css('opacity', '1.0');  
   }
 }

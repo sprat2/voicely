@@ -57,6 +57,8 @@
               listComplete1 = true;
             else {
               $('#composition-section-1 .scroll-container').append(newContent);
+              // Select those which have already been manually added
+              $('#toInput').trigger('newScrollContainerContentLoaded');
               $('#composition-section-1 .scroll-container').scroll(); // Update scroll position
             }
           }, emulatedAjaxDelay);    

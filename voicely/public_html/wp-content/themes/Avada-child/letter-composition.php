@@ -51,9 +51,10 @@ if (empty($_SERVER['HTTPS'])) {
 <center>Under construction</center>
 <?php
   // If user isn't logged in, display the login screen. Otherwise display the page as expected.
-  if ( ! is_user_logged_in() )
-    include "letter-composition/partials/login.php";
-  else
+  // Note: Disabled old login scheme
+  // if ( ! is_user_logged_in() )
+    // include "letter-composition/partials/login.php";
+  // else
     include "letter-composition/partials/letter-composition.php";
 ?>
 

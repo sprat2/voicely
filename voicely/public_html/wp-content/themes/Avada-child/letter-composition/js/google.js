@@ -21,9 +21,8 @@ function loadGoogleContacts( token ){
     
   // Authorization button
   $('#google-prompt-button').click(function() {
-    $('#google-prompt-button').addClass('disabled');
-    $('#windowslive-prompt-button').removeClass('disabled');
     $('#google-prompt-button').data("stepCompleted", true);
+    $("#bodyInput").trigger('input'); // To reevaluate via the validation script
     // Store google contacts as a cookie, to be used by selectContacts
     getToken('Google');
   });
@@ -35,9 +34,6 @@ function loadGoogleContacts( token ){
     // Show the overlay
     $('#google-contacts-selection-div').html('Loading contacts...');
     $('#google-contacts-selection-overlay').css( 'display', 'block' );
-    // Gray out & disable the button
-    $('#google-prompt-button').css('opacity', '0.5');
-    $('#google-prompt-button').addClass('disabled');
 
     // Get their contacts and display them appropriately
     var userContacts = getContacts( 'Google', token, function( userContacts ) {
@@ -77,9 +73,6 @@ function loadGoogleContacts( token ){
   $('#google-skip-button').click(function() {
     // Enable the "Next" button
     // $('#end-step3b1-button').prop('disabled', false);
-    // Gray out & disable the button
-    $('#google-prompt-button').css('opacity', '0.5');
-    $('#google-prompt-button').addClass('disabled');
     // Remove the token (so that the user may take back their authorization)
     $('#tokenholder').removeData( 'google-token' );
     $('#google-contacts-selection-div').removeData( 'selected-sharing-addresses' );

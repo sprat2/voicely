@@ -11,9 +11,8 @@ function twitterTokenCallback( token ){
   
   // Sharing prompt button
   $('#twitter-prompt-button').click(function() {
-    $('#twitter-prompt-button').addClass('disabled');
-    $('#google-prompt-button').removeClass('disabled');
     $('#twitter-prompt-button').data("stepCompleted", true);
+    $("#bodyInput").trigger('input'); // To reevaluate via the validation script
     getToken('Twitter');
   });
 
@@ -21,26 +20,25 @@ function twitterTokenCallback( token ){
   twitterTokenCallback = function( token ) {
     // Hide the button
     // $('#twitter-prompt-button').css('display', 'none');
-    // Gray out & disable the button
-    $('#twitter-prompt-button').css('opacity', '0.5');
-    $('#twitter-prompt-button').addClass('disabled');
     
     // Set the sharing message appropriately
-    $('#twitter-sharing-message').val( getShareMessageWithCurrentParams() );
+    $('#twitter-sharing-message').val( getShareMessageWithCurrentParams('twitter') );
     
-    // Unhide the textarea
-    $('#twitter-sharing-message').css( 'display', 'inline' );
+    // Unhide the area
+    $('#twitter-sharing-message-overlay-background').css( 'display', 'inline' );
   }
 
   // Skip button
   $('#twitter-skip-button').click(function() {
     // Enable the "Next" button
     // $('#end-step3a2-button').prop('disabled', false);
-    // Gray out & disable the button
-    $('#twitter-prompt-button').css('opacity', '0.5');
-    $('#twitter-prompt-button').addClass('disabled');
     // Remove the token (so that the user may take back their authorization)
     $('#tokenholder').removeData( 'twitter-token' );
   })
+
+  // Hide overlay button
+  $('#close-tw-overlay-button').click(function() {
+    $('#twitter-sharing-message-overlay-background').css( 'display', 'none' );
+  });
 
 })( jQuery );

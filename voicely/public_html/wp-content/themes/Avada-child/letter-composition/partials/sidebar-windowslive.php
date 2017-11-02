@@ -6,14 +6,14 @@
         <span class="social-prompt-text">Share to Windows Live</span>
       </a>
     </span>
-  <span id="fb-status-indicator" class="status-display-button"></span>
+  <span id="fb-status-indicator" class="status-display-button updatable-status"></span>
   <!-- <div class="col-xs-3"> -->
     <!-- <a id="windowslive-skip-button" class="skip-button">No thanks...</a> -->
   <!-- </div> -->
 </div>
 
-<div id="windowslive-contacts-selection-overlay">
-  <div id="windowslive-contacts-selection-overlay-content">
+<div id="windowslive-contacts-selection-overlay" class="overlay-background">
+  <div id="windowslive-contacts-selection-overlay-content" class="overlay-content">
     <div id="windowslive-contacts-selection-div"></div>
   </div>
 </div>

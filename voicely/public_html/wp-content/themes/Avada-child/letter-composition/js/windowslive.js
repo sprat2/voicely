@@ -21,9 +21,8 @@ function loadWindowsliveContacts( token ){
 
   // Authorization button
   $('#windowslive-prompt-button').click(function() {
-    $('#windowslive-prompt-button').addClass('disabled');
-    $('#fax-prompt-button').removeClass('disabled');
     $('#windowslive-prompt-button').data("stepCompleted", true);
+    $("#bodyInput").trigger('input'); // To reevaluate via the validation script
     // Store windowslive contacts as a cookie, to be used by selectContacts
     getToken('WindowsLive');
   });
@@ -35,9 +34,6 @@ function loadWindowsliveContacts( token ){
     // Show the overlay
     $('#windowslive-contacts-selection-div').html('Loading contacts...');
     $('#windowslive-contacts-selection-overlay').css( 'display', 'block' );
-    // Gray out & disable the button
-    $('#windowslive-prompt-button').css('opacity', '0.5');
-    $('#windowslive-prompt-button').addClass('disabled');
 
     // Get their contacts and display them appropriately
     var userContacts = getContacts( 'WindowsLive', token, function( userContacts ) {
@@ -77,9 +73,6 @@ function loadWindowsliveContacts( token ){
   $('#windowslive-skip-button').click(function() {
     // Enable the "Next" button
     // $('#end-step3b2-button').prop('disabled', false);
-    // Gray out & disable the button
-    $('#windowslive-prompt-button').css('opacity', '0.5');
-    $('#windowslive-prompt-button').addClass('disabled');
     // Remove the token (so that the user may take back their authorization)
     $('#tokenholder').removeData( 'windowslive-token' );
     $('#windowslive-contacts-selection-div').removeData( 'selected-sharing-addresses' );

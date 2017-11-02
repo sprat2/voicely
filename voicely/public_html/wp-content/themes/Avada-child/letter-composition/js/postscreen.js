@@ -158,6 +158,14 @@
           $('#fb-status-indicator').css('color', 'red');
           $('#facebook-prompt-button .social-prompt-text').text('Not shared to Facebook');
           
+          // If we failed due to improper authorization, show a yellow dash instead
+          if ( ( returnedData.error_msg.indexOf('Invalid or expired token') !== -1 ) ||
+               ( returnedData.error_msg.indexOf('Token not set') !== -1 ) ) {
+            $('#fb-status-indicator').html('–');
+            $('#fb-status-indicator').css('color', 'yellow');
+            $('#facebook-prompt-button .social-prompt-text').text('Not shared to Facebook');
+          }
+          
           // Attempt to share to Twitter (will only succeed if authorized)
           shareToTwitter( returnedData );
         }
@@ -200,6 +208,14 @@
           $('#tw-status-indicator').css('color', 'red');
           $('#twitter-prompt-button .social-prompt-text').text('Not shared to Twitter');
           
+          // If we failed due to improper authorization, show a yellow dash instead
+          if ( ( returnedData.error_msg.indexOf('Invalid or expired token') !== -1 ) ||
+               ( returnedData.error_msg.indexOf('Token not set') !== -1 ) ) {
+            $('#tw-status-indicator').html('–');
+            $('#tw-status-indicator').css('color', 'yellow');
+            $('#twitter-prompt-button .social-prompt-text').text('Not shared to Twitter');
+          }
+
           proceedPastSharing();
         }
       );
@@ -222,7 +238,45 @@
       // TODO: URL link display
       //$('#url-to-clipboard').html('Clipboard-copiable link to go here:<br><a href="' + serverResponse.url_to_letter + '>your letter</a>.');
       
-      // Update status  UI
+      faxPublishingUIUpdate();
+    }
+    
+    function faxPublishingUIUpdate() {
+      // Update status UI
+      $('#fax-sharing-div .updatable-status').html('…');
+      $('#fax-sharing-div .updatable-status').css('color', 'white');
+      $('#fax-sharing-div .social-prompt-text').text('Faxing...');
+
+      // On a delay...
+      setTimeout(function() {
+        // Update the UI to indicate that the letter has been published successfully
+        $('#fax-sharing-div .updatable-status').html('✓');
+        $('#fax-sharing-div .updatable-status').css('color', 'lightgreen');
+        $('#fax-sharing-div .social-prompt-text').text('Faxed!');
+
+        hardcopyPublishingUIUpdate();
+      }, 700);
+    }
+    
+    function hardcopyPublishingUIUpdate() {
+      // Update status UI
+      $('#hardcopy-sharing-div .updatable-status').html('…');
+      $('#hardcopy-sharing-div .updatable-status').css('color', 'white');
+      $('#hardcopy-sharing-div .social-prompt-text').text('Mailing...');
+
+      // On a delay...
+      setTimeout(function() {
+        // Update the UI to indicate that the letter has been published successfully
+        $('#hardcopy-sharing-div .updatable-status').html('✓');
+        $('#hardcopy-sharing-div .updatable-status').css('color', 'lightgreen');
+        $('#hardcopy-sharing-div .social-prompt-text').text('Mailed!');
+
+        letterPublishingUIUpdate();
+      }, 1000);
+    }
+
+    function letterPublishingUIUpdate() {
+      // Update status UI
       $('#publish-button-div .status-display-button').html('…');
       $('#publish-button-div .status-display-button').css('color', 'white');
       $('#post-now-button').text('Publishing...');
@@ -234,14 +288,13 @@
         $('#publish-button-div .status-display-button').css('color', 'lightgreen');
         $('#post-now-button').text('Published!');
 
-        // Display links
-        $('#postscreen-buttons-div').css( 'display', 'block' );
+        // Display links (temporarily disabled)
+        // $('#postscreen-buttons-div').css( 'display', 'block' );
 
-        // On a delay...
+        // Redirect on a delay...
         setTimeout(function() {
-          // Redirect
           window.location.href = serverResponse.url_to_letter; 
-        }, 3000);
+        }, 0);
       }, 700);
     }
     // Alters the UI to signal letter publishing failure

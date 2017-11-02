@@ -10,6 +10,6 @@ $tags = get_tags( $args );
  
 for ( $i=0; ($i<$max_tags) && ($i<sizeof($tags)); $i++ ) {
   $tag = $tags[$i];
-  echo '<span id="related-tag-id-'.$tag->term_id.'" class="tag label label-info" onclick=\'suggestedTagClicked("'.$tag->term_id.'", "'.$tag->name.'")\'>'.$tag->name.'</span>'."\n";
+  echo '<span id="related-tag-id-'.$tag->name.'" class="tag label label-info" onclick=\'suggestedTagClicked("'.$tag->term_id.'", "'.$tag->name.'")\'>'.$tag->name.'</span>'."\n";
 }
 ?>

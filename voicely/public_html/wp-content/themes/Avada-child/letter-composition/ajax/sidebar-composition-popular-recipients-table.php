@@ -22,6 +22,7 @@ $receivedIndex = isset($_GET['index']) ? $_GET['index'] : 0;
 $recipients = get_terms(array(
   'taxonomy' => 'addressee',
   'hide_empty' => 0,
+  'orderby' => 'count',
   'order' => 'DESC',
   'number' => $numPerRow * $numOfRows,
   'offset' => $receivedIndex * $numPerRow * $numOfRows,

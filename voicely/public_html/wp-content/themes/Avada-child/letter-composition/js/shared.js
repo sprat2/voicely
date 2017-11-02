@@ -6,13 +6,25 @@ if (location.protocol == 'https:') detS = "s";
 var ajaxLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/ajax/";
 
 // Returns the default sharing message using the user's entered parameters from the first few steps
-function getShareMessageWithCurrentParams() {
+function getShareMessageWithCurrentParams(service) {
 
 	// Addressees
   var addressees = jQuery('#toInput').tagsinput('items');
-  addressees = addressees.map( function(element){ return element.twitter_handle; });
-	if ( addressees.length == 0 )
-	  addressees = "the world";
+
+  // Remove "The World"
+  addressees = addressees.filter(function( element ) {
+    return element.twitter_handle !== 'The World';
+  });
+  // Array to string
+  addressees = addressees.map( function(element){
+    return element.twitter_handle;
+  });
+  // Default to "the world"
+	// if ( addressees.length == 0 )
+    // addressees = "the world";
+  // Prefix with "to" if any elements exist
+	if ( addressees.length != 0 )
+    addressees = "to " + addressees;
   
 	// Title
 	var title = jQuery('#titleInput').val();
@@ -20,9 +32,9 @@ function getShareMessageWithCurrentParams() {
   // Combine & return
   var result = "";
   if ( title != "" )
-    result = "I just wrote an open letter to " + addressees + " entitled \"" + title + "\".";
+    result = "I just wrote an open letter " + addressees + " entitled \"" + title + "\".";
   else
-	  result = "I just wrote an open letter to " + addressees + ".";
+	  result = "I just wrote an open letter " + addressees + ".";
 	return result;
 }
 

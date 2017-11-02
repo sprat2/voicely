@@ -4,9 +4,8 @@
   
   // Callback after token retrieved
   $('#fax-prompt-button').click(function() {
-    $('#fax-prompt-button').addClass('disabled');
     $('#fax-prompt-button').data("stepCompleted", true);
-    $('#hardcopy-prompt-button').removeClass('disabled');
+    $("#bodyInput").trigger('input'); // To reevaluate via the validation script
   });
 
   // // Skip button
@@ -18,10 +17,8 @@
     
   // Callback after token retrieved
   $('#hardcopy-prompt-button').click(function() {
-    $('#hardcopy-prompt-button').addClass('disabled');
     $('#hardcopy-prompt-button').data("stepCompleted", true);
-    // Enable "Publish"
-    $('#post-now-button').prop('disabled', false);
+    $("#bodyInput").trigger('input'); // To reevaluate via the validation script
   });
 
   // // Skip button

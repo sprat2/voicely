@@ -18,6 +18,7 @@ var saveInterval = null;
   }
 
   function disableAllButtons() {
+    // Disable
     $('#facebook-prompt-button').addClass("disabled");
     $('#twitter-prompt-button').addClass("disabled");
     $('#google-prompt-button').addClass("disabled");
@@ -25,6 +26,27 @@ var saveInterval = null;
     $('#fax-prompt-button').addClass("disabled");
     $('#hardcopy-prompt-button').addClass("disabled");
     $('#post-now-button').prop('disabled', true);
+
+    // Grey
+    $('#facebook-prompt-button').addClass("grey");
+    $('#twitter-prompt-button').addClass("grey");
+    $('#google-prompt-button').addClass("grey");
+    $('#windowslive-prompt-button').addClass("grey");
+    $('#fax-prompt-button').addClass("grey");
+    $('#hardcopy-prompt-button').addClass("grey");
+    $('#post-now-button').addClass("grey");
+
+    // Number background colors
+    resetNumberBackgroundColors();
+  }
+
+  function resetNumberBackgroundColors() {
+    $('#facebook-sharing-div .status-display-button:first-child').css('background-color', '#888888');
+    $('#twitter-sharing-div .status-display-button:first-child').css('background-color', '#888888');
+    $('#google-sharing-div .status-display-button:first-child').css('background-color', '#888888');
+    $('#windowslive-sharing-div .status-display-button:first-child').css('background-color', '#888888');
+    $('#fax-sharing-div .status-display-button:first-child').css('background-color', '#888888');
+    $('#hardcopy-sharing-div .status-display-button:first-child').css('background-color', '#888888');
   }
 
   function sidebarStepsAreDone() {
@@ -47,6 +69,7 @@ var saveInterval = null;
   
   // Checks if the letter is publishable and disables/enables the Publish button accordingly
   function enabledStateUpdate() {
+    var firstTicked = false;
     disableAllButtons();
 
     var titleIsSatisfactory = ( $('#titleInput').val().trim().length >= 3 );
@@ -54,22 +77,53 @@ var saveInterval = null;
     // var hasAddressees = ( $('#toInput').tagsinput('items').length > 0 );
 
     if ( titleIsSatisfactory && bodyIsSatisfactory ) {
-      // Enable proper sidebar step
-      // Note: Must be done in reverse sequential order to function properly
-      if ( sidebarStepsAreDone() )
+      // Enable proper sidebar steps
+      // Note: Must be done in reverse sequential order to function properly (when one enabled at a time)
+      if ( sidebarStepsAreDone() ) {
         $('#post-now-button').prop('disabled', false);
-      else if ( $('#fax-prompt-button').data("stepCompleted") )
+        $('#post-now-button').removeClass('grey');
+        firstTicked = true;
+      }
+      if ( $('#fax-prompt-button').data("stepCompleted") ) {
         $('#hardcopy-prompt-button').removeClass('disabled');
-      else if ( $('#windowslive-prompt-button').data("stepCompleted") )
+        $('#hardcopy-prompt-button').removeClass('grey');
+        if (!firstTicked)
+          $('#hardcopy-sharing-div .status-display-button:first-child').css('background-color', '#d87a68');
+        firstTicked = true;
+      }
+      if ( $('#windowslive-prompt-button').data("stepCompleted") ) {
         $('#fax-prompt-button').removeClass('disabled');
-      else if ( $('#google-prompt-button').data("stepCompleted") )
+        $('#fax-prompt-button').removeClass('grey');
+        if (!firstTicked)
+          $('#fax-sharing-div .status-display-button:first-child').css('background-color', '#404040');
+        firstTicked = true;
+      }
+      if ( $('#google-prompt-button').data("stepCompleted") ) {
         $('#windowslive-prompt-button').removeClass('disabled');
-      else if ( $('#twitter-prompt-button').data("stepCompleted") )
+        $('#windowslive-prompt-button').removeClass('grey');
+        if (!firstTicked)
+          $('#windowslive-sharing-div .status-display-button:first-child').css('background-color', '#2672ec');
+        firstTicked = true;
+      }
+      if ( $('#twitter-prompt-button').data("stepCompleted") ) {
         $('#google-prompt-button').removeClass('disabled');
-      else if ( $('#facebook-prompt-button').data("stepCompleted") )
+        $('#google-prompt-button').removeClass('grey');
+        if (!firstTicked)
+          $('#google-sharing-div .status-display-button:first-child').css('background-color', '#dd4b39');
+        firstTicked = true;
+      }
+      if ( $('#facebook-prompt-button').data("stepCompleted") ) {
         $('#twitter-prompt-button').removeClass('disabled');
-      else
-        $('#facebook-prompt-button').removeClass('disabled');
+        $('#twitter-prompt-button').removeClass('grey');
+        if (!firstTicked)
+          $('#twitter-sharing-div .status-display-button:first-child').css('background-color', '#55acee');
+        firstTicked = true;
+      }
+      $('#facebook-prompt-button').removeClass('disabled');
+      $('#facebook-prompt-button').removeClass('grey');
+      if (!firstTicked)
+        $('#facebook-sharing-div .status-display-button:first-child').css('background-color', '#3b5998');
+      firstTicked = true;
     }
   }
 

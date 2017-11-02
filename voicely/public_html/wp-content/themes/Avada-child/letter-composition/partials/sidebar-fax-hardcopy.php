@@ -6,7 +6,7 @@
         <span class="social-prompt-text">Send Fax</span>
       </a>
     </span>
-  <span id="fb-status-indicator" class="status-display-button"></span>
+  <span class="status-display-button updatable-status"></span>
   <!-- <div class="col-xs-3"> -->
     <!-- <a id="fax-skip-button" class="skip-button">No thanks...</a> -->
   <!-- </div> -->
@@ -22,7 +22,7 @@
         <span class="social-prompt-text">Send Hardcopy</span>
       </a>
     </span>
-  <span id="fb-status-indicator" class="status-display-button"></span>
+  <span class="status-display-button updatable-status"></span>
   <!-- <div class="col-xs-3"> -->
     <!-- <a id="hardcopy-skip-button" class="skip-button">No thanks...</a> -->
   <!-- </div> -->

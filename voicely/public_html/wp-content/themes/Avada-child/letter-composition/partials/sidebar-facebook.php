@@ -6,24 +6,29 @@
       <span class="social-prompt-text">Share to Facebook</span>
     </a>
   </span>
-  <span id="fb-status-indicator" class="status-display-button"></span>
+  <span id="fb-status-indicator" class="status-display-button updatable-status"></span>
   <!-- <div class="col-xs-3"> -->
     <!-- <a id="facebook-skip-button" class="skip-button">No thanks...</a> -->
   <!-- </div> -->
 </div>
 
-<div id="facebook-sharing-message-content" style="display: none;">
-  <div >
-    <textarea class="sharing-message-textarea" id="facebook-sharing-message-suggestion" disabled></textarea>
-  </div>
-  <div id="fb-copyover-button-div" >
-    <a class="btn btn-lg btn-link" id="fb-copyover-button">
-      <span class="fa fa-2x fa-arrow-circle-down"></span>
-    </a>
-  </div>
-  <div>
-    <textarea class="sharing-message-textarea" id="facebook-sharing-message"></textarea>
+<div id="facebook-sharing-message-overlay-background" class="overlay-background">
+  <div class="overlay-content">
+    <div class="overlay-content-wrapper">
+      <div id="facebook-sharing-message-content">
+        <textarea class="sharing-message-textarea" id="facebook-sharing-message-suggestion" disabled></textarea>
+        <span id="fb-copyover-button-div" >
+          <a class="btn btn-lg btn-link" id="fb-copyover-button">
+            <span class="fa fa-2x fa-arrow-circle-right"></span>
+          </a>
+        </span>
+        <textarea class="sharing-message-textarea" id="facebook-sharing-message"></textarea>
+      </div>
+      <div id="close-fb-overlay-button-wrapper" class="pull-right">
+        <button id="close-fb-overlay-button" type="button" class="btn btn-primary center-block pull-right">Share</button>
+      </div>
+    </div>
   </div>
 </div>
-
+  
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri() ?>/letter-composition/js/facebook.js"></script>

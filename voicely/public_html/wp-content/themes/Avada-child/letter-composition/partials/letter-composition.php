@@ -23,7 +23,18 @@
       <!-- Title: -->
       <input type="text" placeholder="Title" id="titleInput" autocomplete="off">
       <!-- Body: -->
-      <textarea class="form-control" placeholder="Write something important" id="bodyInput" autocomplete="off"></textarea>
+      <span id="body-input-wrapper">
+        <textarea class="form-control" placeholder="Write something important" id="bodyInput" autocomplete="off"></textarea>
+        <div id="body-blocking-overlay" data-logged-in=<?= is_user_logged_in() ? 'true' : 'false'; ?>>
+          <span>
+            <p>
+              <a class="btn btn-block btn-social btn-facebook btn-inline" id="fb-signin-button">
+              <span class="fa fa-facebook"></span> Log in with Facebook
+              </a> &nbsp and write something important!
+            <p>
+          </span>
+        </div>
+      </span>
     </div>
       
     <!-- Right side -->

@@ -20,7 +20,7 @@
 </div>
 
 <!-- Overlay -->
-<div id="postscreen-overlay">
+<div id="postscreen-overlay" class="overlay-background">
   <div id="submit-view-container">
 
     <!-- Submit Summary -->

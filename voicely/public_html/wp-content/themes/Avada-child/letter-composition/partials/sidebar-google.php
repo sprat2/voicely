@@ -6,14 +6,14 @@
         <span class="social-prompt-text">Share to Gmail</span>
       </a>
     </span>
-  <span id="fb-status-indicator" class="status-display-button"></span>
+  <span class="status-display-button updatable-status"></span>
   <!-- <div class="col-xs-3"> -->
     <!-- <a id="google-skip-button" class="skip-button">No thanks...</a> -->
   <!-- </div> -->
 </div>
 
-<div id="google-contacts-selection-overlay">
-  <div id="google-contacts-selection-overlay-content">
+<div id="google-contacts-selection-overlay" class="overlay-background">
+  <div id="google-contacts-selection-overlay-content" class="overlay-content">
     <div id="google-contacts-selection-div"></div>
   </div>
 </div>

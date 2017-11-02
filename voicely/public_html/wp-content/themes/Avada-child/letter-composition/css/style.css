@@ -324,14 +324,37 @@ textarea {
     resize: none;
 }
 
-#facebook-sharing-message-content,
+#twitter-sharing-message-content > div,
+#twitter-sharing-message-content > div > textarea,
 #facebook-sharing-message-content > div,
 #facebook-sharing-message-content > div > textarea {
-    width: 100%;
+    width: 70%;
+}
+
+#twitter-sharing-message-content,
+#facebook-sharing-message-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+#close-fb-overlay-button-wrapper,
+#close-tw-overlay-button-wrapper {
+    display: inline-block;
+}
+
+#close-fb-overlay-button,
+#close-tw-overlay-button {
+    margin-top: 10px;
+    width: 7em;
 }
 
 .sharing-message-textarea {
     border: 1px solid lightgray;
+    flex: 1;
+    height: 16%;
+    height: 100%;
 }
 
 #fb-copyover-button-div {
@@ -345,6 +368,7 @@ textarea {
 
 #twitter-sharing-message {
     width: 100%;
+    height: 100%;
     border: 1px solid lightgray;
 }
 
@@ -394,7 +418,7 @@ textarea {
     visibility: visible;
 }
 
-#postscreen-overlay {
+.overlay-background {
     position: fixed;
     display: none;
     /* display: block; */
@@ -409,23 +433,9 @@ textarea {
     cursor: pointer;
 }
 
-#google-contacts-selection-overlay {
-    position: fixed;
-    display: none;
-    /* display: block; */
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 2;
-    cursor: pointer;
-}
-
-#google-contacts-selection-overlay-content {
+.overlay-content {
     font-size: 200%;
+    height: 20%;
     display: block;
     align-items: center;
     position: absolute;
@@ -437,32 +447,10 @@ textarea {
     padding: 1%;
 }
 
-#windowslive-contacts-selection-overlay {
-    position: fixed;
-    display: none;
-    /* display: block; */
-    width: 100%;
+.overlay-content-wrapper {
     height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 2;
-    cursor: pointer;
-}
-
-#windowslive-contacts-selection-overlay-content {
-    font-size: 200%;
-    display: block;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    /* -ms-transform: translate(-50%,-50%); */
-    background-color: white;
-    padding: 1%;
+    display: flex;
+    flex-direction: column;
 }
 
 .status-display-button {
@@ -554,13 +542,47 @@ textarea {
 }
 .container-row > span > span > span {
     position: absolute;
-    /* height: 100%; */
     width: 100%;
-    top: 40%;
+    top: 50%;
+    transform: translateY(-50%);
     left: 0px;
     pointer-events: none;
     background-color: #25A9BD;
     color: white;
     font-weight: bold;
     white-space: normal;
+}
+
+/* Body-blocking login overlay */
+#body-input-wrapper {
+    position: relative;
+    height: 100%;
+}
+#body-blocking-overlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+}
+#body-blocking-overlay > span {
+    background-color: #5bc0de;
+    color: white;
+    font-size: 115%;
+}
+#body-blocking-overlay > span > p {
+    margin: 10px;
+}
+.btn-inline {
+    display: inline;
+}
+
+.grey {
+    /* '!important' is necessary to override bootstrap's button color for the "Publish" button. */
+    background-color: #808080 !important;
 }
