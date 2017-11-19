@@ -4,6 +4,7 @@
 var detS = "";
 if (location.protocol == 'https:') detS = "s";
 var ajaxLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/ajax/";
+var imgLocation = "http" + detS + "://voicely.org/wp-content/themes/Avada-child/letter-composition/img/";
 
 // Returns the default sharing message using the user's entered parameters from the first few steps
 function getShareMessageWithCurrentParams(service) {
@@ -15,16 +16,26 @@ function getShareMessageWithCurrentParams(service) {
   addressees = addressees.filter(function( element ) {
     return element.twitter_handle !== 'The World';
   });
+
   // Array to string
   addressees = addressees.map( function(element){
-    return element.twitter_handle;
+    // Return twitter handles if using twitter, else just their recognizable name
+    if ( service == 'twitter' )
+      return element.twitter_handle;
+    else
+      return element.pretty_name;
   });
+  if ( addressees.length > 1 ) {
+    var last = addressees.pop();
+    addressees = addressees.join(', ') + ' and ' + last;
+  }
+
   // Default to "the world"
 	// if ( addressees.length == 0 )
     // addressees = "the world";
   // Prefix with "to" if any elements exist
 	if ( addressees.length != 0 )
-    addressees = "to " + addressees;
+    addressees = " to " + addressees;
   
 	// Title
 	var title = jQuery('#titleInput').val();
@@ -32,7 +43,7 @@ function getShareMessageWithCurrentParams(service) {
   // Combine & return
   var result = "";
   if ( title != "" )
-    result = "I just wrote an open letter " + addressees + " entitled \"" + title + "\".";
+    result = "I just wrote an open letter" + addressees + " entitled \"" + title + "\".";
   else
 	  result = "I just wrote an open letter " + addressees + ".";
 	return result;

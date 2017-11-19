@@ -184,13 +184,22 @@ class Voicely_Core_Admin {
             'type' => 'text',
             'id'   => 'fb_username' // meta-key name
         ) );
-
+        
         // Instagram handle
         $cmb_term->add_field( array(
             'name' => 'Instagram Handle',
             'desc' => 'e.g. johnsmith',
             'type' => 'text',
             'id'   => 'ig_handle' // meta-key name
+        ) );
+        
+        // Instagram handle
+        $cmb_term->add_field( array(
+            'name' => 'Image URL',
+            'desc' => 'e.g. https://example.com/johnsmith.png',
+            'type' => 'text_url',
+            // 'protocols' => array( 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet' ), // Array of allowed protocols
+            'id'   => 'img_url' // meta-key name
         ) );
 
     }

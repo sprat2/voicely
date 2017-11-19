@@ -143,7 +143,7 @@ var saveInterval = null;
     else if (!sidebarStepsAreDone())
       tooltipText = "Please complete the steps above";
     else if (!hasAddressees)
-      tooltipText = "If you don't choose any recipients your letter will be addressed to \"The World\"";
+      tooltipText = "Feel free to address your letter to specific people";
     
     if ( tooltipText == "Tooltip error" ) {
       // No messages to display - disable the tooltip for now

@@ -46,9 +46,41 @@ if ( sizeof($recipients) == 0 ) {
             $current_term_id = $recipients[$j]->term_id;
             $current_term_name = $recipients[$j]->name;
             $current_prettyname = get_term_meta( $current_term_id, "pretty_name", true );
+
+            // echo '<pre>';
+            // var_export( $current_term_name );
+            // die();
+
+            // XXX: TODO: This is a workaround due to an SSL error.
+            //      THIS SHOULD NOT PERSIST ANY LONGER THAN NECESSARY.
+            stream_context_set_default( [
+              'ssl' => [
+                  'verify_peer' => false,
+                  'verify_peer_name' => false,
+              ],
+            ]);
+
+            // Get image url and determine if image exists at that url
+            $current_img_url = get_term_meta( $current_term_id, "img_url", true );
+            if ( !empty($current_img_url) ) {
+              $image_headers = @get_headers($current_img_url);
+              if( !$image_headers || strpos($image_headers[0], '404') )
+                $image_exists = false;
+              else
+                $image_exists = true;
+            }
+            else
+              $image_exists = false;
+          
+            // Echo the output for this recipient
             // $testvar = var_export($recipients[$j], true);
             echo "\t\t\t".'<span>'."\n";
-            echo "\t\t\t\t".'<img id="scroll-recipient-id-'.$current_term_id.'" src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/64x64.png" onclick=\'addresseeClicked("'.$current_term_id.'", "'.$current_term_name.'", "'.$current_prettyname.'")\'>'."\n";
+            // Include their proper image, or a placeholder image if image if theirs doesn't exist
+            if ( $image_exists )
+              echo "\t\t\t\t".'<img id="scroll-recipient-id-'.$current_term_id.'" src="'.$current_img_url.'" onclick=\'addresseeClicked("'.$current_term_id.'", "'.$current_term_name.'", "'.$current_prettyname.'")\'>'."\n";
+            else
+              echo "\t\t\t\t".'<img id="scroll-recipient-id-'.$current_term_id.'" src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/64x64.png" onclick=\'addresseeClicked("'.$current_term_id.'", "'.$current_term_name.'", "'.$current_prettyname.'")\'>'."\n";
+            // Include their name label
             echo "\t\t\t\t".'<span class="scroll-recipient-label">'.$current_prettyname.'</span>'."\n";
             echo "\t\t\t".'</span>'."\n";
             // echo "\t\t\t".'<span class="scroll-recipient-label">'.$testvar.'</span>'."\n";

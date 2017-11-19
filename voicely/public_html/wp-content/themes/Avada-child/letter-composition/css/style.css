@@ -351,10 +351,12 @@ textarea {
 }
 
 .sharing-message-textarea {
+    font-size: 0.75em;
     border: 1px solid lightgray;
     flex: 1;
-    height: 16%;
-    height: 100%;
+    /* height: 100%; */
+    width: 20em;
+    height: 5em;
 }
 
 #fb-copyover-button-div {
@@ -364,12 +366,6 @@ textarea {
 #fb-copyover-button-div a {
     margin: 0px;
     padding: 0px;
-}
-
-#twitter-sharing-message {
-    width: 100%;
-    height: 100%;
-    border: 1px solid lightgray;
 }
 
 #post-now-button, #tooltip {
@@ -435,7 +431,7 @@ textarea {
 
 .overlay-content {
     font-size: 200%;
-    height: 20%;
+    /* height: 20%; */
     display: block;
     align-items: center;
     position: absolute;
@@ -469,6 +465,10 @@ textarea {
     border-color: #555555;
     border: 1px solid #555555;
     pointer-events: none;
+    /* Properly centers content without strange padding or margins */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-social-span {
@@ -537,8 +537,15 @@ textarea {
     margin-bottom: 2px;
     display: flex;
 }
+#composition-section-1 .container-row > span > span {
+    height: 12em;
+}    
+#composition-section-2 .container-row > span > span {
+    height: 4em;
+}    
 .container-row > span > span > img {
     flex: 1;
+    object-fit: cover; /* Don't stretch.  Fill to smaller dimension */
 }
 .container-row > span > span > span {
     position: absolute;
@@ -567,7 +574,8 @@ textarea {
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(0,0,0,0.5);
+    /* background-color: rgba(0,0,0,0.5); */
+    background-color: rgba(0,0,0,0); /* Transparent */
     z-index: 2;
 }
 #body-blocking-overlay > span {
@@ -585,4 +593,20 @@ textarea {
 .grey {
     /* '!important' is necessary to override bootstrap's button color for the "Publish" button. */
     background-color: #808080 !important;
+}
+
+.character-limit-message {
+    font-size: 0.5em;
+}
+
+.opt-out {
+    position: relative;
+    top: 75%;
+    padding-right: 5px;
+    font-size: 0.3em;
+}
+
+#facebook-sharing-message-content p {
+    font-size: 0.6em;
+    text-align: center;
 }

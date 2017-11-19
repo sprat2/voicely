@@ -10,6 +10,7 @@
   var tags = null;
   var postNonce = null;
   var shareNonce = null;
+  var postClicked = false;
 
   // Hide the overlay background when clicked
   // $('#postscreen-overlay').unbind('click').click( function () {
@@ -18,6 +19,10 @@
 
   // Handle click event for the Publish button, removing previous event handlers to avoid a duplication bug
   $('#post-now-button').unbind('click').click( function () {
+    
+    // Don't allow the user to fire the button multiple times
+    $('#post-now-button').prop("disabled", true);
+
     // Lock the inputs so that the user can't edit them anymore
     $('#titleInput').prop('disabled', true);
     $('#bodyInput').prop('disabled', true);
@@ -127,7 +132,8 @@
     function shareToFacebook(returnedRemoteLetterData) {
       // Set up the sharing status display
       // Update status 
-      $('#fb-status-indicator').html('…');
+      // $('#fb-status-indicator').html('…');
+      $('#fb-status-indicator').html('<img src="'+imgLocation+'loading.gif">');
       $('#fb-status-indicator').css('color', 'white');
       $('#facebook-prompt-button .social-prompt-text').text('Sharing to Facebook...');
 
@@ -176,7 +182,8 @@
     function shareToTwitter(returnedFromFacebookSharingCall) {
       // Set up the sharing status display
       // Update status 
-      $('#tw-status-indicator').html('…');
+      // $('#tw-status-indicator').html('…');
+      $('#tw-status-indicator').html('<img src="'+imgLocation+'loading.gif">');
       $('#tw-status-indicator').css('color', 'white');
       $('#twitter-prompt-button .social-prompt-text').text('Sharing to Twitter...');
 
@@ -243,7 +250,8 @@
     
     function faxPublishingUIUpdate() {
       // Update status UI
-      $('#fax-sharing-div .updatable-status').html('…');
+      // $('#fax-sharing-div .updatable-status').html('…');
+      $('#fax-sharing-div .updatable-status').html('<img src="'+imgLocation+'loading.gif">');
       $('#fax-sharing-div .updatable-status').css('color', 'white');
       $('#fax-sharing-div .social-prompt-text').text('Faxing...');
 
@@ -260,7 +268,8 @@
     
     function hardcopyPublishingUIUpdate() {
       // Update status UI
-      $('#hardcopy-sharing-div .updatable-status').html('…');
+      // $('#hardcopy-sharing-div .updatable-status').html('…');
+      $('#hardcopy-sharing-div .updatable-status').html('<img src="'+imgLocation+'loading.gif">');
       $('#hardcopy-sharing-div .updatable-status').css('color', 'white');
       $('#hardcopy-sharing-div .social-prompt-text').text('Mailing...');
 
@@ -277,7 +286,8 @@
 
     function letterPublishingUIUpdate() {
       // Update status UI
-      $('#publish-button-div .status-display-button').html('…');
+      // $('#publish-button-div .status-display-button').html('…');
+      $('#publish-button-div .status-display-button').html('<img src="'+imgLocation+'loading.gif">');
       $('#publish-button-div .status-display-button').css('color', 'white');
       $('#post-now-button').text('Publishing...');
 

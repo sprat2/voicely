@@ -15,6 +15,28 @@ function twitterTokenCallback( token ){
     $("#bodyInput").trigger('input'); // To reevaluate via the validation script
     getToken('Twitter');
   });
+  
+  // User opted out.  Flush their sharing token and close the overlay.
+  $('#skip-tw-overlay-text').click(function() {
+    $('#tokenholder').removeData( 'twitter-token' );
+    $('#twitter-sharing-message-overlay-background').css( 'display', 'none' );
+  });
+
+  // On message change...
+  $('#twitter-sharing-message').bind('input propertychange', function() {
+    var maxChars = 280;
+    
+    // Enable the share button if there's a message - else, disable it again
+    if ( ( $('#twitter-sharing-message').val().length == 0 ) || 
+         ( $('#twitter-sharing-message').val().length > maxChars ) )
+      $('#close-tw-overlay-button').prop("disabled", true);
+    else
+      $('#close-tw-overlay-button').prop("disabled", false);
+
+    // Update the "characters remaining" message
+    var remainingCharacters = maxChars - $('#twitter-sharing-message').val().length;
+    $('#twitter-character-limit-message i').text( remainingCharacters );
+  });
 
   // Callback after token retrieved
   twitterTokenCallback = function( token ) {
@@ -26,6 +48,9 @@ function twitterTokenCallback( token ){
     
     // Unhide the area
     $('#twitter-sharing-message-overlay-background').css( 'display', 'inline' );
+    
+    // Update remaining character count
+    $('#twitter-sharing-message').trigger('propertychange');
   }
 
   // Skip button

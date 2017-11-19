@@ -15,10 +15,35 @@ function facebookTokenCallback( token ){
     $("#bodyInput").trigger('input'); // To reevaluate via the validation script
     getToken('Facebook');
   });
+
+  // User opted out.  Flush their sharing token and close the overlay.
+  $('#skip-fb-overlay-text').click(function() {
+    $('#tokenholder').removeData( 'facebook-token' );
+    $('#facebook-sharing-message-overlay-background').css( 'display', 'none' );
+  });
   
   // Copyover button
   $('#fb-copyover-button').click(function() {
     $('#facebook-sharing-message').val( $('#facebook-sharing-message-suggestion').val() );
+    
+    // Update remaining character count
+    $('#facebook-sharing-message').trigger('propertychange');
+  });
+
+  // On message change...
+  $('#facebook-sharing-message').bind('input propertychange', function() {
+    var maxChars = 280;
+
+    // Enable the share button if there's a message - else, disable it again
+    if ( ( $('#facebook-sharing-message').val().length == 0 ) || 
+         ( $('#facebook-sharing-message').val().length > maxChars ) )
+      $('#close-fb-overlay-button').prop("disabled", true);
+    else
+      $('#close-fb-overlay-button').prop("disabled", false);
+
+    // Update the "characters remaining" message
+    var remainingCharacters = maxChars - $('#facebook-sharing-message').val().length;
+    $('#facebook-character-limit-message i').text( remainingCharacters );
   });
 
   // Callback after token retrieved
@@ -31,6 +56,9 @@ function facebookTokenCallback( token ){
     
     // Unhide the area
     $('#facebook-sharing-message-overlay-background').css( 'display', 'block' );
+
+    // Update remaining character count
+    $('#facebook-sharing-message').trigger('propertychange');
   }
 
   // Hide overlay button

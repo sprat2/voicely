@@ -46,9 +46,10 @@ try {
         if ( !isset( $_POST['tags'] ) )
             $_POST['tags'] = array();
         $tags = array_map( 'esc_attr', $_POST['tags'] );
-        // Set default addressee if none is provided
+        // Set default addressee if none is provided (disabled)
         if ( empty( $_POST['addressees'] ) )
-            $addressees = array( 'The World' );
+            // $addressees = array( 'The World' );
+            $addressees = array();
         else
             $addressees = array_map( 'esc_attr', $_POST['addressees'] );
 

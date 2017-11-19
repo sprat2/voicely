@@ -18,7 +18,7 @@
   <span class="status-display-button"><i class="fa-alph">6</i></span>
     <span class="btn-social-span">
       <a class="btn btn-block btn-social btn-adn disabled" id="hardcopy-prompt-button">
-        <span class="fa fa-envelope"></span>
+        <span class="fa fa-inbox"></span>
         <span class="social-prompt-text">Send Hardcopy</span>
       </a>
     </span>

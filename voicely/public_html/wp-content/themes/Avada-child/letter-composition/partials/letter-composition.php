@@ -24,7 +24,7 @@
       <input type="text" placeholder="Title" id="titleInput" autocomplete="off">
       <!-- Body: -->
       <span id="body-input-wrapper">
-        <textarea class="form-control" placeholder="Write something important" id="bodyInput" autocomplete="off"></textarea>
+        <textarea class="form-control" placeholder="Write something important" id="bodyInput" autocomplete="off" disabled></textarea>
         <div id="body-blocking-overlay" data-logged-in=<?= is_user_logged_in() ? 'true' : 'false'; ?>>
           <span>
             <p>
@@ -75,6 +75,7 @@
                 <?php include 'sidebar-twitter.php'?>
                 <?php include 'sidebar-google.php'?>
                 <?php include 'sidebar-windowslive.php'?>
+                <?php // include 'sidebar-email.php'?>
                 <?php include 'sidebar-fax-hardcopy.php'?>
               </div>
               <?php // include 'sidebar-payment.php'?>

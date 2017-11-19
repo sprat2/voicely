@@ -164,6 +164,7 @@ class Voicely_Core_Public {
 	 * Registers the addressees custom taxonomy.
 	 *
 	 *		Also adds the default addressee, "The World", if it doesn't already exist
+	 *		Note: default addressee, "the world", is currently disabled
 	 *
 	 * @since    1.0.0
 	 */
@@ -184,7 +185,7 @@ class Voicely_Core_Public {
 			'view_item'                  => 'View Addressee',
 			'separate_items_with_commas' => 'Separate addressees with commas',
 			'add_or_remove_items'        => 'Add or remove addressees',
-			'choose_from_most_used'      => 'Choose from the most written-to',
+			'choose_from_most_used'      => 'Choose from the most written to',
 			'popular_items'              => 'Popular Addressees',
 			'search_items'               => 'Search Addressees',
 			'not_found'                  => 'Not Found',
@@ -206,13 +207,13 @@ class Voicely_Core_Public {
 		register_taxonomy( 'addressee', array( 'letter' ), $args );
 
 		// Add the default addressee if not present
-		if ( !( term_exists( 'The World', 'addressee' ) ) ) {
-			$world_args = array(
-				'description' => 'Open to all!',
-			);
-			$result = wp_insert_term( 'The World', 'addressee', $world_args );
-			add_term_meta( $result['term_id'], 'pretty_name', 'The World', true );
-		}
+		// if ( !( term_exists( 'The World', 'addressee' ) ) ) {
+		// 	$world_args = array(
+		// 		'description' => 'Open to all!',
+		// 	);
+		// 	$result = wp_insert_term( 'The World', 'addressee', $world_args );
+		// 	add_term_meta( $result['term_id'], 'pretty_name', 'The World', true );
+		// }
 	}
 
 

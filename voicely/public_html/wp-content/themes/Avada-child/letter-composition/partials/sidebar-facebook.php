@@ -15,17 +15,26 @@
 <div id="facebook-sharing-message-overlay-background" class="overlay-background">
   <div class="overlay-content">
     <div class="overlay-content-wrapper">
+      <h2>Share to Facebook</h2>
       <div id="facebook-sharing-message-content">
-        <textarea class="sharing-message-textarea" id="facebook-sharing-message-suggestion" disabled></textarea>
+        <span>
+          <p>Recommended sharing message</p>
+          <textarea class="sharing-message-textarea" id="facebook-sharing-message-suggestion" disabled></textarea>
+        </span>
         <span id="fb-copyover-button-div" >
           <a class="btn btn-lg btn-link" id="fb-copyover-button">
             <span class="fa fa-2x fa-arrow-circle-right"></span>
           </a>
         </span>
-        <textarea class="sharing-message-textarea" id="facebook-sharing-message"></textarea>
+        <span>
+          <p>Your sharing message</p>
+          <textarea class="sharing-message-textarea" id="facebook-sharing-message" maxlength="280"></textarea>
+        </span>
       </div>
       <div id="close-fb-overlay-button-wrapper" class="pull-right">
-        <button id="close-fb-overlay-button" type="button" class="btn btn-primary center-block pull-right">Share</button>
+        <span id="facebook-character-limit-message" class="character-limit-message"><i>280</i> characters remaining.</span>
+        <button id="close-fb-overlay-button" type="button" class="btn btn-primary center-block pull-right" disabled>Share</button>
+        <span id="skip-fb-overlay-text" class="opt-out pull-right">No thanks...</span>
       </div>
     </div>
   </div>

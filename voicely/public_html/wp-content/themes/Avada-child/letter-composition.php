@@ -48,7 +48,6 @@ if (empty($_SERVER['HTTPS'])) {
 <script src="<?= get_stylesheet_directory_uri().'/'?>letter-composition/js/shared.js"></script>
 
 <!-- Our content -->
-<center>Under construction</center>
 <?php
   // If user isn't logged in, display the login screen. Otherwise display the page as expected.
   // Note: Disabled old login scheme

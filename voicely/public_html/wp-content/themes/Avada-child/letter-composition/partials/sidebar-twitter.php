@@ -15,11 +15,14 @@
 <div id="twitter-sharing-message-overlay-background" class="overlay-background">
   <div class="overlay-content">
     <div class="overlay-content-wrapper">
+      <h2>Share to Twitter</h2>
       <div id="twitter-sharing-message-content">
-        <textarea id="twitter-sharing-message"></textarea>
+        <textarea id="twitter-sharing-message" class="sharing-message-textarea" maxlength="280"></textarea>
       </div>
       <div id="close-tw-overlay-button-wrapper" class="pull-right">
-        <button id="close-tw-overlay-button" type="button" class="btn btn-primary center-block pull-right">Share</button>
+        <span id="twitter-character-limit-message" class="character-limit-message"><i>280</i> characters remaining.</span>
+        <button id="close-tw-overlay-button" type="button" class="btn btn-primary center-block pull-right" disabled>Share</button>
+        <span id="skip-tw-overlay-text" class="opt-out pull-right">No thanks...</span>
       </div>
     </div>
   </div>

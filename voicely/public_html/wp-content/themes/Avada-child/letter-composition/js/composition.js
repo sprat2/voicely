@@ -97,12 +97,12 @@
       minLength: 3, // Doesn't work - hardcoded in typeahead source instead
       displayKey: 'tag',
       valueKey: 'tag',
-      source: tagnames.ttAdapter()
+      source: tagnames.ttAdapter(),
     },
     confirmKeys: [13, 44, 59, 32, 9], // Confirm on enter, comma, semicolon, space (ASCII codes)
     delimiter: [13, 44, 59, 32, 9], // Break on enter, comma, semicolon, space (ASCII codes)
     trimValue: true, // Trim whitespace from tags
-    cancelConfirmKeysOnEmpty: false, // fix for carrying over comma to next tag
+    cancelConfirmKeysOnEmpty: true, // fix for carrying over comma to next tag
   });
 
   // Initialize the addressee fetching object
@@ -169,7 +169,7 @@
     jQuery('#scroll-recipient-id-'+event.item.term_id).css('opacity', '1.0');  
   });
 
-  // When an item is added to the recipients list, select it on the right side
+  // When an item is added to the tags list, select it on the right side
   jQuery('#tagsInput').on('itemAdded', function(event) {
     // Mark the element as selected
     jQuery('#related-tag-id-'+event.item).data('isSelected', true);
@@ -210,9 +210,11 @@
     getToken( 'Facebook', true );
   });
 
-  // Hide the body-blocking overlay if the user is logged in
-  if ( $('#body-blocking-overlay').data('logged-in') === true )
-  $('#body-blocking-overlay').css('display', 'none');
+  // Hide the body-blocking overlay & enable composition if the user is logged in
+  if ( $('#body-blocking-overlay').data('logged-in') === true ) {
+    $('#bodyInput').prop("disabled", false);
+    $('#body-blocking-overlay').css('display', 'none');
+  }
 
   $(document).ready(function() {
     // Fetch & set nonces
@@ -265,7 +267,18 @@
       if ( $('#body-blocking-overlay').data('logged-in') === true )
         $('#bodyInput').val( readCookie('savedLetter') );
     }
-    
+
+    // Workaround - clears the tagsinput element on "enter"
+    //   (Solves persisting input if no autocomplete suggestion is selected when user presses "enter")
+    $('.tags .twitter-typeahead').keypress(function(e){
+      if (e.which == 13){ // Enter key pressed
+        // Clear the input after the addition and readdition succeed
+        setTimeout(function () {
+          $('.tt-input').typeahead('val', '');
+        }, 0);
+      }
+    });
+
   });
 
 })( jQuery );
