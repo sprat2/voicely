@@ -3,6 +3,7 @@
 <div class="rhs-composition-section" id="composition-section-1">
   <!-- Arrow buttons -->
   <div class="mini-nav btn-group scroll-container-buttons" id="popular-recipients-buttons">
+    <button class="btn btn-default btn-xs far-left-button" type="button"><span class="glyphicon glyphicon-fast-backward"></span></button>
     <button class="btn btn-default btn-xs left-button" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
     <button class="btn btn-default btn-xs right-button" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
   </div>
@@ -33,11 +34,11 @@
   <div class="tags">
     <!-- Tags Input -->
     <div class="form-group" id="form-tag">
-      <textarea type="text" data-role="tagsinput" placeholder="Add a tag..." class="form-control" id="tagsInput" autocomplete="off"></textarea>
+      <textarea type="text" data-role="tagsinput" placeholder="Add a tag..." class="form-control" id="tagsInput" autocomplete="off" disabled></textarea>
     </div>
     <!-- Suggested Tags -->
     <div class="form-group" id="form-tag-gray">
-      <?php include dirname(__FILE__).'/suggested-tags.php' ?>
+      <?php include dirname(dirname(__FILE__)).'/ajax/suggested-tags.php' ?>
     </div>
   </div>
 </div>
@@ -47,6 +48,7 @@
 <div class="rhs-composition-section" id="composition-section-2">
   <!-- Arrow buttons -->
   <div class="mini-nav btn-group scroll-container-buttons" id="add-image-buttons">
+    <button class="btn btn-default btn-xs far-left-button" type="button"><span class="glyphicon glyphicon-fast-backward"></span></button>
     <button class="btn btn-default btn-xs left-button" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
     <button class="btn btn-default btn-xs right-button" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
   </div>

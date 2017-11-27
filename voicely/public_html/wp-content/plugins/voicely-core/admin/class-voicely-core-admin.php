@@ -193,7 +193,7 @@ class Voicely_Core_Admin {
             'id'   => 'ig_handle' // meta-key name
         ) );
         
-        // Instagram handle
+        // Image URL
         $cmb_term->add_field( array(
             'name' => 'Image URL',
             'desc' => 'e.g. https://example.com/johnsmith.png',

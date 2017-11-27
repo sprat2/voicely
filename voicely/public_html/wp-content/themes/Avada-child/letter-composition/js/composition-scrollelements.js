@@ -12,6 +12,16 @@
   var displayedSetIndex1 = 0;
   var loadedSetIndex1 = 0;
   var listComplete1 = false;
+
+  // Far-left scroll button clicked...
+  $('#composition-section-1 .scroll-container-buttons .far-left-button').unbind('click').click( function () {
+    // Scroll all the way to the left
+    // Update scroll index
+    displayedSetIndex1 = 0;
+    // Update scroll position
+    $('#composition-section-1 .scroll-container').scroll();
+  });
+
   // Left scroll button clicked...
   $('#composition-section-1 .scroll-container-buttons .left-button').unbind('click').click( function () {
     // Scroll one screen to the left
@@ -57,6 +67,9 @@
               listComplete1 = true;
             else {
               $('#composition-section-1 .scroll-container').append(newContent);
+              // Mark elements as draggable
+              markAsDraggable();
+              greyElementsIfAppropriate();
               // Select those which have already been manually added
               $('#toInput').trigger('newScrollContainerContentLoaded');
               $('#composition-section-1 .scroll-container').scroll(); // Update scroll position
@@ -75,6 +88,16 @@
   var displayedSetIndex2 = 0;
   var loadedSetIndex2 = 0;
   var listComplete2 = false;
+
+  // Far-left scroll button clicked...
+  $('#composition-section-2 .scroll-container-buttons .far-left-button').unbind('click').click( function () {
+    // Scroll all the way to the left
+    // Update scroll index
+    displayedSetIndex2 = 0;
+    // Update scroll position
+    $('#composition-section-2 .scroll-container').scroll();
+  });
+
   // Left scroll button clicked...
   $('#composition-section-2 .scroll-container-buttons .left-button').unbind('click').click( function () {
     // Scroll one screen to the left
@@ -120,6 +143,9 @@
               listComplete2 = true;
             else {
               $('#composition-section-2 .scroll-container').append(newContent);
+              // Mark elements as draggable
+              markAsDraggable();
+              greyElementsIfAppropriate();
               $('#composition-section-2 .scroll-container').scroll(); // Update scroll position
             }
           }, emulatedAjaxDelay);    
@@ -128,5 +154,10 @@
   });
   // Trigger first scroll event to load default content
   $('#composition-section-2 .scroll-container').scroll();
+
+
+  /*******************************************************************
+   *************************  ADDITIONAL  ****************************
+   *******************************************************************/
 
 })( jQuery );

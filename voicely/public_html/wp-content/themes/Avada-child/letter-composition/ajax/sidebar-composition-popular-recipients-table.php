@@ -15,7 +15,7 @@ ini_set('display_errors', 1);
 define('WP_USE_THEMES', false);
 require('../../../../../wp-load.php');
 
-$numPerRow = 3;
+$numPerRow = 6;
 $numOfRows = 2;
 $receivedIndex = isset($_GET['index']) ? $_GET['index'] : 0;
 
@@ -74,16 +74,30 @@ if ( sizeof($recipients) == 0 ) {
           
             // Echo the output for this recipient
             // $testvar = var_export($recipients[$j], true);
-            echo "\t\t\t".'<span>'."\n";
+            echo "\t\t\t".'<span class="tooltip recipient">'."\n";
             // Include their proper image, or a placeholder image if image if theirs doesn't exist
             if ( $image_exists )
-              echo "\t\t\t\t".'<img id="scroll-recipient-id-'.$current_term_id.'" src="'.$current_img_url.'" onclick=\'addresseeClicked("'.$current_term_id.'", "'.$current_term_name.'", "'.$current_prettyname.'")\'>'."\n";
+              echo "\t\t\t\t".'<img id="scroll-recipient-id-'.$current_term_id.'" src="'.$current_img_url.'" onclick=\'addresseeClicked("'.$current_term_id.'", "'.$current_term_name.'", "'.$current_prettyname.'")\' class="draggable recipient">'."\n";
             else
-              echo "\t\t\t\t".'<img id="scroll-recipient-id-'.$current_term_id.'" src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/64x64.png" onclick=\'addresseeClicked("'.$current_term_id.'", "'.$current_term_name.'", "'.$current_prettyname.'")\'>'."\n";
-            // Include their name label
-            echo "\t\t\t\t".'<span class="scroll-recipient-label">'.$current_prettyname.'</span>'."\n";
+              echo "\t\t\t\t".'<img id="scroll-recipient-id-'.$current_term_id.'" src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/64x64.png" onclick=\'addresseeClicked("'.$current_term_id.'", "'.$current_term_name.'", "'.$current_prettyname.'")\' class="draggable recipient">'."\n";
+              
+              // Include their name label
+              // echo "\t\t\t\t".'<span class="scroll-recipient-label">'.$current_prettyname.'</span>'."\n";
+             
+              // Include their tooltip
+              echo "\t\t\t\t\t".'<span class="tooltiptext display-enabled" class="display-enabled" on>'."\n";
+                  // echo "\t\t\t\t\t\t".$current_prettyname."\n";
+
+
+                  echo "\t\t\t\t\t\t".'<span class="breakout-wrapper">'."\n";    
+                    echo "\t\t\t\t\t\t\t".$current_prettyname."\n";
+                  echo "\t\t\t\t\t\t".'</span>'."\n";
+
+
+                echo "\t\t\t\t\t".'</span>'."\n";
+              echo "\t\t\t\t".'</span>'."\n";
             echo "\t\t\t".'</span>'."\n";
-            // echo "\t\t\t".'<span class="scroll-recipient-label">'.$testvar.'</span>'."\n";
+                
           }
           echo "\t\t".'</span>'."\n";
 

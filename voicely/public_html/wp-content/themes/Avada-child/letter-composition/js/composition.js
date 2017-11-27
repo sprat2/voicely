@@ -169,8 +169,16 @@
     jQuery('#scroll-recipient-id-'+event.item.term_id).css('opacity', '1.0');  
   });
 
+  // Mandate a minimum tag length of 3 characters
+  jQuery('#tagsInput').on('beforeItemAdd', function(event) {
+    if (event.item.length < 3)
+      event.cancel = true;  
+  });
   // When an item is added to the tags list, select it on the right side
   jQuery('#tagsInput').on('itemAdded', function(event) {
+    // Mandate a minimum tag length of 3 characters
+    if (event.item.length < 3)
+      return;
     // Mark the element as selected
     jQuery('#related-tag-id-'+event.item).data('isSelected', true);
     // Adjust display appropriately
@@ -210,32 +218,30 @@
     getToken( 'Facebook', true );
   });
 
-  // Hide the body-blocking overlay & enable composition if the user is logged in
+  // If the user isn't logged in, gray the proper elements out
+  //   (Done in two places to improve response time AND cover the dynamically added elements)
+  greyElementsIfAppropriate();
+
+  // Hide the body-blocking overlay & enable composition (visually) if the user is logged in
+  //   NOTE: Half of the CSS for these steps is on the stylesheet - 
+  //         arbitrarily managed there and here depending on logged in state
   if ( $('#body-blocking-overlay').data('logged-in') === true ) {
+    $('#toInput').prop("disabled", false);
+    $('#titleInput').prop("disabled", false);
     $('#bodyInput').prop("disabled", false);
+    $('#tagsInput').prop("disabled", false);
+    $('.bootstrap-tagsinput').each(function(){
+      $(this).css('background-color', 'initial');
+    });
     $('#body-blocking-overlay').css('display', 'none');
   }
 
-  $(document).ready(function() {
+  $(document).ready(function() {    
     // Fetch & set nonces
     nonceRequest( 'post' );
     nonceRequest( 'mark-shared' );
     nonceRequest( 'share-to-social-media' );
     nonceRequest( 'google-contacts' );
-
-    // Saves letter progress.  Must be global so the sending script can stop progress saving.
-    window.saveInterval = null;
-
-    // Save the letter data to cookies every 10 seconds
-    window.saveInterval = setInterval(function() {
-      createCookie( 'savedTitle', $('#titleInput').val(), 3 );
-      createCookie( 'savedTags', $('#tagsInput').tagsinput('items'), 3 );
-      createCookie( 'savedAddressees', JSON.stringify( $('#toInput').tagsinput('items'), 3 ) );
-      // Only save the body of the letter if the user is logged in
-      //   (else it'll overwrite their saved letter, since it's not loaded in the first place)
-      if ( $('#body-blocking-overlay').data('logged-in') === true )
-        createCookie( 'savedLetter', $('#bodyInput').val(), 3 );
-    }, 1000);
 
     // Restore in-progress letter parameters, if detected
     // If there's a cookie with a title value, load it back in
@@ -264,9 +270,36 @@
     // If there's a cookie with a body value, load it back in
     if ( readCookie('savedLetter') != null ) {
       // Only do so if the user is logged in
-      if ( $('#body-blocking-overlay').data('logged-in') === true )
-        $('#bodyInput').val( readCookie('savedLetter') );
+      if ( $('#body-blocking-overlay').data('logged-in') === true ) {
+        var oldContent = readCookie('savedLetter');
+        if (oldContent)
+          $('#bodyInput').val( oldContent );
+        else {
+          // If there's no saved content, wipe the cookie to avoid duplicate cookie/different path errors.
+          document.cookie = 'savedLetter=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+          // Try once more for the one buried another layer deep.
+          // This issue should be better identified and handled in the future.
+          // (Though we won't be saving to cookies in the future either)
+          oldContent = readCookie('savedLetter');
+          $('#bodyInput').val( oldContent ); 
+        }
+      }
     }
+
+    // Saves letter progress.  Must be global so the sending script can stop progress saving.
+    window.saveInterval = null;
+
+    // Save the letter data to cookies every 10 seconds
+    window.saveInterval = setInterval(function() {
+      createCookie( 'savedTitle', $('#titleInput').val(), 3 );
+      createCookie( 'savedTags', $('#tagsInput').tagsinput('items'), 3 );
+      createCookie( 'savedAddressees', JSON.stringify( $('#toInput').tagsinput('items'), 3 ) );
+      // Only save the body of the letter if the user is logged in
+      //   (else it'll overwrite their saved letter, since it's not loaded in the first place)
+      if ( $('#body-blocking-overlay').data('logged-in') === true ) {
+        createCookie( 'savedLetter', $('#bodyInput').val(), 3 );
+      }
+    }, 1000);
 
     // Workaround - clears the tagsinput element on "enter"
     //   (Solves persisting input if no autocomplete suggestion is selected when user presses "enter")
@@ -279,6 +312,10 @@
       }
     });
 
+    // If the user isn't logged in, gray the proper elements out
+    //   (Done in two places to improve response time AND cover the dynamically added elements)
+    greyElementsIfAppropriate();
+
   });
 
 })( jQuery );
@@ -286,6 +323,10 @@
 // Fires when an addressee is selected from the "Popular Recipients" section
 //   Selects or deselects them appropriately
 function addresseeClicked( addresseeId, addresseeName, addresseePrettyName ) {
+  // If the input field is disabled, return without doing anything
+  if ( jQuery('#toInput').prop('disabled') )
+    return;
+
   // Determine if the element has already been selected
   var previouslySelected = false;
   if ( jQuery('#scroll-recipient-id-'+addresseeId).data('isSelected') === true )
@@ -314,6 +355,10 @@ function addresseeClicked( addresseeId, addresseeName, addresseePrettyName ) {
 // Fires when a suggested tag is selected from the "Suggested Tags" section
 //   Selects or deselects them appropriately
 function suggestedTagClicked( tagId, tagName ) {
+  // If the input field is disabled, return without doing anything
+  if ( jQuery('#tagsInput').prop('disabled') )
+    return;
+
   // Determine if the element has already been selected
   var previouslySelected = false;
   if ( jQuery('#related-tag-id-'+tagName).data('isSelected') === true )

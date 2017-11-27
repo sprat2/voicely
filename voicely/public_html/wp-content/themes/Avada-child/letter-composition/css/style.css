@@ -368,14 +368,22 @@ textarea {
     padding: 0px;
 }
 
-#post-now-button, #tooltip {
+#post-now-button, .tooltip {
     width: 100%;
     padding-left: 0px;
     padding-right: 0px;
 }
 
+.opt-out {
+    position: relative;
+    top: 75%;
+    padding-right: 2em;
+    font-size: 0.3em;
+    color: #bbbbbb;
+}
+
 /* Tooltip element */
-#tooltip {
+.tooltip {
     position: relative;
     display: inline-block;
     opacity: 1;
@@ -383,7 +391,7 @@ textarea {
 }
 
 /* Tooltip text */
-#tooltip #tooltiptext {
+.tooltip .tooltiptext {
     visibility: hidden;
     padding: 5px;
     width: 60%;
@@ -398,7 +406,7 @@ textarea {
 }
 
 /* Tooltip arrow */
-#tooltip #tooltiptext::after {
+.tooltip .tooltiptext::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -410,7 +418,7 @@ textarea {
 }
 
 /* Show tooltip only on hover only when enabled */
-#tooltip:hover #tooltiptext.display-enabled {
+.tooltip:hover .tooltiptext.display-enabled {
     visibility: visible;
 }
 
@@ -531,14 +539,15 @@ textarea {
     padding: 0px;
 }
 .container-row > span > span {
-    position: relative;
+    /* position: relative; */
+    position: static;
     width: 90%;
     margin-top: 2px;
     margin-bottom: 2px;
     display: flex;
 }
 #composition-section-1 .container-row > span > span {
-    height: 12em;
+    height: 7em;
 }    
 #composition-section-2 .container-row > span > span {
     height: 4em;
@@ -561,6 +570,12 @@ textarea {
 }
 
 /* Body-blocking login overlay */
+#blocking-login-overlay-element-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: block;
+}
 #body-input-wrapper {
     position: relative;
     height: 100%;
@@ -579,8 +594,11 @@ textarea {
     z-index: 2;
 }
 #body-blocking-overlay > span {
-    background-color: #5bc0de;
-    color: white;
+    position: absolute;
+    left: -15px;
+    top: -10px;
+    /* background-color: #5bc0de; */
+    color: black;
     font-size: 115%;
 }
 #body-blocking-overlay > span > p {
@@ -599,14 +617,71 @@ textarea {
     font-size: 0.5em;
 }
 
-.opt-out {
-    position: relative;
-    top: 75%;
-    padding-right: 5px;
-    font-size: 0.3em;
-}
-
 #facebook-sharing-message-content p {
     font-size: 0.6em;
     text-align: center;
+}
+
+#facebook-sharing-message-content > span {
+    position: relative;
+}
+
+#text-inputs > br {
+    margin-top: 1em;
+}
+#titleInput {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#facebook-character-limit-message {
+    position: absolute;
+    bottom: -1.5em;
+    left: 0em;
+}
+
+/* Disable all inputs visually (grey them out) */
+#text-inputs input:disabled,
+input:disabled,
+.bootstrap-tagsinput {
+    background-color: #eee;
+}
+
+/* Login overlay padding to center a little better */
+/* .btn-facebook-overlay {
+    padding-bottom: 9px;
+} */
+
+#close-fb-overlay-button-wrapper .tooltip,
+#close-tw-overlay-button-wrapper .tooltip {
+    width: auto;
+}
+#close-fb-overlay-button-wrapper .tooltiptext,
+#close-tw-overlay-button-wrapper .tooltiptext {
+    font-size: initial;
+    width: 6em;
+    top: -15px;
+}
+
+/* New tooltips */
+#popular-recipients-buttons .tooltip {
+    width: auto;
+}
+#composition-section-1 .tooltiptext {
+    font-size: initial;
+    width: 10em;
+    top: 20%;
+    transform: translateX(-95%);
+}
+
+/* Wrap long tagsinput elements */
+.bootstrap-tagsinput .tag {
+    word-wrap: break-word;
+    white-space: normal;
+    display: inline-block;
+    max-width: 100%;
+}
+.bootstrap-tagsinput .twitter-typeahead .tt-input {
+    width: 100%;
+    max-width: 100%;
 }

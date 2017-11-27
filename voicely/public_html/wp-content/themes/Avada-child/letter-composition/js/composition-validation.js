@@ -147,13 +147,13 @@ var saveInterval = null;
     
     if ( tooltipText == "Tooltip error" ) {
       // No messages to display - disable the tooltip for now
-      $('#tooltiptext').html("Tooltip should be disabled");
-      $('#tooltiptext').removeClass("display-enabled");
+      $('#publish-button-div .tooltiptext').html("Tooltip should be disabled");
+      $('#publish-button-div .tooltiptext').removeClass("display-enabled");
     }
     else {
       // change tooltip text here and make sure it's enabled
-      $('#tooltiptext').html(tooltipText);
-      $('#tooltiptext').addClass("display-enabled");
+      $('#publish-button-div .tooltiptext').html(tooltipText);
+      $('#publish-button-div .tooltiptext').addClass("display-enabled");
     }
   }
 

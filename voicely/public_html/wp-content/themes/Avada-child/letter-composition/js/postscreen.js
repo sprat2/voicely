@@ -119,7 +119,8 @@
       document.cookie = 'savedTitle=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
       document.cookie = 'savedTags=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
       document.cookie = 'savedAddressees=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-      document.cookie = 'savedLetter=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      document.cookie = 'savedLetter=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'; // (rootpath)
+      document.cookie = 'savedLetter=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'; // (nopath)
 
       // Enable the letter URL button
       $('#end-step6-buttona').prop("disabled", false);

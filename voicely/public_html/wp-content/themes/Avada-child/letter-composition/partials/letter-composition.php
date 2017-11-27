@@ -1,3 +1,8 @@
+<?php
+wp_enqueue_script("jquery-ui-core");
+wp_enqueue_script("jquery-ui-draggable");
+wp_enqueue_script("jquery-ui-droppable");
+?>
 <!-- Displayed HTML container -->
 <div class="container-fluid Col2" id="html-display-container">
   <!-- Header -->
@@ -5,7 +10,18 @@
     <div class="col-md-12" id="logo-header-div-parent">
       <div class="page-header" id="logo-header-div">
         <img src="https://voicely.org/wp-content/themes/Avada-child/letter-composition/img/Open_Letter_Logo.jpg" ALT="Logo" width="144" height="42" />
-        <h4>Your Open Letter</h4>
+        <span id="blocking-login-overlay-element-wrapper">
+          <h4>Your Open Letter</h4>
+          <div id="body-blocking-overlay" data-logged-in=<?= is_user_logged_in() ? 'true' : 'false'; ?>>
+            <span>
+              <p>
+                <a class="btn btn-block btn-social btn-facebook btn-facebook-overlay btn-inline" id="fb-signin-button">
+                <span class="fa fa-facebook"></span> Log in with Facebook
+                </a> &nbsp and write something important!
+              <p>
+            </span>
+          </div>
+        </span>
       </div>
     </div>
   </div>
@@ -19,21 +35,16 @@
     <!-- Left side -->
     <div class="col-md-7 panel" id="text-inputs">
       <!-- To: -->
-      <input type="text" placeholder="To" id="toInput" data-role="tagsinput" autocomplete="off">
+      <span id="to-input-wrapper">
+        <input type="text" placeholder="To" id="toInput" data-role="tagsinput" autocomplete="off" disabled>
+      </span>
+      <br>
       <!-- Title: -->
-      <input type="text" placeholder="Title" id="titleInput" autocomplete="off">
+      <input type="text" placeholder="Title" id="titleInput" autocomplete="off" disabled>
+      <br>
       <!-- Body: -->
       <span id="body-input-wrapper">
         <textarea class="form-control" placeholder="Write something important" id="bodyInput" autocomplete="off" disabled></textarea>
-        <div id="body-blocking-overlay" data-logged-in=<?= is_user_logged_in() ? 'true' : 'false'; ?>>
-          <span>
-            <p>
-              <a class="btn btn-block btn-social btn-facebook btn-inline" id="fb-signin-button">
-              <span class="fa fa-facebook"></span> Log in with Facebook
-              </a> &nbsp and write something important!
-            <p>
-          </span>
-        </div>
       </span>
     </div>
       

@@ -230,4 +230,89 @@ function postToSocialMedia( provider, token, shareMessage, returnedRemoteLetterD
       failureCallback(data);
     }
   );
+
+}
+
+// Drag/drop
+// Mark/initialize new elements as draggable
+//   Called upon successful AJAX requests
+function markAsDraggable() {
+  jQuery('.draggable').each(function() {
+    jQuery(this).draggable({
+      start: function(event, ui) {
+        jQuery(this).draggable("option", "cursorAt", {
+          left: Math.floor(ui.helper.width() / 2),
+          top: Math.floor(ui.helper.height() / 2)
+        }); 
+      },
+      helper: 'clone', // don't move base element when dragged
+      revert: 'invalid', // move back if dragged somewhere invalid
+      appendTo: 'body', // escape parent
+      scroll: false, // don't scroll the container when dragged to its bounds
+      cursor: 'pointer',
+      tolerance: 'pointer', // cursor is required overlap position
+      delay: 180, // Must hold mouse down for long enough to initate drag sequence, to avoid detecting clicks as drags
+    });
+    jQuery(this).removeClass('draggable');
+  });
+
+  // Add url to body if it's from the addable images section
+  jQuery("#bodyInput").droppable({
+    drop: function( event, ui ) {
+      // Don't allow anything if they aren't logged in
+      if ( ! jQuery('#body-blocking-overlay').data('logged-in') === true )
+        return;
+      // Copy the content to the body
+      var url = ui.draggable.attr('src');
+      if (url && (ui.draggable.hasClass('addable-image')) )
+        jQuery(this).val( jQuery(this).val() + "\n\n" + url + "\n\n" );
+      else if (url && (ui.draggable.hasClass('recipient')) )
+        jQuery(this).val( jQuery(this).val() + "\n\n" + url + "\n\n" );
+    },
+    accept: '.addable-image, .recipient'
+  });
+  
+  // Add tag to selected tags list if it's dragged from the tags section
+  jQuery("#form-tag").droppable({
+    drop: function( event, ui ) {
+      var tagId = ui.draggable.attr('id');
+      // Select if unselected
+      if ( jQuery('#'+tagId).data('isSelected') != true )
+        ui.draggable.click(); // Fire its onclick
+    },
+    accept: '.tag'
+  });
+    
+  // Add recipient to selected recipient list if it's dragged from the recipients section
+  jQuery("#to-input-wrapper").droppable({
+    drop: function( event, ui ) {
+      var repipientId = ui.draggable.attr('id');
+      // Select if unselected
+      if ( jQuery('#'+repipientId).data('isSelected') != true )
+        ui.draggable.click(); // Fire its onclick
+    },
+    accept: '.recipient'
+  });
+}
+
+// Grey out elements which are loaded dynamically, when appropriate
+function greyElementsIfAppropriate() {
+  // If not logged in, grey the elements
+  if ( ! jQuery('#body-blocking-overlay').data('logged-in') === true ) {
+    jQuery('.tags .tag').each(function() {
+      jQuery(this).css('background-color', '#888888');
+      jQuery(this).css('opacity', '0.5');
+    });
+    jQuery('#to-input-wrapper .tag').each(function() {
+      jQuery(this).css('background-color', '#888888');
+      jQuery(this).css('opacity', '0.5');
+    });
+    jQuery('.scroll-recipient-label').each(function() {
+      jQuery(this).css('background-color', '#888888');
+      jQuery(this).css('opacity', '0.5');
+    });
+    jQuery('.addable-image').each(function() {
+      jQuery(this).css('opacity', '0.5');
+    });
+  }
 }

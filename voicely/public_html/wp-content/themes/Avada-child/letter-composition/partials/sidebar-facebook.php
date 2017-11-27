@@ -28,13 +28,16 @@
         </span>
         <span>
           <p>Your sharing message</p>
-          <textarea class="sharing-message-textarea" id="facebook-sharing-message" maxlength="280"></textarea>
+          <textarea class="sharing-message-textarea" id="facebook-sharing-message" maxlength="280" autocomplete="off"></textarea>
+          <span id="facebook-character-limit-message" class="character-limit-message"><i>280</i> characters remaining.</span>
         </span>
       </div>
       <div id="close-fb-overlay-button-wrapper" class="pull-right">
-        <span id="facebook-character-limit-message" class="character-limit-message"><i>280</i> characters remaining.</span>
         <button id="close-fb-overlay-button" type="button" class="btn btn-primary center-block pull-right" disabled>Share</button>
-        <span id="skip-fb-overlay-text" class="opt-out pull-right">No thanks...</span>
+        <span class="tooltip opt-out pull-right">
+          <span id="skip-fb-overlay-text">No thanks...</span>
+          <span class="tooltiptext display-enabled" class="display-enabled">No thanks</span>
+        </span>
       </div>
     </div>
   </div>

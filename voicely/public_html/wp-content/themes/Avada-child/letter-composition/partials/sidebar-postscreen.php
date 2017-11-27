@@ -1,8 +1,8 @@
 <!-- Publish Button -->
 <div id="publish-button-div">
-  <span id="tooltip">
+  <span class="tooltip">
     <button id="post-now-button" type="button" class="btn btn-primary center-block" disabled>Publish</button>
-    <span id="tooltiptext" class="display-enabled"></span>
+    <span class="tooltiptext" class="display-enabled"></span>
   </span>
   <span class="status-display-button"><i class="fa-alph"></i></span>
 </div>

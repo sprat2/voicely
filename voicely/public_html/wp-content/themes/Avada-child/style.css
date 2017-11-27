@@ -12,3 +12,35 @@
  Text Domain:  avada-child-theme
 */
 
+/* Big screens */
+@media screen and (min-width: 1024px) {
+  .fusion-header .fusion-row .fusion-flyout-menu-bg,
+  .fusion-header .fusion-row .fusion-flyout-menu {
+    width: 26em;
+    /* Align right */
+    right: 0px;
+    left: unset;
+  }
+}
+
+/* Tablet-sized screens */
+@media screen and (min-width: 768px) and (max-width : 1023px) {
+  .fusion-header .fusion-row .fusion-flyout-menu-bg,
+  .fusion-header .fusion-row .fusion-flyout-menu {
+    width: 100%;
+    /* Align right (so that resizing from large to small window appears correct) */
+    right: 0px;
+    left: unset;
+  }
+}
+
+/* Phone-sized screens */
+@media screen and (min-width: 0px) and (max-width : 767px) {
+  .fusion-header .fusion-row .fusion-flyout-menu-bg,
+  .fusion-header .fusion-row .fusion-flyout-menu {
+    width: 100%;
+    /* Align right (so that resizing from large to small window appears correct) */
+    right: 0px;
+    left: unset;
+  }
+}
