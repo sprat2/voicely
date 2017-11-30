@@ -318,6 +318,17 @@
 
   });
 
+  // Handle sharing section's execution flow
+  $('#socialShareGoButton').on('click', function() {
+    var shareToFB = jQuery('#share-to-fb-checkbox').is(':checked');
+    var shareToTW = jQuery('#share-to-tw-checkbox').is(':checked');
+
+    if (shareToFB)
+      $('#facebook-prompt-button').trigger( "click" )
+    if (shareToTW)
+      $('#twitter-prompt-button').trigger( "click" )
+  });
+
 })( jQuery );
 
 // Fires when an addressee is selected from the "Popular Recipients" section

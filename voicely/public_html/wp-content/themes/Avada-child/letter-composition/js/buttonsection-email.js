@@ -14,11 +14,9 @@
   });
     
   // Authorization button
-  $('#email-prompt-button').click(function() {
-    $('#email-prompt-button').data("stepCompleted", true);
-    $("#bodyInput").trigger('input'); // To reevaluate via the validation script
-    // XXX
-    console.log('Launch email selection overlay here');
+  $('#email-contacts-prompt-button').click(function() {
+    $('#email-contacts-prompt-button').data("stepCompleted", true);
+    // $("#bodyInput").trigger('input'); // To reevaluate via the validation script
     $('#email-contacts-selection-overlay').css( 'display', 'block' );
   });
 

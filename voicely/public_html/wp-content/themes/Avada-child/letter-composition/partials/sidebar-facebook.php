@@ -1,15 +1,11 @@
 <div class="flex-display" id="facebook-sharing-div">
-  <span class="status-display-button"><i class="fa-alph">1</i></span>
+  <input id="share-to-fb-checkbox" type="checkbox">
   <span class="btn-social-span">
-    <a class="btn btn-block btn-social btn-facebook disabled" id="facebook-prompt-button">
+    <a class="btn btn-block btn-social btn-facebook" id="facebook-prompt-button">
       <span class="fa fa-facebook"></span>
       <span class="social-prompt-text">Share to Facebook</span>
     </a>
   </span>
-  <span id="fb-status-indicator" class="status-display-button updatable-status"></span>
-  <!-- <div class="col-xs-3"> -->
-    <!-- <a id="facebook-skip-button" class="skip-button">No thanks...</a> -->
-  <!-- </div> -->
 </div>
 
 <div id="facebook-sharing-message-overlay-background" class="overlay-background">

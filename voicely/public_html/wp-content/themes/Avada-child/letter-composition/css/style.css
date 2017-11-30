@@ -438,7 +438,7 @@ textarea {
 }
 
 .overlay-content {
-    font-size: 200%;
+    font-size: 150%;
     /* height: 20%; */
     display: block;
     align-items: center;
@@ -670,8 +670,7 @@ input:disabled,
 #composition-section-1 .tooltiptext {
     font-size: initial;
     width: 10em;
-    top: 20%;
-    transform: translateX(-95%);
+    position: fixed;
 }
 
 /* Wrap long tagsinput elements */
@@ -684,4 +683,9 @@ input:disabled,
 .bootstrap-tagsinput .twitter-typeahead .tt-input {
     width: 100%;
     max-width: 100%;
+}
+
+.btn-grey {
+    background-color: #777777;
+    color: white; 
 }

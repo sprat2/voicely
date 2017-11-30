@@ -316,3 +316,24 @@ function greyElementsIfAppropriate() {
     });
   }
 }
+
+// Position the tooltip relative to document on hover
+function configureTooltipPositioning() {
+  jQuery('.tooltippable').each(function() {
+    jQuery(this).hover(
+    // hover-in
+    function() {
+      var elementPosition = jQuery(this).offset();
+      jQuery(this).siblings(".tooltiptext").css({
+        'top':elementPosition.top,
+        'left':elementPosition.left,
+        'transform':'translate(-95%, 50%)'
+      });
+    },
+    // hover-out
+    function() {
+      // No hover-out functionality
+    } );
+    jQuery(this).removeClass('tooltippable');
+  });
+}
