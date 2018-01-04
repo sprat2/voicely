@@ -87,9 +87,13 @@ if ( sizeof($recipients) == 0 ) {
               // Include their tooltip
               echo "\t\t\t\t\t".'<span class="tooltiptext display-enabled" class="display-enabled">'."\n";
                   // echo "\t\t\t\t\t\t".$current_prettyname."\n";
+
+
                   echo "\t\t\t\t\t\t".'<span class="breakout-wrapper">'."\n";    
                     echo "\t\t\t\t\t\t\t".$current_prettyname."\n";
                   echo "\t\t\t\t\t\t".'</span>'."\n";
+
+
                 echo "\t\t\t\t\t".'</span>'."\n";
               echo "\t\t\t\t".'</span>'."\n";
             echo "\t\t\t".'</span>'."\n";

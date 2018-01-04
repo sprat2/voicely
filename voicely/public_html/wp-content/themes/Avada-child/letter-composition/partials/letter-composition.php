@@ -82,7 +82,12 @@ wp_enqueue_script("jquery-ui-droppable");
             <div class="inner">
               <?php include 'sidebar-composition.php'?>
               <div id="sharing-divs">
-                <?php include 'sidebar-buttongroups.php'?>
+                <?php include 'sidebar-facebook.php'?>
+                <?php include 'sidebar-twitter.php'?>
+                <?php include 'sidebar-google.php'?>
+                <?php include 'sidebar-windowslive.php'?>
+                <?php // include 'sidebar-email.php'?>
+                <?php include 'sidebar-fax-hardcopy.php'?>
               </div>
               <?php // include 'sidebar-payment.php'?>
               <?php include 'sidebar-postscreen.php'?>
@@ -105,4 +110,4 @@ wp_enqueue_script("jquery-ui-droppable");
 
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri() ?>/letter-composition/js/composition.js"></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri() ?>/letter-composition/js/composition-scrollelements.js"></script>
-<!-- <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri() ?>/letter-composition/js/composition-validation.js"></script> -->
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri() ?>/letter-composition/js/composition-validation.js"></script>

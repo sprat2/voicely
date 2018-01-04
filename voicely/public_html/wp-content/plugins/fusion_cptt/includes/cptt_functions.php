@@ -40,15 +40,15 @@ function cptt_avada_render_post_metadata( $layout, $settings = array() ) {
             $author_post_link = ob_get_clean();
 
            // Check if rich snippets are enabled.
-				if ( $fusion_settings->get( 'disable_date_rich_snippet_pages' ) && $fusion_settings->get( 'disable_rich_snippet_author' ) ) {
-					$metadata .= sprintf( esc_html__( 'By %s', 'fusion-builder' ), '<span class="vcard"><span class="fn">' . $author_post_link . '</span></span>' );
-				} else {
+				if ( ! $fusion_settings->get( 'disable_date_rich_snippet_pages' ) ) {
 					$metadata .= sprintf( esc_html__( 'By %s', 'fusion-builder' ), '<span>' . $author_post_link . '</span>' );
+				} else {
+					$metadata .= sprintf( esc_html__( 'By %s', 'fusion-builder' ), '<span class="vcard"><span class="fn">' . $author_post_link . '</span></span>' );
 				}
-				$metadata .= '<span class="fusion-inline-sep">|</span>';
-			} else { // If author meta data won't be visible, render just the invisible author rich snippet.
-				$author .= fusion_builder_render_rich_snippets_for_pages( false, true, false );
-			}
+            $metadata .= '<span class="fusion-inline-sep">|</span>';
+        } else { // If author meta data won't be visible, render just the invisible author rich snippet.
+            $author .= fusion_builder_render_rich_snippets_for_pages( false, true, false );
+        }
 
         // Render the updated meta data or at least the rich snippet if enabled.
         if ( $settings['post_meta_date'] ) {
