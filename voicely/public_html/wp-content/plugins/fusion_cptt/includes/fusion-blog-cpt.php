@@ -197,6 +197,7 @@ if (!class_exists('FusionSC_Blog_CPT') && class_exists('FusionCore_Plugin')) {
                     'posts_per_page' => '-1',
                     'taxonomy' => 'category',
                     'cpt_post_type' => 'post',
+                    'cpt_include_posts' => 'yes',
                     'cus_taxonomy' => '',
                     'cus_terms' => '',
                     'cus_terms_exclude' => '',
@@ -237,6 +238,18 @@ if (!class_exists('FusionSC_Blog_CPT') && class_exists('FusionCore_Plugin')) {
             }
             extract($defaults);
             $defaults['post_type'] = $defaults['cpt_post_type'];
+
+            // Add in posts of type 'post' if option is set
+            if ( $defaults['cpt_include_posts'] == 'yes' ) {
+                // But only if 'post' isn't already the displayed post type
+                if ( $defaults['post_type'] != 'post' ) {
+                    $old_post_type = $defaults['post_type'];
+                    $defaults['post_type'] = array(
+                        $old_post_type,
+                        'post',
+                    );
+                }
+            }
 
             // Since WP 4.4 'title' param is reserved.
             if ($defaults['title']) {
@@ -2065,6 +2078,25 @@ function fusion_element_blog_cpt()
             ),
 
             array(
+                'type' => 'radio_button_set',
+                'heading' => esc_attr__('Include posts', 'fusion-builder'),
+                'description' => esc_attr__('Include posts of type post.', 'fusion-builder'),
+                'param_name' => 'cpt_include_posts',
+                'default' => 'yes',
+                'value' => array(
+                    'yes' => esc_attr__('Yes', 'fusion-builder'),
+                    'no' => esc_attr__('No', 'fusion-builder'),
+                ),
+                'dependency' => array(
+                    array(
+                        'element' => 'cpt_post_type',
+                        'value' => 'post',
+                        'operator' => '!=',
+                    )
+                ),
+            ),
+
+            array(
                 'type' => 'select',
                 'heading' => esc_attr__('Custom Taxonomy', 'fusion-builder'),
                 'description' => esc_attr__('Select a custom taxonomy if you want to filter by taxonomy terms.', 'fusion-builder'),
@@ -2324,6 +2356,7 @@ function fusion_element_blog_cpt()
                 ),
             ),
             array(
+                
                 'type' => 'radio_button_set',
                 'heading' => esc_attr__('Text display', 'fusion-builder'),
                 'description' => esc_attr__('Controls if the blog post content is displayed as excerpt, full content or is completely disabled.', 'fusion-builder'),
