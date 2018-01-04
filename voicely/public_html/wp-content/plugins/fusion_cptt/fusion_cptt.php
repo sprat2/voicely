@@ -3,7 +3,7 @@
  * Plugin Name: Fusion Builder Custom Post Types and Taxonomies
  * Plugin URI: http://www.amunet.biz
  * Description: The plugin adds custom post types and custom taxonomies functionality to the Fusion page builder used by Avada theme.
- * Version: 5.2.2
+ * Version: 5.3
  * Author: Amunet
  * Author URI: http://www.amunet.biz
  */
