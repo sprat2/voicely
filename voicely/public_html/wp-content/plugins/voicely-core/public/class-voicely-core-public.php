@@ -96,16 +96,8 @@ class Voicely_Core_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->voicely_core, plugin_dir_url( __FILE__ ) . 'js/voicely-core-public.js', array( 'jquery' ), $this->version, false );
-	}
-
-	/**
-	 * Display frontend letter-writing dialog.
-	 *
-	 * @since    1.0.0
-	 */
-	public function write_letter_dialog() {
-		echo 'Here be a frontend, arrr';
+		 wp_enqueue_script( $this->voicely_core, plugin_dir_url( __FILE__ ) . 'js/voicely-core-public.js', array( 'jquery' ), $this->version, false );
+		 wp_enqueue_script( $this->voicely_core + '-2', plugin_dir_url( __FILE__ ) . 'js/login-logout-menu-entry.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -172,6 +164,7 @@ class Voicely_Core_Public {
 	 * Registers the addressees custom taxonomy.
 	 *
 	 *		Also adds the default addressee, "The World", if it doesn't already exist
+	 *		Note: default addressee, "the world", is currently disabled
 	 *
 	 * @since    1.0.0
 	 */
@@ -192,7 +185,7 @@ class Voicely_Core_Public {
 			'view_item'                  => 'View Addressee',
 			'separate_items_with_commas' => 'Separate addressees with commas',
 			'add_or_remove_items'        => 'Add or remove addressees',
-			'choose_from_most_used'      => 'Choose from the most written-to',
+			'choose_from_most_used'      => 'Choose from the most written to',
 			'popular_items'              => 'Popular Addressees',
 			'search_items'               => 'Search Addressees',
 			'not_found'                  => 'Not Found',
@@ -214,12 +207,39 @@ class Voicely_Core_Public {
 		register_taxonomy( 'addressee', array( 'letter' ), $args );
 
 		// Add the default addressee if not present
-		if ( !( term_exists( 'The World', 'addressee' ) ) ) {
-			$world_args = array(
-				'description' => 'Open to all!',
-			);
+		// if ( !( term_exists( 'The World', 'addressee' ) ) ) {
+		// 	$world_args = array(
+		// 		'description' => 'Open to all!',
+		// 	);
+		// 	$result = wp_insert_term( 'The World', 'addressee', $world_args );
+		// 	add_term_meta( $result['term_id'], 'pretty_name', 'The World', true );
+		// }
+	}
 
-			wp_insert_term( 'The World', 'addressee', $world_args );
+
+	// Prevent users from accessing WP's login page
+	function prevent_wp_login() {
+		// WP tracks the current page - global the variable to access it
+		global $pagenow;
+		$action = (isset($_GET['action'])) ? $_GET['action'] : '';
+		if( $pagenow == 'wp-login.php' && ( ! $action || ( $action && ! in_array($action, array('logout', 'lostpassword', 'rp', 'resetpass'))))) {
+			wp_redirect( get_bloginfo('url') );
+			exit();
 		}
+	}
+
+	// Handle/process Login/logout menu entry
+	function loginout_setup_nav_menu_item( $item ) {
+		// If this is the login/logout entry...
+		if ( (basename($_SERVER['PHP_SELF']) != 'nav-menus.php') && isset( $item->url ) && ($item->url === '#loginout') ) {
+			// Act on it appropriately
+			$item->title = is_user_logged_in() ? 'Logout' : 'Login';
+			$item->url = is_user_logged_in() ? wp_logout_url( get_permalink() ) : '';
+
+			// Add an identifying DOM class for our JS script to identify this by in order to add the click event
+			if ( !is_user_logged_in() )
+				$item->classes[] = 'login-logout-in';
+		}			
+		return $item;
 	}
 }

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <meta charset="utf-8">
+  <title>Demo</title>
+</head>
+
+<body>
+  <div id="main-div">
+    <span class="inner" id="inner-1" style="background-color: black;"></span>
+    <span class="inner" id="inner-2" style="background-color: lightblue;"></span>
+    <span class="inner" id="inner-3" style="background-color: green;"></span>
+    <span class="inner" id="inner-4" style="background-color: gray;"></span>
+  </div>
+
+  <button type="button" id="button-1">1</button>
+  <button type="button" id="button-2">2</button>
+  <button type="button" id="button-3">3</button>
+  <button type="button" id="button-4">4</button>
+  </body>
+
+<style>
+#main-div{
+  display:block;
+  height: 800px;
+  width: 300px;
+  overflow: hidden;
+  background-color: white;
+}
+.inner {
+  display:block;
+  float: left;
+  height: 100%;
+  width: 0%;
+  transition:all 0.3s ease;
+}
+/* Initially open element */
+#inner-1 {
+  width: 100%;
+}
+</style>
+
+<script>
+$('#button-1').click(function() {
+  $('.inner').css('width', '0%');
+  $('#inner-1').css('width', '100%');
+});
+$('#button-2').click(function() {
+  $('.inner').css('width', '0%');
+  $('#inner-2').css('width', '100%');
+});
+$('#button-3').click(function() {
+  $('.inner').css('width', '0%');
+  $('#inner-3').css('width', '100%');
+});
+$('#button-4').click(function() {
+  $('.inner').css('width', '0%');
+  $('#inner-4').css('width', '100%');
+});
+</script>
+
+</html>

@@ -1,0 +1,686 @@
+/* Begin old CSS */
+#html-display-container {
+    border-color: #efefef;
+    border-style: solid;
+    border-width: 1px;
+    /* margin: 50px; */
+    margin: 0 auto;
+    padding: 50px;
+    /* width: 670px; */
+    width: 1256px; 
+    padding-top: 10px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+#logo-header-div {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+
+#logo-header-div-parent {
+  margin-left: 0px;
+}
+
+#right-side-bar-child {
+    /* width: 22.5%; */
+    background-color: #f6f6f6;
+    /* This was the old height which we temporarily */
+    /*   disabled for the single-panel non-scrolling display */
+    /* height: 462px; */
+    margin-bottom: 24px;
+    border: 1px;
+    border-style: solid;
+    border-color: #e6e6e6;
+}
+
+#right-side-bar-child h4{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+#right-side-bar-child h3{
+    font-size: 12px;
+    color: #757474;
+}
+
+#more-recipients {
+    margin-left: -10px;
+    padding-bottom: 5px;
+}
+
+#composition-progress-button-div {
+    float: right;
+    width: 350px;
+    padding-right: 15px;
+}
+
+#end-composition-button {
+    float: right;
+    width: 265px;
+    color: #1F1F1F;
+    border-color: #6C6C6C;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c8TV1mAAAAG3RSTlNAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAvEOwtAAAFVklEQVR4XpWWB67c2BUFb3g557T/hRo9/WUMZHlgr4Bg8Z4qQgQJlHI4A8SzFVrapvmTF9O7dmYRFZ60YiBhJRCgh1FYhiLAmdvX0CzTOpNE77ME0Zty/nWWzchDtiqrmQDeuv3powQ5ta2eN0FY0InkqDD73lT9c9lEzwUNqgFHs9VQce3TVClFCQrSTfOiYkVJQBmpbq2L6iZavPnAPcoU0dSw0SUTqz/GtrGuXfbyyBniKykOWQWGqwwMA7QiYAxi+IlPdqo+hYHnUt5ZPfnsHJyNiDtnpJyayNBkF6cWoYGAMY92U2hXHF/C1M8uP/ZtYdiuj26UdAdQQSXQErwSOMzt/XWRWAz5GuSBIkwG1H3FabJ2OsUOUhGC6tK4EMtJO0ttC6IBD3kM0ve0tJwMdSfjZo+EEISaeTr9P3wYrGjXqyC1krcKdhMpxEnt5JetoulscpyzhXN5FRpuPHvbeQaKxFAEB6EN+cYN6xD7RYGpXpNndMmZgM5Dcs3YSNFDHUo2LGfZuukSWyUYirJAdYbF3MfqEKmjM+I2EfhA94iG3L7uKrR+GdWD73ydlIB+6hgref1QTlmgmbM3/LeX5GI1Ux1RWpgxpLuZ2+I+IjzZ8wqE4nilvQdkUdfhzI5QDWy+kw5Wgg2pGpeEVeCCA7b85BO3F9DzxB3cdqvBzWcmzbyMiqhzuYqtHRVG2y4x+KOlnyqla8AoWWpuBoYRxzXrfKuILl6SfiWCbjxoZJUaCBj1CjH7GIaDbc9kqBY3W/Rgjda1iqQcOJu2WW+76pZC9QG7M00dffe9hNnseupFL53r8F7YHSwJWUKP2q+k7RdsxyOB11n0xtOvnW4irMMFNV4H0uqwS5ExsmP9AxbDTc9JwgneAT5vTiUSm1E7BSflSt3bfa1tv8Di3R8n3Af7MNWzs49hmauE2wP+ttrq+AsWpFG2awvsuOqbipWHgtuvuaAE+A1Z/7gC9hesnr+7wqCwG8c5yAg3AL1fm8T9AZtp/bbJGwl1pNrE7RuOX7PeMRUERVaPpEs+yqeoSmuOlokqw49pgomjLeh7icHNlG19yjs6XXOMedYm5xH2YxpV2tc0Ro2jJfxC50ApuxGob7lMsxfTbeUv07TyYxpeLucEH1gNd4IKH2LAg5TdVhlCafZvpskfncCfx8pOhJzd76bJWeYFnFciwcYfubRc12Ip/ppIhA1/mSZ/RxjFDrJC5xifFjJpY2Xl5zXdguFqYyTR1zSp1Y9p+tktDYYSNflcxI0iyO4TPBdlRcpeqjK/piF5bklq77VSEaA+z8qmJTFzIWiitbnzR794USKBUaT0NTEsVjZqLaFVqJoPN9ODG70IPbfBHKK+/q/AWR0tJzYHRULOa4MP+W/HfGadZUbfw177G7j/OGbIs8TahLyynl4X4RinF793Oz+BU0saXtUHrVBFT/DnA3ctNPoGbs4hRIjTok8i+algT1lTHi4SxFvONKNrgQFAq2/gFnWMXgwffgYMJpiKYkmW3tTg3ZQ9Jq+f8XN+A5eeUKHWvJWJ2sgJ1Sop+wwhqFVijqWaJhwtD8MNlSBeWNNWTa5Z5kPZw5+LbVT99wqTdx29lMUH4OIG/D86ruKEauBjvH5xy6um/Sfj7ei6UUVk4AIl3MyD4MSSTOFgSwsH/QJWaQ5as7ZcmgBZkzjjU1UrQ74ci1gWBCSGHtuV1H2mhSnO3Wp/3fEV5a+4wz//6qy8JxjZsmxxy5+4w9CDNJY09T072iKG0EnOS0arEYgXqYnXcYHwjTtUNAcMelOd4xpkoqiTYICWFq0JSiPfPDQdnt+4/wuqcXY47QILbgAAAABJRU5ErkJggg==);
+    background-color: #fff;
+}
+
+#end-composition-button:hover {
+    color: #fff;
+    background-color: #333;
+    border-color: #ddd;
+}
+
+/* Make the addressee tags input element (on the letter composition dialog) span its entire row */
+.bootstrap-tagsinput {
+  width: 100% !important;
+}
+
+
+/* Styles borrowed from remote-letter use case */
+/* Colors, etc. */
+.panel-default>.panel-heading {
+    background-color: #fff !important;
+}
+body {
+    background-color: #f5f5f5 !important;
+}
+.panel-collapse {
+    background-color: #fff !important;
+    padding: 0px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ccc;
+    display: none;
+}
+.panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {
+    font-size: 130%;
+}
+.panel-group .panel+.panel {
+    margin-top: 0px !important;
+}
+
+/* Post-submit view */
+#submit-view-container {
+    font-size: 200%;
+    display: block;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    /* -ms-transform: translate(-50%,-50%); */
+    background-color: white;
+    padding: 1%;
+}
+#submit-view-container #submit-view {
+    width: 17em;
+    text-align: center;
+    background-color: #fff;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ccc;
+    padding: 5px;
+}
+#remote-letter-link-textinput {
+    vertical-align: middle;
+    font-size: 80%;
+}
+#remote-letter-clipboard-image {
+    height: 31px;
+}
+#remote-letter-url-sharing-dialog button {
+    margin-left: 1px;
+}
+.remote-letter-error-message {
+    font-size: 70%;
+    font-style: italic;
+    font-family: sans-serif;
+}
+#no-share-warning {
+    margin-bottom: 7px;
+    font-size: 70%;
+}
+.sharing-icon img {
+    height: 40px;
+}
+.sharing-message {
+    vertical-align: bottom;
+}
+#postscreen-buttons-div {
+    text-align: center;
+}
+/* .social-share-progress {
+    height: 40px;
+    border-style: none;
+    margin: 0px;
+    padding: 0px;
+} */
+
+/* Animated ellipsis via https://codepen.io/thetallweeks/pen/yybGra */
+.loading {
+    font-size: 30px;
+}
+.loading:after {
+    position: absolute;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+    animation: ellipsis steps(4,end) 900ms infinite;
+    content: "\2026"; /* ascii code for the ellipsis character */
+    width: 0px;
+}
+@keyframes ellipsis {
+    to {
+        width: 1.25em;    
+    }
+}
+@-webkit-keyframes ellipsis {
+    to {
+        width: 1.25em;    
+    }
+}
+/* End old CSS */
+
+/* Begin new Russ CSS */
+.col-md-9 {
+    width: 60%;
+}
+  
+.mini-nav {
+    float: right;
+    margin-top: -2px;
+    margin-left: -3px;
+}
+  
+.medium-nav {
+    margin-left: 182px;
+    margin-top: 6px;
+    margin-bottom: 2px;
+}
+  
+#last-section {
+    text-align: center;
+    padding-bottom: 6px;
+    /* border-bottom: 3px solid #b8b6b6; */
+}
+  
+#right-side-bar-child h4 {
+    padding-bottom: 5px;
+}
+  
+#form-tag {
+    padding-bottom: 0px;
+}
+  
+#form-tag-blue {
+    margin-top: -5px;
+    padding: 0px;
+}
+  
+#form-tag-gray {
+    margin-top: -10px;
+    margin-bottom: 9px;
+}
+  
+#form-tag-gray h3 {
+    margin-top: 15px;
+    margin-bottom: 5px
+}
+
+#section-2 {
+    padding-bottom: 0px;
+}
+/* End new Russ CSS */
+
+/* Begin sidebar CSS */
+#div-display-window{
+    height: 100%;
+    /* width: 300px; */
+    overflow: visible;
+  }
+  #all-inner-divs{
+    height: 100%;
+    /* width: (100% * numChildren); Set in script to autodetect child count */
+    transition: all 0.3s;
+  }
+  .inner {
+    display: block;
+    float: left;
+    height: 100%;
+    padding: 7px; 
+    /* width: (100% / numChildren); Set in script to autodetect child count */
+  }
+/* End sidebar CSS */
+
+#bodyInput {
+    /* height: 470px; */
+    height: 100%;
+}
+
+#fb-login-div {
+    text-align: center;
+}
+
+#recipients-table td, #add-images-table td {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 0px;
+    border-top: 0px;
+}
+
+#recipients-table, #add-images-table {
+    /* To compensate for the edge cases: */
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+#facebook-signin-button-div {
+    /* width: 30%; */
+    margin: auto;
+}
+
+#main-row .panel {
+    float: none;
+    vertical-align: top;
+}
+
+#main-row {
+    display: flex;
+}
+
+#facebook-signin-button-div {
+    width: 15em;
+}
+
+#text-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+#sharing-divs > div {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.skip-button {
+    position: absolute;
+    transform: translate(0%, 25%);
+    cursor: pointer;
+}
+
+#end-step6-buttonc-wrapper {
+    display: inline;
+}
+
+/* Support disabling links */
+a.disabled {
+    pointer-events: none;
+}
+
+textarea {
+    resize: none;
+}
+
+#twitter-sharing-message-content > div,
+#twitter-sharing-message-content > div > textarea,
+#facebook-sharing-message-content > div,
+#facebook-sharing-message-content > div > textarea {
+    width: 70%;
+}
+
+#twitter-sharing-message-content,
+#facebook-sharing-message-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+#close-fb-overlay-button-wrapper,
+#close-tw-overlay-button-wrapper {
+    display: inline-block;
+}
+
+#close-fb-overlay-button,
+#close-tw-overlay-button {
+    margin-top: 10px;
+    width: 7em;
+}
+
+.sharing-message-textarea {
+    font-size: 0.75em;
+    border: 1px solid lightgray;
+    flex: 1;
+    /* height: 100%; */
+    width: 20em;
+    height: 5em;
+}
+
+#fb-copyover-button-div {
+    text-align: center;
+}
+
+#fb-copyover-button-div a {
+    margin: 0px;
+    padding: 0px;
+}
+
+#post-now-button, .tooltip {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.opt-out {
+    position: relative;
+    top: 75%;
+    padding-right: 2em;
+    font-size: 0.3em;
+    color: #bbbbbb;
+}
+
+/* Tooltip element */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    margin-right: 1px;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    padding: 5px;
+    width: 60%;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    top: -8px;
+    right: 101%;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+
+/* Show tooltip only on hover only when enabled */
+.tooltip:hover .tooltiptext.display-enabled {
+    visibility: visible;
+}
+
+.overlay-background {
+    position: fixed;
+    display: none;
+    /* display: block; */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.overlay-content {
+    font-size: 200%;
+    /* height: 20%; */
+    display: block;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    /* -ms-transform: translate(-50%,-50%); */
+    background-color: white;
+    padding: 1%;
+}
+
+.overlay-content-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.status-display-button {
+    display: inline-block;
+    overflow: hidden;
+    /* width: 35px; */
+    flex: 0 0 34px;
+    height: 34px;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    text-shadow: 2px 2px #000000;
+    color: #ffffff;
+    background-color: #888888;
+    border-radius: 4px;
+    border-color: #555555;
+    border: 1px solid #555555;
+    pointer-events: none;
+    /* Properly centers content without strange padding or margins */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-social-span {
+    flex: 1;
+    margin-left: 1px;
+    margin-right: 1px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.flex-display {
+    display: flex;
+}
+
+#publish-button-div {
+    display: flex;
+}
+
+#add-images-table, #recipients-table {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}
+
+/* Infinite Scroll Containers: */
+/* .mini-nav { (In Russ's CSS)
+    float: right;
+    margin-top: -2px;
+    margin-left: -3px;
+} */
+.scroll-container-wrapper {
+    border-style: none;
+    /* width: 500px; */
+}
+.scroll-container {
+    border-style: none;
+    width: 100%;
+    overflow: hidden;
+    /* overflow: auto; */
+    white-space: nowrap;
+}
+.scroll-container .scroll-container-element {
+    border-style: none;
+    display: inline-block;
+    width: 100%;
+}
+.scroll-container-flex-element {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.container-row {
+    width: 100%;
+    display: flex;
+}
+.container-row > span {
+    flex-grow: 1;
+    flex: 1;
+    text-align: center;
+    padding: 0px;
+}
+.container-row > span > span {
+    /* position: relative; */
+    position: static;
+    width: 90%;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    display: flex;
+}
+#composition-section-1 .container-row > span > span {
+    height: 7em;
+}    
+#composition-section-2 .container-row > span > span {
+    height: 4em;
+}    
+.container-row > span > span > img {
+    flex: 1;
+    object-fit: cover; /* Don't stretch.  Fill to smaller dimension */
+}
+.container-row > span > span > span {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0px;
+    pointer-events: none;
+    background-color: #25A9BD;
+    color: white;
+    font-weight: bold;
+    white-space: normal;
+}
+
+/* Body-blocking login overlay */
+#blocking-login-overlay-element-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+#body-input-wrapper {
+    position: relative;
+    height: 100%;
+}
+#body-blocking-overlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /* background-color: rgba(0,0,0,0.5); */
+    background-color: rgba(0,0,0,0); /* Transparent */
+    z-index: 2;
+}
+#body-blocking-overlay > span {
+    position: absolute;
+    left: -15px;
+    top: -10px;
+    /* background-color: #5bc0de; */
+    color: black;
+    font-size: 115%;
+}
+#body-blocking-overlay > span > p {
+    margin: 10px;
+}
+.btn-inline {
+    display: inline;
+}
+
+.grey {
+    /* '!important' is necessary to override bootstrap's button color for the "Publish" button. */
+    background-color: #808080 !important;
+}
+
+.character-limit-message {
+    font-size: 0.5em;
+}
+
+#facebook-sharing-message-content p {
+    font-size: 0.6em;
+    text-align: center;
+}
+
+#facebook-sharing-message-content > span {
+    position: relative;
+}
+
+#text-inputs > br {
+    margin-top: 1em;
+}
+#titleInput {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#facebook-character-limit-message {
+    position: absolute;
+    bottom: -1.5em;
+    left: 0em;
+}
+
+/* Disable all inputs visually (grey them out) */
+#text-inputs input:disabled,
+input:disabled,
+.bootstrap-tagsinput {
+    background-color: #eee;
+}
+
+/* Login overlay padding to center a little better */
+/* .btn-facebook-overlay {
+    padding-bottom: 9px;
+} */
+
+#close-fb-overlay-button-wrapper .tooltip,
+#close-tw-overlay-button-wrapper .tooltip {
+    width: auto;
+}
+#close-fb-overlay-button-wrapper .tooltiptext,
+#close-tw-overlay-button-wrapper .tooltiptext {
+    font-size: initial;
+    width: 6em;
+    top: -15px;
+}
+
+/* New tooltips */
+#popular-recipients-buttons .tooltip {
+    width: auto;
+}
+#composition-section-1 .tooltiptext {
+    font-size: initial;
+    width: 10em;
+    position: fixed;
+}
+
+/* Wrap long tagsinput elements */
+.bootstrap-tagsinput .tag {
+    word-wrap: break-word;
+    white-space: normal;
+    display: inline-block;
+    max-width: 100%;
+}
+.bootstrap-tagsinput .twitter-typeahead .tt-input {
+    width: 100%;
+    max-width: 100%;
+}
